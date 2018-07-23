@@ -34,5 +34,11 @@
 		"matches": [
 			"request_24101"
 		]
+	},
+	{
+		"name": "test1",
+		"matches": [
+			"test1"
+		]
 	}
 ]

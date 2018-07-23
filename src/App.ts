@@ -31,6 +31,8 @@ class App {
 
   // Configure Express middleware.
   private middleware(): void {
+
+    this.express.use(express.static('dashboard/dist/dashboard'))
     this.express.use(logger('dev'));
 
     this.express.use(function (req, res, next) {

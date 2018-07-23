@@ -11,7 +11,6 @@ debug('ts-express:server');
 const port = normalizePort(config.app.port);
 App.set('port', port);
 
-
 const server = http.createServer(App);
 server.listen(port);
 server.on('error', onError);

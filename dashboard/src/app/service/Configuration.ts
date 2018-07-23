@@ -4,8 +4,8 @@ export class Config {
     baseUrl: string;
     adminApiUrl: string;
     constructor() {
-        this.baseUrl = 'http://localhost:3000';
-        // this.baseUrl = ''
+        //this.baseUrl = 'http://localhost:3000';
+        this.baseUrl = ''
         this.adminApiUrl = this.baseUrl + '/api/v1/admin/services';
     }
 
