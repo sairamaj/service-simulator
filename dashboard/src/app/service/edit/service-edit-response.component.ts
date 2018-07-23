@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SimulatedResponseData } from '../../host/SimulatedResponseData';
-import { HostService } from '../../host/host-service';
+import { ApiService } from '../ApiService';
 import { ActivatedRoute } from '@angular/router';
-import { IResponseMap } from '../../host/responsemap';
+import { IResponseMap } from '../../models/IResponseMap';
+import { SimulatedResponseData } from '../../models/SimulatedResponseData';
+
 
 @Component({
   selector: 'app-host-newresponse',
@@ -21,11 +22,9 @@ export class ServiceEditResponseComponent implements OnInit {
     '',
     '',
     '',
-    '',
-    '',
     []);
   constructor(private _route: ActivatedRoute,
-    private _hostService: HostService) {
+    private _hostService: ApiService) {
     this.hostName = this._route.snapshot.paramMap.get('name');
     this.mapName = this._route.snapshot.paramMap.get('mapname');
     this.model.name = this.mapName;

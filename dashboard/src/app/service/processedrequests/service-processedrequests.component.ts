@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HostService } from '../../host/host-service';
+import { ApiService } from '../ApiService';
 import { ProcessedRequest } from '../../models/ProcessedRequest';
 
 @Component({
@@ -12,7 +12,7 @@ export class ServiceProcessedRequestComponent implements OnInit {
 
   errorMessage: string;
   name: string;
-  constructor(private _route: ActivatedRoute,private _hostService: HostService) {
+  constructor(private _route: ActivatedRoute,private _hostService: ApiService) {
 
     this.name = this._route.snapshot.paramMap.get('name')
   }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { HostService } from '../../host/host-service';
-import { IHost } from '../../host/host';
-import { map, tap, catchError } from 'rxjs/operators';
+import { ApiService } from '../ApiService';
 import { HttpClient } from '@angular/common/http';
 import { Service } from '../../models/Service';
 @Component(
@@ -24,6 +22,6 @@ export class ServiceListComponent implements OnInit {
                 error => this.errorMessage = <any>error)
     }
 
-    constructor(private _hostService: HostService, private _http: HttpClient) {
+    constructor(private _hostService: ApiService, private _http: HttpClient) {
     }
 }

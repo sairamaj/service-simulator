@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
-import { IHost } from './host';
 import { HttpClient } from '@angular/common/http';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Observable, throwError, Observer } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
-import { IResponseMap } from './responsemap';
-import { SimulatedResponseData } from './SimulatedResponseData';
-import { HostLastRequest } from './hostlastrequest';
 import { Config } from './Configuration';
-import { hostResponseData } from './hostResponseData';
 import { MapDetail } from '../models/MapDetail';
-import { ServedRequests } from './ServedRequest';
 import { Service } from '../models/Service';
 import { ProcessedRequest } from '../models/ProcessedRequest';
+import { ServiceResponseData } from '../models/ServiceResponseData';
+import { SimulatedResponseData } from '../models/SimulatedResponseData';
 
 
 @Injectable()
-export class HostService {
+export class ApiService {
     Configuration: Config;
     constructor(private _http: HttpClient, private _location: Location) {
         this.Configuration = new Config();
@@ -49,9 +45,9 @@ export class HostService {
             catchError(this.handleError), );
     }
 
-    submitRequest(host: string, request: string): Observable<hostResponseData> {
+    submitRequest(host: string, request: string): Observable<ServiceResponseData> {
         const requestProcessingUrl = this.Configuration.getHostSimulatorUrl(host);
-        return this._http.post<hostResponseData>(requestProcessingUrl, request)
+        return this._http.post<ServiceResponseData>(requestProcessingUrl, request)
             .pipe(tap(data => console.log('received:' + data.code)),
                 catchError(this.handleError));
     }

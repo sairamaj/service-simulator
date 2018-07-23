@@ -1,4 +1,4 @@
-export class hostResponseData{
+export class ServiceResponseData{
     constructor(
         public code: number,
         public data: string,

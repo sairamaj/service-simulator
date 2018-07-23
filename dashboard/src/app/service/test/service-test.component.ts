@@ -1,8 +1,9 @@
 import { MapDetail } from '../../models/MapDetail';
 import { Component, OnInit } from '@angular/core';
-import { HostService } from '../../host/host-service';
+import { ApiService } from '../ApiService';
 import { ActivatedRoute } from '@angular/router';
-import { hostResponseData } from '../../host/hostResponseData';
+import { ServiceResponseData } from '../../models/ServiceResponseData';
+
 
 @Component({
   selector: 'app-host-test',
@@ -10,14 +11,14 @@ import { hostResponseData } from '../../host/hostResponseData';
   styleUrls: ['./service-test.component.css']
 })
 export class ServiceTestComponent implements OnInit {
-  testResponse: hostResponseData
+  testResponse: ServiceResponseData
   name: string;
   mapname: string
   _request: string
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _hostService: HostService) {
+    private _hostService: ApiService) {
     this.name = this._route.snapshot.paramMap.get('name')
     this.mapname = this._route.snapshot.paramMap.get('mapname')
   }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IResponseMap } from '../../host/responsemap';
-import { HostService } from '../../host/host-service';
+import { ApiService } from '../ApiService';
 import { Service } from '../../models/Service';
-import { Config } from '../../host/Configuration';
+import { Config } from '../Configuration';
 
 @Component({
   selector: 'app-host.detail',
@@ -17,7 +16,7 @@ export class ServiceDetailComponent implements OnInit {
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _router: Router, private _hostService: HostService) {
+    private _router: Router, private _hostService: ApiService) {
     this.name = this._route.snapshot.paramMap.get('name');
   }
 
