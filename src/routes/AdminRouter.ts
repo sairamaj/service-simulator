@@ -121,6 +121,23 @@ export class AdminRouter {
     }
   }
 
+  public async addNewResponse(req: Request, res: Response) {
+    let mapDetail = JSON.parse(await this.getRequest(req))
+    debug('add new response:' + mapDetail)
+    let name = req.params.name
+    try {
+      var status = await ServiceManagerFactory.createServiceManager().addNewResponse(name, mapDetail)
+      if (status) {
+        res.send({})
+      } else {
+        res.status(304).send({})
+      }
+    } catch (error) {
+      debug('error:' + error)
+      res.status(500).send({})
+    }
+  }
+
   private async getRequest(req: Request): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       var requestData = JSON.stringify(req.body)
@@ -157,6 +174,9 @@ export class AdminRouter {
 
     this.router.post('/:name/test', async (req: Request, resp: Response) => {
       await this.testService(req, resp);
+    });
+    this.router.post('/:name/response', async (req: Request, resp: Response) => {
+      await this.addNewResponse(req, resp);
     });
   }
 }

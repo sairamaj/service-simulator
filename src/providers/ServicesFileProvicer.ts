@@ -43,6 +43,11 @@ export class ServicesFileProvider implements ServiceManager {
         return await serviceProvider.getMapDetail(mapName);
     }
 
+    public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        var serviceProvider = new ServiceFileProvider(name);
+        return await serviceProvider.addNewResponse(mapDetail);
+    }
+
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
         debug('enter:getResponse');
 
@@ -68,7 +73,7 @@ export class ServicesFileProvider implements ServiceManager {
         return await new ProcessLogFileManager(name).getLogs();
     }
 
-    public async getProcessedRequest(name: string, id: string): Promise<ProcessedRequest>{
+    public async getProcessedRequest(name: string, id: string): Promise<ProcessedRequest> {
         return await new ProcessLogFileManager(name).getLog(id)
     }
 

@@ -26,7 +26,7 @@ export class Config {
     }
 
     getAddNewResponseUrl(name: string): string {
-        return this.baseUrl + '/admin/api/hosts/' + name + '/response';
+        return this.adminApiUrl + '/' + name + '/response';
     }
 
     getLastRequestUrl(name: string): string {

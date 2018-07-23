@@ -8,6 +8,8 @@ import { ProcessInfo } from '../model/ProcessInfo';
 import * as mongoose from "mongoose";
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
+import { ServiceConfigMap } from '../model/ServiceConfigMap';
+import { resolve } from 'url';
 const debug = require('debug')('mongodbprovider')
 
 const ServiceDbSchema = mongoose.model('services', ServiceSchema);
@@ -55,6 +57,36 @@ export class MongoDbProvider implements ServiceManager {
         var responseData = await this.getResponseData(name, mapName)
         var requestData = await this.getRequestData(name, mapName)
         return new MapDetail(mapName, requestData, responseData, foundConfig.matches)
+    }
+
+    public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        debug('enter addNewResponse')
+        var service = await this.getService(name)
+        if (service === undefined) {
+            debug('warn service ' + name + ' not found')
+            return undefined
+        }
+
+        if (service.config === undefined) {
+            service.config = []
+        }
+
+        service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+        return new Promise<boolean>((resolve, reject) => {
+            debug('updating...')
+            ServiceDbSchema.findOneAndUpdate({ name: name }, service, async (err) => {
+                if (err) {
+                    debug('error:' + err)
+                    reject(err)
+                } else {
+                    debug('successfully updated config.')
+                    await this.addRequest(name, mapDetail.name, mapDetail.request)
+                    await this.addResponse(name, mapDetail.name, mapDetail.response)
+                    debug('successfully updated.')
+                    resolve(true)
+                }
+            })
+        })
     }
 
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
@@ -165,6 +197,7 @@ export class MongoDbProvider implements ServiceManager {
 
     private async getResponseData(name: string, mapName: string): Promise<string> {
         var responseNameKey = name + "_response_" + mapName;
+        debug('getResponseData: ' + responseNameKey)
         var responses = await ResponseDbSchema.find({
             name: responseNameKey
         });
@@ -187,5 +220,33 @@ export class MongoDbProvider implements ServiceManager {
         }
 
         return undefined
+    }
+
+    public async addRequest(name: string, mapName: string, request: string): Promise<boolean> {
+        var requestNameKey = name + "_request_" + mapName;
+        debug('adding request:' + requestNameKey)
+        return new Promise<boolean>((resolve, reject) => {
+            RequestDbSchema.collection.insertOne({ name: requestNameKey, request: request }, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(true)
+                }
+            });
+        })
+    }
+
+    public async addResponse(name: string, mapName: string, response: string): Promise<boolean> {
+        var responseNameKey = name + "_response_" + mapName;
+        debug('adding response:' + responseNameKey)
+        return new Promise<boolean>((resolve, reject) => {
+            ResponseDbSchema.collection.insertOne({ name: responseNameKey, response: response }, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(true)
+                }
+            });
+        })
     }
 }

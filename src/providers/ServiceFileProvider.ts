@@ -43,6 +43,29 @@ export class ServiceFileProvider {
         });
     }
 
+    public async addNewResponse(mapDetail: MapDetail) : Promise<boolean>{
+        return new Promise<boolean>((resolve, reject) => {
+            if( this.configMaps === undefined){
+                this.configMaps = []
+            }
+
+            // Update config
+            this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+            let configMapFileName = this.getConfigMapFile();
+            fs.writeFileSync(configMapFileName, JSON.stringify(this.configMaps, null, '\t'))
+
+            // write request
+            let requestFileName = this.getRequestFileName(mapDetail.name);
+            fs.writeFileSync(requestFileName, mapDetail.request)
+
+            // write response
+            let responseFileName = this.getResponseFileName(mapDetail.name);
+            fs.writeFileSync(responseFileName, mapDetail.response)
+
+            resolve(true)
+        });
+    }
+
     public async getResponse(request: string): Promise<ProcessInfo> {
         debug('enter:getResponse');
 

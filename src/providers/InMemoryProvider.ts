@@ -1,44 +1,22 @@
 import { ServiceManager } from '../ServiceManager';
 import { Service } from '../model/Service';
 import { ProcessInfo } from '../model/ProcessInfo';
-import { resolve } from 'path';
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
+import { LoggerIntance } from './LoggerIntance';
 const debug = require('debug')('inmemoryprovider')
 
-class LoggerIntance {
-    private static instance: LoggerIntance;
-    private Logs: ProcessedRequest[] = []
-    static getInstance() {
-        if (!LoggerIntance.instance) {
-            LoggerIntance.instance = new LoggerIntance();
-            // ... any one time initialization goes here ...
-        }
-        return LoggerIntance.instance;
-    }
-
-    public getLogs(): ProcessedRequest[] {
-        return this.Logs;
-    }
-
-    public clear() {
-        this.Logs = []
-    }
-
-    public add(log: ProcessedRequest) {
-        this.Logs.push(log);
-    }
-}
-
 export class InMemoryProvider implements ServiceManager {
-    TestData: any;
+    static TestData: any;
     constructor() {
-        this.TestData = require('../../testdata/testdata1');
+        if (InMemoryProvider.TestData === undefined) {
+            InMemoryProvider.TestData = require('../../testdata/testdata1');
+        }
     }
 
     public async getServices(): Promise<Service[]> {
         return new Promise<Service[]>((resolve) => {
-            resolve(this.TestData);
+            resolve(InMemoryProvider.TestData);
         });
     }
 
@@ -49,7 +27,7 @@ export class InMemoryProvider implements ServiceManager {
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
         return new Promise<MapDetail>((resolve) => {
-            var service = this.TestData.find(s => s.name === name);
+            var service = InMemoryProvider.TestData.find(s => s.name === name);
             if (service === undefined) {
                 resolve(undefined)
             }
@@ -62,6 +40,23 @@ export class InMemoryProvider implements ServiceManager {
             var mapDetail = new MapDetail(mapInfo.name, mapInfo.request, mapInfo.response, mapInfo.matches)
             resolve(mapDetail)
         });
+    }
+
+    public addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        debug('enter addNewResponse')
+        return new Promise<boolean>((resolve, reject) => {
+            var service = InMemoryProvider.TestData.find(s => s.name === name);
+            if (service === undefined) {
+                reject('service ' + name + ' not found')
+            }
+
+            if (service.config === undefined) {
+                service.config = []
+            }
+
+            service.config.push(mapDetail)
+            resolve(true)
+        })
     }
 
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
@@ -118,15 +113,15 @@ export class InMemoryProvider implements ServiceManager {
             var logs = LoggerIntance.getInstance().getLogs();
             debug('logs length' + logs.length)
             try {
-                let index = +id -1
+                let index = +id - 1
                 if (logs.length >= index) {
                     debug('returning log')
                     resolve(logs[index])
-                }else{
+                } else {
                     resolve(undefined)
                 }
             } catch (error) {
-                reject(error)                
+                reject(error)
             }
         });
     }

@@ -87,3 +87,33 @@ describe('POST api/v1/admin/services/:name/test', () => {
   })
 })
 
+
+describe('Adding new test case', () => {
+  it('responds with 200 and adds new response', () => {
+    var mapName = 'request_' + Math.floor(Math.random() * 10000) + 1
+    console.log(mapName)
+    var newRequest = {
+      name: mapName,
+      request: 'request for ' + mapName + ' here',
+      response: 'response for ' + mapName + ' here',
+      matches: [mapName]
+    }
+    return chai.request(app).post('/api/v1/admin/services/service1/response').send(newRequest)
+      .then(res => {
+        expect(res.status).to.equal(200);
+
+        return chai.request(app).get('/api/v1/admin/services/service1/maps/' + mapName)
+          .then(res => {
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            expect(map.name).to.equal(newRequest.name)
+            expect(map.request).to.equal(newRequest.request)
+            expect(map.response).to.equal(newRequest.response)
+            expect(map.matches).to.not.be.undefined
+            expect(map.matches.length).to.equal(1)
+            expect(map.matches[0]).to.equal(mapName)
+          })
+      });
+  });
+});
