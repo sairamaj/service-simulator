@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ServiceListComponent } from './service/list/service-list.components';
 import { ServiceDetailComponent } from './service/detail/service-detail.component';
-import { HostDetailResponseComponent } from './host/host-detail-response.component';
-import { HostDetailRequestComponent } from './host/host-detail-request.component';
 import { ServiceTestComponent } from './service/test/service-test.component';
 import { ServiceEditResponseComponent } from './service/edit/service-edit-response.component';
 import { XmlPipe } from './XmlPipe';
@@ -20,8 +18,6 @@ import { ServiceViewProcessedRequestComponent } from './service/processedrequest
     AppComponent,
     ServiceListComponent,
     ServiceDetailComponent,
-    HostDetailResponseComponent,
-    HostDetailRequestComponent,
     ServiceTestComponent,
     ServiceEditResponseComponent,
     ServiceProcessedRequestComponent,
@@ -38,8 +34,6 @@ import { ServiceViewProcessedRequestComponent } from './service/processedrequest
       { path: 'hosts/:name/newresponse/:mapname', component: ServiceEditResponseComponent },
       { path: 'hosts/:name/:mapname/test', component: ServiceTestComponent },
       { path: 'services/:name', component: ServiceDetailComponent },
-      { path: 'hosts/:name/details/response/:file', component: HostDetailResponseComponent },
-      { path: 'hosts/:name/details/request/:file', component: HostDetailRequestComponent },
       { path: 'services/:name/processedrequests', component: ServiceProcessedRequestComponent },
       { path: 'services/:name/processedrequests/:id', component: ServiceViewProcessedRequestComponent },
       { path: '', component: ServiceListComponent },
