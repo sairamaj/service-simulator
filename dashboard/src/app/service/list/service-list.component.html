@@ -1,0 +1,29 @@
+<div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+</div>
+
+
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+    <div class='table-responsive'>
+
+        <table class='table'>
+            <thead>
+                <th>Name</th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor='let service of services'>
+                    <td>
+                        <a [routerLink]="['/services', service.name]">
+                            {{ service.name }}
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

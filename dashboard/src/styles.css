@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css'); */
+
+div.panel-heading {
+    font-size: large;
+}
+
+.table td {
+    text-align: left;
+    font-size: medium;
+}
+
+.table th {
+    font-size: x-large;
+}
+
+thead {
+    color: #337AB7;
+}
+
+.label-custom {
+    background-color: blueviolet;
+}
+
+.label-custom2 {
+    background-color: gray;
+}

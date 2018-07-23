@@ -1,0 +1,51 @@
+<div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+</div>
+
+<div class='panel panel-primary' style="width: 100%;">
+    <div class='panel-heading'>
+        {{name}}
+    </div>
+
+    <div class='table-responsive'>
+
+        <table class='table'>
+            <thead>
+                <th>Name</th>
+                <th>Matches</th>
+                <th></th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor='let map of service.config'>
+                    <td>
+                        {{ map.name }}
+                    </td>
+                    <td>
+                        <tr *ngFor='let m of map.matches'>
+                            <td>
+                                {{ m }}
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <a class='btn btn-success' (click)='onTest(map.name)' style='width:80px'>
+                            Test
+                        </a> &nbsp;
+                        <a class='btn btn-success' (click)='onEdit(map.name)' style='width:80px'>
+                            Edit
+                        </a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<a class='btn btn-info' (click)='onNew()' style='width:80px'>
+    New
+</a>&nbsp;&nbsp;
+<a class='btn btn-info' (click)='onLastServedRequests()' style='width:160px'>
+    LastServedRequests
+</a>

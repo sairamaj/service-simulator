@@ -1,0 +1,64 @@
+<!-- {{diagnostic}} -->
+
+<div class="container">
+    <h1>{{title}}</h1>
+    <form (ngSubmit)="onSubmit()" #HostNewresponse="ngForm">
+        <button type="submit" class="btn btn-success" [disabled]="!HostNewresponse.form.valid">Submit</button>
+
+        <div *ngIf='errorMessage' class='alert alert-danger'>
+            Error: {{ errorMessage }}
+        </div>
+        <div *ngIf='statusMessage' class='alert alert-success'>
+            {{ statusMessage }}
+        </div>
+
+        <div class="form-group">
+            <span class="label label-custom pull-left">Name</span>
+            <span class="label label-custom2 pull-left">(Name of the test case)</span>
+            <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" required #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="label label-custom pull-left">Request</span>
+            <span class="label label-custom2 pull-left">(Request content.)</span>
+            <textarea class="form-control" id="request" [(ngModel)]='model.request' name="request" required #request="ngModel" rows="20">       </textarea>
+            <div [hidden]="request.valid || request.pristine" class="alert alert-danger">
+                Request required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="label label-custom pull-left">Matches</span>
+            <span class="label label-custom2 pull-left">(Matches will be used against request and response will be returned in case of match. 2 matches can be specified
+                separated by , )</span>
+            <input type="text" class="form-control" id="matches" [(ngModel)]="model.matchString" name="matches" #matches="ngModel" required>
+            <div [hidden]="matches.valid || matches.pristine" class="alert alert-danger">
+                Matches required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="label label-custom pull-left">Response</span>
+            <span class="label label-custom2 pull-left">(Response content. This will be returned when match happens against request)</span>
+            <textarea class="form-control" id="response" [(ngModel)]='model.response' name="response" required #response="ngModel" rows="20">
+            </textarea>
+            <div [hidden]="response.valid || response.pristine" class="alert alert-danger">
+                Response required
+            </div>
+        </div>
+
+        <div *ngIf='errorMessage' class='alert alert-danger'>
+            Error: {{ errorMessage }}
+        </div>
+        <div *ngIf='statusMessage' class='alert alert-success'>
+            {{ statusMessage }}
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!HostNewresponse.form.valid">Submit</button>
+    </form>
+
+
+</div>

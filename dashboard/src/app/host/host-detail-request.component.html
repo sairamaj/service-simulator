@@ -1,0 +1,9 @@
+<div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+</div>
+
+<div class="form-group">
+    <textarea class="form-control" rows="90" style="min-width: 100%">
+    {{request.data}}
+  </textarea>
+</div>

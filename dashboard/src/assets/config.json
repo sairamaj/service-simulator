@@ -1,0 +1,4 @@
+{
+    "adminBaseUrl" : "http://localhost:3000",
+    "getHostsUrl"  : "http://localhost:3000/hosts"
+}

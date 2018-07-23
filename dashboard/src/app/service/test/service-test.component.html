@@ -1,0 +1,62 @@
+<div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+</div>
+
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        Submit request and get response
+    </div>
+    <div class='table-responsive'>
+
+        <table class='table'>
+            <thead>
+                <th>Request</th>
+                <th style="width: 5%"></th>
+                <th>Response</th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                          <textarea class="form-control" [ngModel]="request | xml" (ngModelChange)="request=$event" name="inputField" rows="35" cols="60">
+                            </textarea>
+                        </div>
+                    </td>
+                    <td>
+                        <a class='btn btn-primary' (click)='onSubmit()' style='width:80px'>Submit </a>
+                    </td>
+                    <td>
+                        <tbody>
+                                <tr>
+                                        <div class="form-group">
+                                                <textarea class="form-control" rows="1" cols="60">
+                                                    {{testResponse.status}}
+                                                  </textarea>
+                                            </div>
+        
+                                </tr>
+                                <tr>
+                                    <div class="form-group">
+                                            <textarea class="form-control" rows="1" cols="60">
+                                                {{testResponse.matches}}
+                                              </textarea>
+                                        </div>
+    
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="30" cols="60">
+                                            {{testResponse.response | xml}}
+                                          </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

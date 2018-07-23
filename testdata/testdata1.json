@@ -1,0 +1,58 @@
+[{
+        "name": "service1",
+        "config": [{
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "request" : "request_1 here",
+                "response": "<xml>service1_response_1</xml>"
+            },
+            {
+                "name": "request_2",
+                "matches": [
+                    "request_2"
+                ],
+                "response": "<xml>service1_response_2</xml>"
+            }
+        ]
+    },
+    {
+        "name": "service2",
+        "config": [{
+                "name": "request_1_input1",
+                "matches": [
+                    "request_1",
+                    "input1"
+                ],
+                "response": "<xml>service2_response_1_with_input1</xml>"
+            },
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "response": "<xml>service2_response_1</xml>"
+            },
+            {
+                "name": "request_2",
+                "matches": [
+                    "request_2"
+                ],
+                "response": "<xml>service2_response_2</xml>"
+            }
+        ]
+    },
+    {
+        "name": "service3"
+    },
+    {
+        "name": "service4"
+    },
+    {
+        "name": "service5"
+    },
+    {
+        "name": "service6"
+    }
+]

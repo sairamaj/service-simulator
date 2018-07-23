@@ -1,0 +1,33 @@
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>
+
+<div class='panel panel-primary' style="width: 100%;">
+  <div class='panel-heading'>
+    {{name}}
+  </div>
+
+  <div class='table-responsive'>
+
+    <table class='table'>
+      <thead>
+        <th>Date</th>
+        <th>Id</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let req of servedRequests">
+          <td>
+            {{ req.date | date:'dd/MM HH:mm'}}
+          </td>
+          <td>
+            <a [routerLink]="['/services/' + name + '/processedrequests/', req.id]">
+              {{req.id}}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
