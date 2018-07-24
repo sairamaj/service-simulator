@@ -4,8 +4,8 @@ export class Config {
     baseUrl: string;
     adminApiUrl: string;
     constructor() {
-        //this.baseUrl = 'http://localhost:3000';
-        this.baseUrl = ''
+        this.baseUrl = 'http://localhost:3000';
+        //this.baseUrl = ''
         this.adminApiUrl = this.baseUrl + '/api/v1/admin/services';
     }
 
@@ -26,7 +26,7 @@ export class Config {
     }
 
     getAddNewResponseUrl(name: string): string {
-        return this.adminApiUrl + '/' + name + '/response';
+        return this.adminApiUrl + '/' + name + '/maps';
     }
 
     getLastRequestUrl(name: string): string {

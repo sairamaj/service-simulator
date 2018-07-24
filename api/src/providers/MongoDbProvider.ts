@@ -71,7 +71,15 @@ export class MongoDbProvider implements ServiceManager {
             service.config = []
         }
 
-        service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+        var isUpdate = false
+        var foundConfig = service.config.find(c => c.name == mapDetail.name)
+        if (foundConfig === undefined) {
+            service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+        } else {
+            foundConfig.matches = mapDetail.matches
+            isUpdate = true
+        }
+
         return new Promise<boolean>((resolve, reject) => {
             debug('updating...')
             ServiceDbSchema.findOneAndUpdate({ name: name }, service, async (err) => {
@@ -80,8 +88,14 @@ export class MongoDbProvider implements ServiceManager {
                     reject(err)
                 } else {
                     debug('successfully updated config.')
-                    await this.addRequest(name, mapDetail.name, mapDetail.request)
-                    await this.addResponse(name, mapDetail.name, mapDetail.response)
+                    if (isUpdate) {
+                        await this.updateRequest(name, mapDetail.name, mapDetail.request)
+                        await this.updateResponse(name, mapDetail.name, mapDetail.response)
+                    } else {
+                        await this.addRequest(name, mapDetail.name, mapDetail.request)
+                        await this.addResponse(name, mapDetail.name, mapDetail.response)
+                    }
+
                     debug('successfully updated.')
                     resolve(true)
                 }
@@ -90,33 +104,7 @@ export class MongoDbProvider implements ServiceManager {
     }
 
     public async modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
-        debug('enter modifyNewResponse')
-        var service = await this.getService(name)
-        if (service === undefined) {
-            debug('warn service ' + name + ' not found')
-            return undefined
-        }
-
-        if (service.config === undefined) {
-            service.config = []
-        }
-
-        service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
-        return new Promise<boolean>((resolve, reject) => {
-            debug('updating...')
-            ServiceDbSchema.findOneAndUpdate({ name: name }, service, async (err) => {
-                if (err) {
-                    debug('error:' + err)
-                    reject(err)
-                } else {
-                    debug('successfully updated config.')
-                    await this.addRequest(name, mapDetail.name, mapDetail.request)
-                    await this.addResponse(name, mapDetail.name, mapDetail.response)
-                    debug('successfully updated.')
-                    resolve(true)
-                }
-            })
-        })
+        return await this.addNewResponse(name, mapDetail)
     }
 
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
@@ -254,12 +242,30 @@ export class MongoDbProvider implements ServiceManager {
 
     public async addRequest(name: string, mapName: string, request: string): Promise<boolean> {
         var requestNameKey = name + "_request_" + mapName;
+        debug('addRequest updated.')
         debug('adding request:' + requestNameKey)
         return new Promise<boolean>((resolve, reject) => {
             RequestDbSchema.collection.insertOne({ name: requestNameKey, request: request }, (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
+                    debug('addRequest updated.')
+                    resolve(true)
+                }
+            });
+        })
+    }
+
+    public async updateRequest(name: string, mapName: string, request: string): Promise<boolean> {
+        var requestNameKey = name + "_request_" + mapName;
+        debug('addRequest updated.')
+        debug('adding request:' + requestNameKey)
+        return new Promise<boolean>((resolve, reject) => {
+            RequestDbSchema.update({ name: requestNameKey }, { name: requestNameKey, request: request }, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    debug('addRequest updated.')
                     resolve(true)
                 }
             });
@@ -271,6 +277,20 @@ export class MongoDbProvider implements ServiceManager {
         debug('adding response:' + responseNameKey)
         return new Promise<boolean>((resolve, reject) => {
             ResponseDbSchema.collection.insertOne({ name: responseNameKey, response: response }, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(true)
+                }
+            });
+        })
+    }
+
+    public async updateResponse(name: string, mapName: string, response: string): Promise<boolean> {
+        var responseNameKey = name + "_response_" + mapName;
+        debug('adding response:' + responseNameKey)
+        return new Promise<boolean>((resolve, reject) => {
+            ResponseDbSchema.collection.update({ name: responseNameKey }, { name: responseNameKey, response: response }, (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
