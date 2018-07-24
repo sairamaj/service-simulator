@@ -2,10 +2,9 @@ import * as glob from 'glob';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mongoose from "mongoose";
-import { ServiceSchema } from '../src/model/ServiceSchema';
-import { ResponseSchema } from '../src/model/ResponseSchema';
-import { RequestSchema } from '../src/model/RequestSchema';
-import { resolve } from 'url';
+import { ServiceSchema } from '../api/src/model/ServiceSchema';
+import { ResponseSchema } from '../api/src/model/ResponseSchema';
+import { RequestSchema } from '../api/src/model/RequestSchema';
 
 const ServiceDbSchema = mongoose.model('services', ServiceSchema);
 const ResponseDbSchema = mongoose.model('responses', ResponseSchema);
