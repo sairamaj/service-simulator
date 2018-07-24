@@ -98,7 +98,7 @@ describe('Adding new test case', () => {
       response: 'response for ' + mapName + ' here',
       matches: [mapName]
     }
-    return chai.request(app).post('/api/v1/admin/services/service1/response').send(newRequest)
+    return chai.request(app).post('/api/v1/admin/services/service1/maps').send(newRequest)
       .then(res => {
         expect(res.status).to.equal(200);
 
@@ -113,6 +113,83 @@ describe('Adding new test case', () => {
             expect(map.matches).to.not.be.undefined
             expect(map.matches.length).to.equal(1)
             expect(map.matches[0]).to.equal(mapName)
+          })
+      });
+  });
+});
+
+describe('Editing test case', () => {
+  it('responds with 200 and modified response', () => {
+    var mapName = 'request_' + Math.floor(Math.random() * 10000) + 1
+    console.log(mapName)
+    var newRequest = {
+      name: mapName,
+      request: 'request for ' + mapName + ' here',
+      response: 'response for ' + mapName + ' here',
+      matches: [mapName]
+    }
+    return chai.request(app).post('/api/v1/admin/services/service1/maps').send(newRequest)
+      .then(res => {
+        expect(res.status).to.equal(200);
+
+        return chai.request(app).get('/api/v1/admin/services/service1/maps/' + mapName)
+          .then(res => {
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            expect(map.name).to.equal(newRequest.name)
+            expect(map.request).to.equal(newRequest.request)
+            expect(map.response).to.equal(newRequest.response)
+            expect(map.matches).to.not.be.undefined
+            expect(map.matches.length).to.equal(1)
+            expect(map.matches[0]).to.equal(mapName)
+
+            newRequest.request = newRequest.request + 'modified'
+            newRequest.response = newRequest.response + 'modified'
+
+            var modifiedRequest = {
+              name: newRequest.name,
+              request: newRequest.request + 'modified',
+              response: newRequest.response + 'modified',
+              matches: [mapName]
+            }
+
+            // get current number maps
+            return chai.request(app).get('/api/v1/admin/services/service1')
+              .then(res => {
+                let service = res.body
+                let prevMapCount = service.config.length
+                console.log('prevMapCount:' + prevMapCount)
+
+                return chai.request(app).patch('/api/v1/admin/services/service1/maps').send(modifiedRequest)
+                  .then(res => {
+
+                    expect(res.status).to.equal(200)
+                    expect(res).to.be.json
+                    let map = res.body
+                    return chai.request(app).get('/api/v1/admin/services/service1/maps/' + mapName)
+                      .then(res => {
+                        let map = res.body
+                        expect(map.name).to.equal(modifiedRequest.name)
+                        expect(map.request).to.equal(modifiedRequest.request)
+                        expect(map.response).to.equal(modifiedRequest.response)
+                        expect(map.matches).to.not.be.undefined
+                        expect(map.matches.length).to.equal(1)
+                        expect(map.matches[0]).to.equal(mapName)
+
+                        // map count should be same
+                        return chai.request(app).get('/api/v1/admin/services/service1')
+                          .then(res => {
+                            let service = res.body
+                            let currentMapCount = service.config.length
+                            console.log('currentMapCount:' + currentMapCount)
+                            console.log('prevMapCount:' + prevMapCount)
+                            expect(currentMapCount).to.be.equal(prevMapCount)
+                          })
+                      })
+                  })
+              })
+
           })
       });
   });

@@ -12,6 +12,7 @@ export class ServiceFileProvider {
     constructor(public name: string, public fileProviderLocation: string) {
         this.configMaps = [];
         var mapFileName = this.getConfigMapFile();
+        debug('loading ' + mapFileName)
         if (!fs.existsSync(mapFileName)) {
             debug('warn: map file name does not exists:' + mapFileName);
             return;
@@ -43,14 +44,20 @@ export class ServiceFileProvider {
         });
     }
 
-    public async addNewResponse(mapDetail: MapDetail) : Promise<boolean>{
+    public async addNewResponse(mapDetail: MapDetail): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            if( this.configMaps === undefined){
+            if (this.configMaps === undefined) {
                 this.configMaps = []
             }
 
+            var foundConfig = this.configMaps.find(c=> c.name == mapDetail.name)
+            if( foundConfig === undefined){
+                this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))    
+            }else{
+                foundConfig.matches =  mapDetail.matches
+            }
+
             // Update config
-            this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
             let configMapFileName = this.getConfigMapFile();
             fs.writeFileSync(configMapFileName, JSON.stringify(this.configMaps, null, '\t'))
 
@@ -62,6 +69,7 @@ export class ServiceFileProvider {
             let responseFileName = this.getResponseFileName(mapDetail.name);
             fs.writeFileSync(responseFileName, mapDetail.response)
 
+            debug('done addNewResponse')
             resolve(true)
         });
     }
@@ -107,7 +115,7 @@ export class ServiceFileProvider {
 
     public getConfigMap(): ServiceConfigMap[] {
         let configFile = this.getConfigMapFile();
-        if( fs.existsSync(configFile) ){
+        if (fs.existsSync(configFile)) {
             return require(configFile);
         }
     }

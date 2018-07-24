@@ -89,6 +89,36 @@ export class MongoDbProvider implements ServiceManager {
         })
     }
 
+    public async modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        debug('enter modifyNewResponse')
+        var service = await this.getService(name)
+        if (service === undefined) {
+            debug('warn service ' + name + ' not found')
+            return undefined
+        }
+
+        if (service.config === undefined) {
+            service.config = []
+        }
+
+        service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+        return new Promise<boolean>((resolve, reject) => {
+            debug('updating...')
+            ServiceDbSchema.findOneAndUpdate({ name: name }, service, async (err) => {
+                if (err) {
+                    debug('error:' + err)
+                    reject(err)
+                } else {
+                    debug('successfully updated config.')
+                    await this.addRequest(name, mapDetail.name, mapDetail.request)
+                    await this.addResponse(name, mapDetail.name, mapDetail.response)
+                    debug('successfully updated.')
+                    resolve(true)
+                }
+            })
+        })
+    }
+
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
         debug('enter getResponse: ' + name)
         var service = await this.getService(name);

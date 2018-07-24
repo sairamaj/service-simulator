@@ -52,6 +52,11 @@ export class ServicesFileProvider implements ServiceManager {
         return await serviceProvider.addNewResponse(mapDetail);
     }
 
+    public async modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        var serviceProvider = new ServiceFileProvider(name, this.getFilesProviderLocation());
+        return await serviceProvider.addNewResponse(mapDetail);
+    }
+
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
         debug('enter:getResponse');
 

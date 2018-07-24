@@ -61,6 +61,30 @@ export class InMemoryProvider implements ServiceManager {
         })
     }
 
+    public modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
+        debug('enter modifyNewResponse')
+        return new Promise<boolean>((resolve, reject) => {
+            var service = InMemoryProvider.TestData.find(s => s.name === name);
+            if (service === undefined) {
+                reject('service ' + name + ' not found')
+            }
+
+            if (service.config === undefined) {
+                reject(mapDetail.name + ' not found in ' + name)
+            }
+
+            var foundMap = service.config.find(c=> c.name == mapDetail.name)
+            if( foundMap === undefined){
+                reject(mapDetail.name + ' not found in ' + name) 
+            }
+
+            foundMap.request = mapDetail.request
+            foundMap.response = mapDetail.response
+            foundMap.matches = mapDetail.matches
+            resolve(true)
+        })
+    }
+
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
         var service = await this.getService(name);
         if (service === undefined || service.config === undefined) {

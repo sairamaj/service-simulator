@@ -8,6 +8,7 @@ export interface ServiceManager {
     getService(name: string): Promise<Service>;
     getMapDetail(name: string, mapName: string): Promise<MapDetail>;
     addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean>;
+    modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean>;
     getResponse(name: string, request: string): Promise<ProcessInfo>;
     logRequest(name: string, date: Date, status: number, processInfo: ProcessInfo): Promise<boolean>;
     getProcessedRequests(name: string): Promise<ProcessedRequest[]>

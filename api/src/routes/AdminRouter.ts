@@ -138,6 +138,23 @@ export class AdminRouter {
     }
   }
 
+  public async modifyNewResponse(req: Request, res: Response) {
+    let mapDetail = JSON.parse(await this.getRequest(req))
+    debug('modify response:' + mapDetail)
+    let name = req.params.name
+    try {
+      var status = await ServiceManagerFactory.createServiceManager().modifyNewResponse(name, mapDetail)
+      if (status) {
+        res.send({})
+      } else {
+        res.status(304).send({})
+      }
+    } catch (error) {
+      debug('error:' + error)
+      res.status(500).send({})
+    }
+  }
+
   private async getRequest(req: Request): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       var requestData = JSON.stringify(req.body)
@@ -170,13 +187,17 @@ export class AdminRouter {
     this.router.get('/:name/processedrequests', this.getProcessedRequests)
     this.router.get('/:name/processedrequests/:id', this.getProcessedRequestById)
     this.router.delete('/:name/processedrequests', this.deleteProcessedRequests)
-    this.router.get('/:name/maps/:mapName', this.getMapDetails)
 
     this.router.post('/:name/test', async (req: Request, resp: Response) => {
       await this.testService(req, resp);
     });
-    this.router.post('/:name/response', async (req: Request, resp: Response) => {
+
+    this.router.get('/:name/maps/:mapName', this.getMapDetails)
+    this.router.post('/:name/maps', async (req: Request, resp: Response) => {
       await this.addNewResponse(req, resp);
+    });
+    this.router.patch('/:name/maps', async (req: Request, resp: Response) => {
+      await this.modifyNewResponse(req, resp);
     });
   }
 }
