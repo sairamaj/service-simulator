@@ -53,6 +53,7 @@ function getConfig() {
     }
 
     if (current.app.provider == 'mongo') {
+        console.log(current.app.mongoDbConnection)
         if (current.app.mongoDbConnection === undefined || current.app.mongoDbConnection.length === 0) {
             console.error('provider is \"mongo\" but no connection string was specified. specify MONGODB_CONNECTION environment variable.')
             process.exit(-97)
