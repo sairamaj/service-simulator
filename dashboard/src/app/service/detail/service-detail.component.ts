@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../ApiService';
 import { Service } from '../../models/Service';
 import { Config } from '../Configuration';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-host.detail',
@@ -16,7 +17,7 @@ export class ServiceDetailComponent implements OnInit {
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _router: Router, private _hostService: ApiService) {
+    private _router: Router, private _hostService: ApiService, private _location: Location) {
     this.name = this._route.snapshot.paramMap.get('name');
   }
 
@@ -44,5 +45,9 @@ export class ServiceDetailComponent implements OnInit {
     let config = new Config();
     console.log(config.getProcessedRequests(this.name))
     this._router.navigate(['services/' + this.name + '/processedrequests']);
+  }
+
+  backClicked() {
+    this._location.back();
   }
 } 
