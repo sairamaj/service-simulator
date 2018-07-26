@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../ApiService';
 import { ActivatedRoute } from '@angular/router';
 import { ServiceResponseData } from '../../models/ServiceResponseData';
-
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-host-test',
@@ -18,7 +18,7 @@ export class ServiceTestComponent implements OnInit {
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _hostService: ApiService) {
+    private _hostService: ApiService, private _location: Location) {
     this.name = this._route.snapshot.paramMap.get('name')
     this.mapname = this._route.snapshot.paramMap.get('mapname')
   }
@@ -43,6 +43,10 @@ export class ServiceTestComponent implements OnInit {
     this._hostService.submitRequest(this.name, this.request)
       .subscribe(response => this.testResponse = response,
         error => this.errorMessage = <any>error)
+  }
+
+  backClicked() {
+    this._location.back();
   }
 
 }

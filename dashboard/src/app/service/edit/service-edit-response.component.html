@@ -1,6 +1,13 @@
 <!-- {{diagnostic}} -->
 
 <div class="container">
+
+    <div class="text-right">
+        <a class='btn btn-info ' (click)='backClicked()' style='width:80px'>
+            Back
+        </a>
+    </div>
+    
     <h1>{{title}}</h1>
     <form (ngSubmit)="onSubmit()" #HostNewresponse="ngForm">
         <button type="submit" class="btn btn-success" [disabled]="!HostNewresponse.form.valid">Submit</button>

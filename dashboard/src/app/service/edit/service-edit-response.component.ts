@@ -3,7 +3,7 @@ import { ApiService } from '../ApiService';
 import { ActivatedRoute } from '@angular/router';
 import { IResponseMap } from '../../models/IResponseMap';
 import { SimulatedResponseData } from '../../models/SimulatedResponseData';
-
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-host-newresponse',
@@ -24,7 +24,7 @@ export class ServiceEditResponseComponent implements OnInit {
     '',
     []);
   constructor(private _route: ActivatedRoute,
-    private _hostService: ApiService) {
+    private _hostService: ApiService, private _location: Location) {
     this.hostName = this._route.snapshot.paramMap.get('name');
     this.mapName = this._route.snapshot.paramMap.get('mapname');
     this.model.name = this.mapName;
@@ -55,4 +55,8 @@ export class ServiceEditResponseComponent implements OnInit {
   }
 
   get diagnostic() { return JSON.stringify(this.model); }
+
+  backClicked() {
+    this._location.back();
+  }
 }
