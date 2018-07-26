@@ -8,15 +8,41 @@ import app from '../src/App';
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('POST services with todays date in response', () => {
-
-    it('responds with service3-request1 with formatted today date', () => {
+describe('POST services with date formatting', () => {
+    it('responds with todays date in response', () => {
         return chai.request(app).post('/service3').send(' this is request_1 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 let date = new Date();
                 let formattedDate =  dateformat(new Date(), 'yyyy-MM-dd')
+                console.log(res["text"])
+                let response = JSON.parse(res["text"])
+                expect(response.dateofbirth).to.be.equal(formattedDate)
+            });
+    });
+
+    it('responds with 2 days after todays date in response', () => {
+        return chai.request(app).post('/service3').send(' this is request_2 data')
+            .then(res => {
+                expect(res.status).to.equal(200);
+                console.log(res.body)
+                var date = new Date()
+                var newDate = date.setDate(date.getDate() +2);
+                let formattedDate =  dateformat(newDate, 'yyyy-MM-dd')
+                console.log(res["text"])
+                let response = JSON.parse(res["text"])
+                expect(response.dateofbirth).to.be.equal(formattedDate)
+            });
+    });
+
+    it('responds with mm-dd-yyyy format  date in response', () => {
+        return chai.request(app).post('/service3').send(' this is request_3 data')
+            .then(res => {
+                expect(res.status).to.equal(200);
+                console.log(res.body)
+                var newDate = new Date()
+                let formattedDate =  dateformat(newDate, 'dd-mm-yyyy')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)

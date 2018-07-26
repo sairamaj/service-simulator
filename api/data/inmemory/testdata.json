@@ -52,6 +52,20 @@
                     "request_1"
                 ],
                 "response": "{ \"dateofbirth\" : \"{{date}}\"}"
+            },
+            {
+                "name": "request_2",
+                "matches": [
+                    "request_2"
+                ],
+                "response": "{ \"dateofbirth\" : \"{{date days=2}}\"}"
+            },
+            {
+                "name": "request_3",
+                "matches": [
+                    "request_3"
+                ],
+                "response": "{ \"dateofbirth\" : \"{{date format=\"dd-mm-yyyy\"}}\"}"
             }
         ]
         
