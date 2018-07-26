@@ -27,7 +27,7 @@ export class ServiceRouter {
             var serviceManager = ServiceManagerFactory.createServiceManager();
             var processInfo = await serviceManager.getResponse(serviceName, requestData);
             if (processInfo) {
-                processInfo.response = await new ResponseTransformer().transform(processInfo.response)
+                processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
                 serviceManager.logRequest(serviceName, new Date(), 200, processInfo);
                 res.status(200).
                     set({ 'content-type': 'text/xml; charset=utf-8' })

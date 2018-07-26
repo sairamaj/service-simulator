@@ -1,11 +1,13 @@
-[{
+[
+    {
         "name": "service1",
-        "config": [{
+        "config": [
+            {
                 "name": "request_1",
                 "matches": [
                     "request_1"
                 ],
-                "request" : "request_1 here",
+                "request": "request_1 here",
                 "response": "<xml>service1_response_1</xml>"
             },
             {
@@ -19,7 +21,8 @@
     },
     {
         "name": "service2",
-        "config": [{
+        "config": [
+            {
                 "name": "request_1_input1",
                 "matches": [
                     "request_1",
@@ -45,7 +48,7 @@
     },
     {
         "name": "service3",
-        "config" : [
+        "config": [
             {
                 "name": "request_1",
                 "matches": [
@@ -80,9 +83,15 @@
                     "request_5"
                 ],
                 "response": "{ \"number\" : \"{{random min=10 max=100}}\"}"
+            },
+            {
+                "name": "request_6",
+                "matches": [
+                    "request_6"
+                ],
+                "response": "{ \"val\" : \"{{request tags=\"<input>|</input>\"}}\"}"
             }
         ]
-        
     },
     {
         "name": "service4"
