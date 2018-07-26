@@ -66,6 +66,20 @@
                     "request_3"
                 ],
                 "response": "{ \"dateofbirth\" : \"{{date format=\"dd-mm-yyyy\"}}\"}"
+            },
+            {
+                "name": "request_4",
+                "matches": [
+                    "request_4"
+                ],
+                "response": "{ \"number\" : \"{{random min=1001}}\"}"
+            },
+            {
+                "name": "request_5",
+                "matches": [
+                    "request_5"
+                ],
+                "response": "{ \"number\" : \"{{random min=10 max=100}}\"}"
             }
         ]
         

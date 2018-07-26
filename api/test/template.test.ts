@@ -49,3 +49,25 @@ describe('POST services with date formatting', () => {
             });
     });
 });
+
+describe('POST services with random formatting', () => {
+    it('responds with random number in response', () => {
+        return chai.request(app).post('/service3').send(' this is request_4 data')
+            .then(res => {
+                expect(res.status).to.equal(200);
+                console.log(res["text"])
+                let response = JSON.parse(res["text"])
+                expect(response.number).to.be.greaterThan(1000)
+            });
+    });
+
+    it('responds with random number in response', () => {
+        return chai.request(app).post('/service3').send(' this is request_5 data')
+            .then(res => {
+                expect(res.status).to.equal(200);
+                console.log(res["text"])
+                let response = JSON.parse(res["text"])
+                expect(response.number).to.be.lessThan(100)
+            });
+    });    
+});

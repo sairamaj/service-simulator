@@ -22,6 +22,21 @@ export class ResponseTransformer {
             var formattedDate = dateformat(newDate, format)
             return formattedDate;    
         });
+
+        handlebars.registerHelper('random', function (context) {
+
+            var min = 0
+            if( context.hash["min"]){
+                min = context.hash['min']
+            }
+            var max = 1000000
+            if( context.hash['max']){
+                max = context.hash['max']
+            }
+       
+            var val = Math.floor(Math.random() * max) + min
+            return val;    
+        });        
     }
 
     public async transform(data: string): Promise<string> {
