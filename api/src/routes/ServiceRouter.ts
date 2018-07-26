@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ServiceManagerFactory } from "../providers/ServiceManagerFactory";
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { ProcessInfo } from '../model/ProcessInfo';
+import { ResponseTransformer } from '../transformers/ResponseTransformer';
 var debug = require('debug')('servicerouter')
 
 export class ServiceRouter {
@@ -26,6 +27,7 @@ export class ServiceRouter {
             var serviceManager = ServiceManagerFactory.createServiceManager();
             var processInfo = await serviceManager.getResponse(serviceName, requestData);
             if (processInfo) {
+                processInfo.response = await new ResponseTransformer().transform(processInfo.response)
                 serviceManager.logRequest(serviceName, new Date(), 200, processInfo);
                 res.status(200).
                     set({ 'content-type': 'text/xml; charset=utf-8' })

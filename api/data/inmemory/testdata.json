@@ -44,7 +44,17 @@
         ]
     },
     {
-        "name": "service3"
+        "name": "service3",
+        "config" : [
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "response": "{ \"dateofbirth\" : \"{{date}}\"}"
+            }
+        ]
+        
     },
     {
         "name": "service4"
