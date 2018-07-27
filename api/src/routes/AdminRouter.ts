@@ -1,8 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { ServiceManagerFactory } from '../providers/ServiceManagerFactory';
-import { MapDetail } from '../model/MapDetail';
-import { resolve } from 'path';
 import debugx = require('debug');
+import { Log } from '../model/Log';
 let debug = debugx('adminrouter');
 
 export class AdminRouter {
@@ -177,6 +176,15 @@ export class AdminRouter {
     });
   }
 
+  private async getLogs(req: Request): Promise<Log[]> {
+    debug('enter getLogs')
+    return new Promise<Log[]>((resolve, reject) => {
+      var logs = []
+      logs.push(new Log('error', 'some error'))
+      resolve(logs)
+    });
+  }
+
   /**
    * Take each handler, and attach to one of the Express.Router's
    * endpoints.
@@ -185,6 +193,7 @@ export class AdminRouter {
     this.router.get('/', this.getAll);
     this.router.get('/:name', this.getOne)
     this.router.get('/:name/processedrequests', this.getProcessedRequests)
+    this.router.get('/:name/logs', this.getLogs)
     this.router.get('/:name/processedrequests/:id', this.getProcessedRequestById)
     this.router.delete('/:name/processedrequests', this.deleteProcessedRequests)
 

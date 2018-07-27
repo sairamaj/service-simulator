@@ -1,4 +1,3 @@
-import * as path from 'path';
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
@@ -7,6 +6,7 @@ import ServiceRouter from './routes/ServiceRouter';
 import LogRouter from './routes/LogRouter';
 import * as mongoose from "mongoose";
 const config = require('./config');
+let debug = require('debug')('app')
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -19,6 +19,12 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
+
+
+    this.express.use((err: any, req, res, next) => {
+      debug('in error handler.')
+      res.status(500).send(err)
+    })
     this.mongoSetup();
   }
 
@@ -47,7 +53,7 @@ class App {
       next();
     });
 
-    // this interceptor is some of the hosts will append the additional info in the query. (fis: /fissignOnVS.signOnVSsoaphttps )
+    // this interceptor is some of the service will append the additional info in the query. (fis: /fissignOnVS.signOnVSsoaphttps )
     this.express.use(function (req, res, next) {
       if (req.url.indexOf('admin') >= 0) {
         next()
@@ -58,7 +64,7 @@ class App {
       req.url = '/' + parts[1]			// take only first part
       next();
     });
-    
+
     // this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
   }
@@ -66,6 +72,7 @@ class App {
   // Configure API endpoints.
   private routes(): void {
     let router = express.Router();
+    this.express.use('/api/v1/admin/logs', LogRouter);
     this.express.use('/api/v1/admin/services', AdminRouter);
     this.express.all("*", ServiceRouter);
   }

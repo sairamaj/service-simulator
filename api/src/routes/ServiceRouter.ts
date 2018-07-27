@@ -42,8 +42,7 @@ export class ServiceRouter {
         } catch (error) {
             debug('error:' + error)
             serviceManager.logRequest(serviceName, new Date(), 500, new ProcessInfo(requestData));
-            res.status(500)
-                .send(error);
+            next(error)
         }
     }
 
@@ -53,8 +52,8 @@ export class ServiceRouter {
      */
     init() {
         //   this.router.post('*', this.handle);
-        this.router.post('*', async (req: Request, resp: Response) => {
-            await this.handle(req, resp, null);
+        this.router.post('*', async (req: Request, resp: Response, next: NextFunction) => {
+            await this.handle(req, resp, next);
         });
     }
 

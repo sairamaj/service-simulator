@@ -101,7 +101,16 @@
         ]
     },
     {
-        "name": "service4"
+        "name": "service4",
+        "config":[
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "response": "{ \"date\" : \"{{date format=\"yyyymmdd\"}120000.000\"}"
+            }
+        ]
     },
     {
         "name": "service5"
