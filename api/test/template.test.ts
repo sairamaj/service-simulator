@@ -71,6 +71,7 @@ describe('POST services with random formatting', () => {
             });
     });    
 });
+
 describe('POST services with request variable formatting', () => {
     it('responds with value in request', () => {
         return chai.request(app).post('/service3').send(' this is <input>test value</input> request_6 data')
