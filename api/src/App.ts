@@ -25,7 +25,7 @@ class App {
   private mongoSetup(): void {
     if (config.app.provider === 'mongo') {
       mongoose.Promise = global.Promise;
-      mongoose.connect(config.app.mongoDbConnection,{useNewUrlParser: true});
+      mongoose.connect(config.app.mongoDbConnection, { useNewUrlParser: true });
     }
   }
 
@@ -44,6 +44,18 @@ class App {
     this.express.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
+
+    // this interceptor is some of the hosts will append the additional info in the query. (fis: /fissignOnVS.signOnVSsoaphttps )
+    this.express.use(function (req, res, next) {
+      if (req.url.indexOf('admin') >= 0) {
+        next()
+        return		// don't do any pre process for admin calls.
+      }
+
+      var parts = req.url.split('/')
+      req.url = '/' + parts[1]			// take only first part
       next();
     });
     

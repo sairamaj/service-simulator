@@ -90,6 +90,13 @@
                     "request_6"
                 ],
                 "response": "{ \"val\" : \"{{request tags=\"<input>|</input>\"}}\"}"
+            },
+            {
+                "name": "request_7",
+                "matches": [
+                    "request_7"
+                ],
+                "response": "{ \"date\" : \"{{date format=\"yyyymmdd\"}}120000.000\"}"
             }
         ]
     },

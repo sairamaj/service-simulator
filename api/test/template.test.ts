@@ -48,6 +48,20 @@ describe('POST services with date formatting', () => {
                 expect(response.dateofbirth).to.be.equal(formattedDate)
             });
     });
+
+    it('responds with yyyyymmdd format date with padded some extra data in response', () => {
+        return chai.request(app).post('/service3').send(' this is request_7 data')
+            .then(res => {
+                expect(res.status).to.equal(200);
+                console.log(res.body)
+                var newDate = new Date()
+                let formattedDate =  dateformat(newDate, 'yyyymmdd') + '120000.000'
+                console.log(res["text"])
+                let response = JSON.parse(res["text"])
+                expect(response.date).to.be.equal(formattedDate)
+            });
+    });
+
 });
 
 describe('POST services with random formatting', () => {
