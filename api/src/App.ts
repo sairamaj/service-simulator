@@ -5,6 +5,7 @@ import AdminRouter from './routes/AdminRouter';
 import ServiceRouter from './routes/ServiceRouter';
 import LogRouter from './routes/LogRouter';
 import * as mongoose from "mongoose";
+import { LogManager } from './providers/LogManager';
 const config = require('./config');
 let debug = require('debug')('app')
 
@@ -23,6 +24,7 @@ class App {
 
     this.express.use((err: any, req, res, next) => {
       debug('in error handler.')
+      LogManager.Log('error', '' + err)
       res.status(500).send(err)
     })
     this.mongoSetup();

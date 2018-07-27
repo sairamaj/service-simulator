@@ -1,4 +1,4 @@
-import { ServiceManager } from '../ServiceManager';
+import { ServiceManager } from './ServiceManager';
 import { Service } from '../model/Service';
 import { ServiceSchema } from '../model/ServiceSchema';
 import { ResponseSchema } from '../model/ResponseSchema';

@@ -1,4 +1,4 @@
-import { ServiceManager } from "../ServiceManager";
+import { ServiceManager } from "./ServiceManager";
 import { InMemoryProvider } from "./InMemoryProvider";
 import { ServicesFileProvider } from "./ServicesFileProvicer";
 import { MongoDbProvider } from "./MongoDbProvider";

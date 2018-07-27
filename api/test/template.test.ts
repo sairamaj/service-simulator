@@ -81,7 +81,7 @@ describe('POST services with random formatting', () => {
                 expect(res.status).to.equal(200);
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
-                expect(response.number).to.be.lessThan(100)
+                expect(response.number).to.be.lessThan(101)
             });
     });    
 });

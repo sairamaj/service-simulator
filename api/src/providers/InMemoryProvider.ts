@@ -1,4 +1,4 @@
-import { ServiceManager } from '../ServiceManager';
+import { ServiceManager } from './ServiceManager';
 import { Service } from '../model/Service';
 import { ProcessInfo } from '../model/ProcessInfo';
 import { ProcessedRequest } from '../model/ProcessedRequest';

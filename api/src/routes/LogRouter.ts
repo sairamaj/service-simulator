@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ServiceManagerFactory } from '../providers/ServiceManagerFactory';
 import { Log } from '../model/Log';
 import debugx = require('debug');
+import { LogManager } from '../providers/LogManager';
 let debug = debugx('logrouter');
 
 export class LogRouter {
@@ -19,12 +20,8 @@ export class LogRouter {
    * GET all log requests.
    */
   public async getAll(req: Request, res: Response, next: NextFunction) {
-    next(new Error('in log router....'))
-    return
     debug('enter getAll')
-    var logs = []
-    logs.push(new Log('error', 'some error'))
-    res.status(200).send(logs)
+    res.status(200).send(await LogManager.getLogs())
   }
 
   public async deleteAll(req: Request, res: Response) {

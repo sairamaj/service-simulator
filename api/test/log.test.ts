@@ -11,19 +11,17 @@ describe('Invalid template in response', () => {
         return chai.request(app).post('/service4').send(' this is request_1 data')
             .catch(err => {
                 expect(500).to.equal(err.status);
-                // should have logs.
-                // return chai.request(app).get('/api/v1/admin/logs/')
-                // .then(res =>{
-                //     expect(res.status).to.equal(200);
-                //     expect(res).to.be.json;
-                //     expect(res.body).to.be.an('array');
-                //     let logs = res.body
-                //     expect(logs.length).to.be.greaterThan(0)
-                //     // find log
-                //     var errorLog = logs.find(l=> l.type == 'error')
-                //     console.log(errorLog)
-                //     expect(errorLog.message).to.be.equal('some error')
-                // })
+                return chai.request(app).get('/api/v1/admin/logs/')
+                .then(res =>{
+                    expect(res.status).to.equal(200);
+                    expect(res).to.be.json;
+                    expect(res.body).to.be.an('array');
+                    let logs = res.body
+                    expect(logs.length).to.be.greaterThan(0)
+                    // find log
+                    var errorLog = logs.find(l=> l.type == 'error')
+                    expect(errorLog.message).to.be.contain('Error: Parse error on line 1:\n...te format')
+                })
             });
     });
 });

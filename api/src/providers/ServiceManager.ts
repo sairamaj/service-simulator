@@ -1,7 +1,7 @@
-import { Service } from './model/Service';
-import { ProcessInfo } from './model/ProcessInfo';
-import { ProcessedRequest } from './model/ProcessedRequest';
-import { MapDetail } from './model/MapDetail';
+import { Service } from '../model/Service';
+import { ProcessInfo } from '../model/ProcessInfo';
+import { ProcessedRequest } from '../model/ProcessedRequest';
+import { MapDetail } from '../model/MapDetail';
 
 export interface ServiceManager {
     getServices(): Promise<Service[]>;
