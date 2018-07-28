@@ -15,7 +15,7 @@ describe('POST services with date formatting', () => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 let date = new Date();
-                let formattedDate =  dateformat(new Date(), 'yyyy-MM-dd')
+                let formattedDate = dateformat(new Date(), 'yyyy-MM-dd')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)
@@ -28,8 +28,8 @@ describe('POST services with date formatting', () => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 var date = new Date()
-                var newDate = date.setDate(date.getDate() +2);
-                let formattedDate =  dateformat(newDate, 'yyyy-MM-dd')
+                var newDate = date.setDate(date.getDate() + 2);
+                let formattedDate = dateformat(newDate, 'yyyy-MM-dd')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)
@@ -42,7 +42,7 @@ describe('POST services with date formatting', () => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 var newDate = new Date()
-                let formattedDate =  dateformat(newDate, 'dd-mm-yyyy')
+                let formattedDate = dateformat(newDate, 'dd-mm-yyyy')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)
@@ -55,7 +55,7 @@ describe('POST services with date formatting', () => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 var newDate = new Date()
-                let formattedDate =  dateformat(newDate, 'yyyymmdd') + '120000.000'
+                let formattedDate = dateformat(newDate, 'yyyymmdd') + '120000.000'
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.date).to.be.equal(formattedDate)
@@ -83,7 +83,7 @@ describe('POST services with random formatting', () => {
                 let response = JSON.parse(res["text"])
                 expect(response.number).to.be.lessThan(101)
             });
-    });    
+    });
 });
 
 describe('POST services with request variable formatting', () => {

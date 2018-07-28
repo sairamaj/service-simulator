@@ -11,12 +11,14 @@ import { ServiceEditResponseComponent } from './service/edit/service-edit-respon
 import { XmlPipe } from './XmlPipe';
 import { ServiceProcessedRequestComponent } from './service/processedrequests/service-processedrequests.component';
 import { ServiceViewProcessedRequestComponent } from './service/processedrequests/service-view-processedrequest/service-view-processedrequest.component';
+import { ServiceLogsComponent } from './service/logs/service-logs.components';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ServiceListComponent,
+    ServiceLogsComponent,
     ServiceDetailComponent,
     ServiceTestComponent,
     ServiceEditResponseComponent,
@@ -29,6 +31,7 @@ import { ServiceViewProcessedRequestComponent } from './service/processedrequest
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
+      { path: 'logs', component: ServiceLogsComponent },
       { path: 'services', component: ServiceListComponent },
       { path: 'hosts/:name/newresponse', component: ServiceEditResponseComponent },
       { path: 'hosts/:name/newresponse/:mapname', component: ServiceEditResponseComponent },

@@ -9,6 +9,7 @@ import { Service } from '../models/Service';
 import { ProcessedRequest } from '../models/ProcessedRequest';
 import { ServiceResponseData } from '../models/ServiceResponseData';
 import { SimulatedResponseData } from '../models/SimulatedResponseData';
+import { Log } from '../models/Log';
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ApiService {
     }
 
     getServices(): Observable<Service[]> {
-        return this._http.get<Service[]>(this.Configuration.adminApiUrl).pipe(
+        return this._http.get<Service[]>(this.Configuration.adminServicesApiUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(this.handleError), );
     }
@@ -79,6 +80,13 @@ export class ApiService {
         const servedRequestUrl = this.Configuration.getProcessedRequest(serviceName, id);
         return this._http.get<ProcessedRequest>(servedRequestUrl).pipe(
             tap(data => console.log('getLastRequests:')),
+            catchError(this.handleError), );
+    }
+
+    getLogs() : Observable<Log[]>{
+        const logRequestUrl = this.Configuration.getLogRequestUrl();
+        return this._http.get<Log[]>(logRequestUrl).pipe(
+            tap(data => console.log('getLog:')),
             catchError(this.handleError), );
     }
 

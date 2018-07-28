@@ -3,7 +3,6 @@
 import * as http from 'http';
 import * as debug from 'debug';
 var config = require('./config')
-
 import App from './App';
 
 debug('ts-express:server');
@@ -48,3 +47,4 @@ function onListening(): void {
   console.log(`Listening on ${bind}`);
   console.log(`provider: ` + config.app.provider);
 }
+

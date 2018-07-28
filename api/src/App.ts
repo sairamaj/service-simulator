@@ -6,6 +6,7 @@ import ServiceRouter from './routes/ServiceRouter';
 import LogRouter from './routes/LogRouter';
 import * as mongoose from "mongoose";
 import { LogManager } from './providers/LogManager';
+import { EchoStream } from './LoggerStream';
 const config = require('./config');
 let debug = require('debug')('app')
 
@@ -24,7 +25,7 @@ class App {
 
     this.express.use((err: any, req, res, next) => {
       debug('in error handler.')
-      LogManager.Log('error', '' + err)
+      LogManager.log('error', '' + err)
       res.status(500).send(err)
     })
     this.mongoSetup();
@@ -41,7 +42,9 @@ class App {
   private middleware(): void {
 
     this.express.use(express.static('dashboard/dist/dashboard'))
-    this.express.use(logger('dev'));
+    this.express.use(logger('dev', {
+      stream: new EchoStream()
+    }));
 
     this.express.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");

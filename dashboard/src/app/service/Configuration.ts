@@ -1,16 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 
 export class Config {
-    baseUrl: string;
-    adminApiUrl: string;
+    baseUrl: string
+    adminUrl: string
+    adminServicesApiUrl: string;
     constructor() {
         this.baseUrl = 'http://localhost:3000';
         //this.baseUrl = ''
-        this.adminApiUrl = this.baseUrl + '/api/v1/admin/services';
+        this.adminServicesApiUrl = this.baseUrl + '/api/v1/admin/services'
+        this.adminUrl = this.baseUrl + '/api/v1/admin/'
     }
 
     getServiceDetailsUrl(name: string): string {
-        return this.adminApiUrl + '/' + name;
+        return this.adminServicesApiUrl + '/' + name;
     }
 
     getHostResponseFileUrl(name: string, file: string): string {
@@ -22,11 +24,11 @@ export class Config {
     }
 
     getHostSimulatorUrl(name: string): string {
-        return this.adminApiUrl + '/' + name + '/test'
+        return this.adminServicesApiUrl + '/' + name + '/test'
     }
 
     getAddNewResponseUrl(name: string): string {
-        return this.adminApiUrl + '/' + name + '/maps';
+        return this.adminServicesApiUrl + '/' + name + '/maps';
     }
 
     getLastRequestUrl(name: string): string {
@@ -34,15 +36,19 @@ export class Config {
     }
 
     getMapDetailUrl(serviceName: string, mapName: string) {
-        return this.adminApiUrl + '/' + serviceName + '/maps/' + mapName;
+        return this.adminServicesApiUrl + '/' + serviceName + '/maps/' + mapName;
     }
 
     getProcessedRequests(serviceName: string) {
-        return this.adminApiUrl + '/' + serviceName + '/processedrequests';
+        return this.adminServicesApiUrl + '/' + serviceName + '/processedrequests';
     }
 
     getProcessedRequest(serviceName: string, id: string) {
-        return this.adminApiUrl + '/' + serviceName + '/processedrequests/' + id;
+        return this.adminServicesApiUrl + '/' + serviceName + '/processedrequests/' + id;
+    }
+
+    getLogRequestUrl() {
+        return this.adminUrl + 'logs';
     }
 }
 

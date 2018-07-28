@@ -11,22 +11,25 @@
 
         <table class='table'>
             <thead>
-                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Message</th>
             </thead>
 
             <tbody>
-                <tr *ngFor='let service of services'>
+                <tr *ngFor='let log of logs'>
                     <td>
-                        <a [routerLink]="['/services', service.name]">
-                            {{ service.name }}
-                        </a>
+                        {{ log.date | date:'dd/MM HH:mm' }}
                     </td>
-                </tr>
+                    <td>
+                        {{log.type}}
+                    </td>
+                    <td>
+                            {{log.message}}
+                        </td>
+                    </tr>
             </tbody>
         </table>
     </div>
 
 </div>
-<a class='btn btn-info' (click)='onLogs()' style='width:160px'>
-        Logs
-    </a>
