@@ -6,7 +6,7 @@ import ServiceRouter from './routes/ServiceRouter';
 import LogRouter from './routes/LogRouter';
 import * as mongoose from "mongoose";
 import { LogManager } from './providers/LogManager';
-import { EchoStream } from './LoggerStream';
+import { LoggerStream } from './LoggerStream';
 const config = require('./config');
 let debug = require('debug')('app')
 
@@ -42,8 +42,8 @@ class App {
   private middleware(): void {
 
     this.express.use(express.static('dashboard/dist/dashboard'))
-    this.express.use(logger('dev', {
-      stream: new EchoStream()
+    this.express.use(logger(':method :url :status :res[content-length] - :response-time ms', {
+      stream: new LoggerStream()
     }));
 
     this.express.use(function (req, res, next) {
