@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HostServedrequestsComponent } from './service-processedrequests.component';
+import { ServiceProcessedRequestComponent } from './service-processedrequests.component';
 
-describe('HostLastrequestsComponent', () => {
-  let component: HostServedrequestsComponent;
-  let fixture: ComponentFixture<HostServedrequestsComponent>;
+describe('ServiceLastrequestsComponent', () => {
+  let component: ServiceProcessedRequestComponent;
+  let fixture: ComponentFixture<ServiceProcessedRequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HostServedrequestsComponent ]
+      declarations: [ ServiceProcessedRequestComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HostServedrequestsComponent);
+    fixture = TestBed.createComponent(ServiceProcessedRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

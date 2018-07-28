@@ -5,7 +5,7 @@ import { Service } from '../../models/Service';
 import { Router } from '@angular/router';
 @Component(
     {
-        selector: 'sim-hosts',
+        selector: 'sim-services',
         templateUrl: './service-list.component.html',
         styleUrls: ['./service-list.component.css']
     }
@@ -18,12 +18,12 @@ export class ServiceListComponent implements OnInit {
     pageTitle = 'Services';
 
     ngOnInit(): void {
-        this._hostService.getServices()
+        this._apiService.getServices()
             .subscribe(result => this.services = result,
                 error => this.errorMessage = <any>error)
     }
 
-    constructor(private _hostService: ApiService, 
+    constructor(private _apiService: ApiService, 
         private _http: HttpClient,
         private _router: Router,) {
     }

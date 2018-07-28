@@ -7,7 +7,7 @@ import { Location } from '@angular/common'
 
 @Component(
     {
-        selector: 'sim-hosts',
+        selector: 'sim-services',
         templateUrl: './service-logs.component.html',
         styleUrls: ['./service-logs.component.css']
     }
@@ -20,12 +20,12 @@ export class ServiceLogsComponent implements OnInit {
     pageTitle = 'Logs';
 
     ngOnInit(): void {
-        this._hostService.getLogs()
+        this._apiService.getLogs()
             .subscribe(result => this.logs = result,
                 error => this.errorMessage = <any>error)
     }
 
-    constructor(private _hostService: ApiService,
+    constructor(private _apiService: ApiService,
         private _http: HttpClient,
         private _router: Router,
         private _location: Location) {

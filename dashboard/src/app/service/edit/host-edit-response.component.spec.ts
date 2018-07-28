@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ServiceEditResponseComponent } from './service-edit-response.component';
 
-describe('HostNewresponseComponent', () => {
+describe('ServiceNewresponseComponent', () => {
   let component: ServiceEditResponseComponent;
   let fixture: ComponentFixture<ServiceEditResponseComponent>;
 

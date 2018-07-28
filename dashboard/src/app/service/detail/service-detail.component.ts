@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../ApiService';
 import { Service } from '../../models/Service';
-import { Config } from '../Configuration';
 import { Location } from '@angular/common'
 
 @Component({
-  selector: 'app-host.detail',
+  selector: 'app-service.detail',
   templateUrl: './service-detail.component.html',
   styleUrls: ['./service-detail.component.css']
 })
@@ -18,27 +17,27 @@ export class ServiceDetailComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
     private _router: Router,
-    private _hostService: ApiService,
+    private _apiService: ApiService,
     private _location: Location) {
     this.name = this._route.snapshot.paramMap.get('name');
   }
 
   ngOnInit(): void {
-    this._hostService.getServiceDetails(this.name)
+    this._apiService.getServiceDetails(this.name)
       .subscribe(service => this.service = service,
         error => this.errorMessage = <any>error);
   }
 
   onTest(requestFile: string): void {
-    this._router.navigate(['/hosts/' + this.name + '/' + requestFile + '/test']);
+    this._router.navigate(['/services/' + this.name + '/' + requestFile + '/test']);
   }
 
   onEdit(mapName: string): void {
-    this._router.navigate(['hosts/' + this.name + '/newresponse/' + mapName]);
+    this._router.navigate(['services/' + this.name + '/newresponse/' + mapName]);
   }
 
   onNew(): void {
-    this._router.navigate(['hosts/' + this.name + '/newresponse']);
+    this._router.navigate(['services/' + this.name + '/newresponse']);
 
   }
 

@@ -5,7 +5,7 @@ import { ProcessedRequest } from '../../../models/ProcessedRequest';
 import { Location } from '@angular/common'
 
 @Component({
-  selector: 'app-host-viewservedrequests',
+  selector: 'app-service-viewservedrequests',
   templateUrl: './service-view-processedrequest.component.html',
   styleUrls: ['./service-view-processedrequest.component.css']
 })
@@ -15,7 +15,7 @@ export class ServiceViewProcessedRequestComponent implements OnInit {
   name: string;
   id: string;
   constructor(private _route: ActivatedRoute,
-    private _hostService: ApiService
+    private _apiService: ApiService
     ,private _location: Location) {
     this.name = this._route.snapshot.paramMap.get('name')
     this.id = this._route.snapshot.paramMap.get('id')
@@ -23,7 +23,7 @@ export class ServiceViewProcessedRequestComponent implements OnInit {
 
   servedRequest: ProcessedRequest;
   ngOnInit(): void {
-    this._hostService.getProcessRequest(this.name, this.id)
+    this._apiService.getProcessRequest(this.name, this.id)
       .subscribe(servedRequest => this.servedRequest = servedRequest,
         error => this.errorMessage = <any>error)
   }

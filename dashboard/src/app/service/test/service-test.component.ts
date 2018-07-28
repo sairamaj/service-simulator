@@ -6,7 +6,7 @@ import { ServiceResponseData } from '../../models/ServiceResponseData';
 import { Location } from '@angular/common'
 
 @Component({
-  selector: 'app-host-test',
+  selector: 'app-service-test',
   templateUrl: './service-test.component.html',
   styleUrls: ['./service-test.component.css']
 })
@@ -18,7 +18,7 @@ export class ServiceTestComponent implements OnInit {
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _hostService: ApiService, private _location: Location) {
+    private _apiService: ApiService, private _location: Location) {
     this.name = this._route.snapshot.paramMap.get('name')
     this.mapname = this._route.snapshot.paramMap.get('mapname')
   }
@@ -30,7 +30,7 @@ export class ServiceTestComponent implements OnInit {
     this._request = value;
   }
   ngOnInit() {
-    this._hostService.getMapDetail(this.name, this.mapname)
+    this._apiService.getMapDetail(this.name, this.mapname)
       .subscribe(mapDetail =>
         this.request = mapDetail.request,
         error => this.errorMessage = <any>error)
@@ -40,7 +40,7 @@ export class ServiceTestComponent implements OnInit {
     console.log('submitting...')
     this.errorMessage = null
     this.testResponse = null
-    this._hostService.submitRequest(this.name, this.request)
+    this._apiService.submitRequest(this.name, this.request)
       .subscribe(response => this.testResponse = response,
         error => this.errorMessage = <any>error)
   }

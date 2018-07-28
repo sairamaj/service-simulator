@@ -6,7 +6,7 @@ import { SimulatedResponseData } from '../../models/SimulatedResponseData';
 import { Location } from '@angular/common'
 
 @Component({
-  selector: 'app-host-newresponse',
+  selector: 'app-service-newresponse',
   templateUrl: './service-edit-response.component.html',
   styleUrls: ['./service-edit-response.component.css']
 })
@@ -14,7 +14,7 @@ export class ServiceEditResponseComponent implements OnInit {
   title: string;
   errorMessage: string;
   statusMessage: string;
-  hostName: string;
+  serviceName: string;
   mapName: string;
   responseMaps: IResponseMap[];
   model = new SimulatedResponseData(
@@ -24,14 +24,14 @@ export class ServiceEditResponseComponent implements OnInit {
     '',
     []);
   constructor(private _route: ActivatedRoute,
-    private _hostService: ApiService, private _location: Location) {
-    this.hostName = this._route.snapshot.paramMap.get('name');
+    private _apiService: ApiService, private _location: Location) {
+    this.serviceName = this._route.snapshot.paramMap.get('name');
     this.mapName = this._route.snapshot.paramMap.get('mapname');
     this.model.name = this.mapName;
     this.title = 'Create new response map';
     if (this.mapName !== null) {
       this.title = 'Edit ' + this.mapName + ' map';
-      this._hostService.getMapDetail(this.hostName, this.mapName)
+      this._apiService.getMapDetail(this.serviceName, this.mapName)
         .subscribe(mapDetail => {
           this.model.matchString = mapDetail.matches.join();
           this.model.request = mapDetail.request;
@@ -49,7 +49,7 @@ export class ServiceEditResponseComponent implements OnInit {
     this.errorMessage = '';
     this.model.matches = [];
     this.model.matchString.split(',').forEach(m => { this.model.matches.push(m); });
-    this._hostService.addNewResponse(this.hostName, this.model)
+    this._apiService.addNewResponse(this.serviceName, this.model)
       .subscribe(msg => this.statusMessage = JSON.stringify(msg),
         error => this.errorMessage = <any>error);
   }

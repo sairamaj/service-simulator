@@ -32,29 +32,15 @@ export class ApiService {
             catchError(this.handleError), );
     }
 
-    getHostResponseFileContent(name: string, file: string): Observable<string> {
-        const responseInfoUrl = this.Configuration.getHostResponseFileUrl(name, file);
-        return this._http.get<string>(responseInfoUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(this.handleError), );
-    }
-
-    getHostRequestFileContent(name: string, mapName: string): Observable<string> {
-        const requestInfoUrl = this.Configuration.getHostRequestFileUrl(name, mapName);
-        return this._http.get<string>(requestInfoUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(this.handleError), );
-    }
-
-    submitRequest(host: string, request: string): Observable<ServiceResponseData> {
-        const requestProcessingUrl = this.Configuration.getHostSimulatorUrl(host);
+    submitRequest(service: string, request: string): Observable<ServiceResponseData> {
+        const requestProcessingUrl = this.Configuration.getServiceSimulatorUrl(service);
         return this._http.post<ServiceResponseData>(requestProcessingUrl, request)
             .pipe(tap(data => console.log('received:' + data.code)),
                 catchError(this.handleError));
     }
 
-    addNewResponse(hostName: string, info: SimulatedResponseData): Observable<any> {
-        const addUrl = this.Configuration.getAddNewResponseUrl(hostName);
+    addNewResponse(service: string, info: SimulatedResponseData): Observable<any> {
+        const addUrl = this.Configuration.getAddNewResponseUrl(service);
         console.log('posting to:' + addUrl);
         console.log('adding info:' + JSON.stringify(info));
         return this._http.post<string>(addUrl, info)
@@ -62,22 +48,22 @@ export class ApiService {
                 catchError(this.handleError));
     }
 
-    getMapDetail(hostName: string, mapName: string): Observable<MapDetail> {
-        const mapDetailUrl = this.Configuration.getMapDetailUrl(hostName, mapName);
+    getMapDetail(service: string, mapName: string): Observable<MapDetail> {
+        const mapDetailUrl = this.Configuration.getMapDetailUrl(service, mapName);
         return this._http.get<MapDetail>(mapDetailUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(this.handleError), );
     }
 
-    getLastRequests(hostName): Observable<ProcessedRequest[]> {
-        const servedRequestUrl = this.Configuration.getProcessedRequests(hostName);
+    getLastRequests(service): Observable<ProcessedRequest[]> {
+        const servedRequestUrl = this.Configuration.getProcessedRequests(service);
         return this._http.get<ProcessedRequest[]>(servedRequestUrl).pipe(
             tap(data => console.log('getLastRequests:')),
             catchError(this.handleError), );
     }
 
-    getProcessRequest(serviceName, id): Observable<ProcessedRequest> {
-        const servedRequestUrl = this.Configuration.getProcessedRequest(serviceName, id);
+    getProcessRequest(service, id): Observable<ProcessedRequest> {
+        const servedRequestUrl = this.Configuration.getProcessedRequest(service, id);
         return this._http.get<ProcessedRequest>(servedRequestUrl).pipe(
             tap(data => console.log('getLastRequests:')),
             catchError(this.handleError), );

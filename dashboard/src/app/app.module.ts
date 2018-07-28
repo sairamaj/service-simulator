@@ -33,9 +33,9 @@ import { ServiceLogsComponent } from './service/logs/service-logs.components';
     RouterModule.forRoot([
       { path: 'logs', component: ServiceLogsComponent },
       { path: 'services', component: ServiceListComponent },
-      { path: 'hosts/:name/newresponse', component: ServiceEditResponseComponent },
-      { path: 'hosts/:name/newresponse/:mapname', component: ServiceEditResponseComponent },
-      { path: 'hosts/:name/:mapname/test', component: ServiceTestComponent },
+      { path: 'services/:name/newresponse', component: ServiceEditResponseComponent },
+      { path: 'services/:name/newresponse/:mapname', component: ServiceEditResponseComponent },
+      { path: 'services/:name/:mapname/test', component: ServiceTestComponent },
       { path: 'services/:name', component: ServiceDetailComponent },
       { path: 'services/:name/processedrequests', component: ServiceProcessedRequestComponent },
       { path: 'services/:name/processedrequests/:id', component: ServiceViewProcessedRequestComponent },

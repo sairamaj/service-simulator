@@ -9,8 +9,8 @@
     </div>
     
     <h1>{{title}}</h1>
-    <form (ngSubmit)="onSubmit()" #HostNewresponse="ngForm">
-        <button type="submit" class="btn btn-success" [disabled]="!HostNewresponse.form.valid">Submit</button>
+    <form (ngSubmit)="onSubmit()" #ServiceNewresponse="ngForm">
+        <button type="submit" class="btn btn-success" [disabled]="!ServiceNewresponse.form.valid">Submit</button>
 
         <div *ngIf='errorMessage' class='alert alert-danger'>
             Error: {{ errorMessage }}
@@ -64,7 +64,7 @@
             {{ statusMessage }}
         </div>
 
-        <button type="submit" class="btn btn-success" [disabled]="!HostNewresponse.form.valid">Submit</button>
+        <button type="submit" class="btn btn-success" [disabled]="!ServiceNewresponse.form.valid">Submit</button>
     </form>
 
 

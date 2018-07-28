@@ -15,15 +15,15 @@ export class Config {
         return this.adminServicesApiUrl + '/' + name;
     }
 
-    getHostResponseFileUrl(name: string, file: string): string {
+    getServiceResponseFileUrl(name: string, file: string): string {
         return this.baseUrl + '/admin/api/hosts/' + name + '/details/response/' + file;
     }
 
-    getHostRequestFileUrl(name: string, mapName: string): string {
+    getServiceRequestFileUrl(name: string, mapName: string): string {
         return this.baseUrl + '/admin/api/hosts/' + name + '/details/request/' + mapName;
     }
 
-    getHostSimulatorUrl(name: string): string {
+    getServiceSimulatorUrl(name: string): string {
         return this.adminServicesApiUrl + '/' + name + '/test'
     }
 
@@ -56,13 +56,5 @@ export class Configuration {
     Config: Config;
 
     constructor(private _http: HttpClient) {
-        console.log('before get...');
-        // this._http.get("./assets/config.json")
-        //     .subscribe(res => {
-        //         console.log('in res:' + res)
-        //         this.Config = <Config>res
-        //         console.log('getHostUrl:' + this.Config.getHostsUrl)
-        //     })
-        console.log('after  get...');
     }
 }
