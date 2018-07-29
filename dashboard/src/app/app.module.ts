@@ -1,3 +1,4 @@
+import { SortByPipe } from './pipes/SortPipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { ServiceListComponent } from './service/list/service-list.components';
 import { ServiceDetailComponent } from './service/detail/service-detail.component';
 import { ServiceTestComponent } from './service/test/service-test.component';
 import { ServiceEditResponseComponent } from './service/edit/service-edit-response.component';
-import { XmlPipe } from './XmlPipe';
+import { XmlPipe } from './pipes/XmlPipe';
 import { ServiceProcessedRequestComponent } from './service/processedrequests/service-processedrequests.component';
 import { ServiceViewProcessedRequestComponent } from './service/processedrequests/service-view-processedrequest/service-view-processedrequest.component';
 import { ServiceLogsComponent } from './service/logs/service-logs.components';
@@ -24,7 +25,8 @@ import { ServiceLogsComponent } from './service/logs/service-logs.components';
     ServiceEditResponseComponent,
     ServiceProcessedRequestComponent,
     ServiceViewProcessedRequestComponent,
-    XmlPipe
+    XmlPipe,
+    SortByPipe
   ],
   imports: [
     BrowserModule,

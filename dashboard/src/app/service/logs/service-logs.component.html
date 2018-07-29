@@ -2,7 +2,6 @@
     Error: {{ errorMessage }}
 </div>
 
-
 <div class='panel panel-primary'>
     <div class='panel-heading'>
         {{pageTitle}}
@@ -17,7 +16,7 @@
             </thead>
 
             <tbody>
-                <tr *ngFor='let log of logs'>
+                <tr *ngFor="let log of logs | sortBy: 'date' : true">
                     <td>
                         {{ log.date | date:'dd/MM HH:mm' }}
                     </td>
