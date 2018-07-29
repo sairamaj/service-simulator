@@ -3,7 +3,7 @@ import { Service } from '../model/Service';
 import { ProcessInfo } from '../model/ProcessInfo';
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
-import { LoggerIntance } from './LoggerIntance';
+import { InMemoryProcessedRequestContainer } from './InMemoryProcessedRequestContainer';
 import * as path from 'path';
 const debug = require('debug')('inmemoryprovider')
 
@@ -115,7 +115,7 @@ export class InMemoryProvider implements ServiceManager {
     public async logRequest(name: string, date: Date, status: number, processInfo: ProcessInfo): Promise<boolean> {
         debug('logRequest.enter')
         return new Promise<boolean>((resolve) => {
-            LoggerIntance.getInstance().add(new ProcessedRequest(date, status, processInfo.request, processInfo.response, processInfo.matches))
+            InMemoryProcessedRequestContainer.add(new ProcessedRequest(date, status, processInfo.request, processInfo.response, processInfo.matches))
             resolve(true);
         });
     }
@@ -124,7 +124,7 @@ export class InMemoryProvider implements ServiceManager {
         debug('getProcessedRequests.enter')
         return new Promise<ProcessedRequest[]>((resolve) => {
             var counter = 0
-            var logs = LoggerIntance.getInstance().getLogs();
+            var logs = InMemoryProcessedRequestContainer.getLogs();
             logs.forEach(l => {
                 counter++;
                 l.id = counter.toString()
@@ -136,7 +136,7 @@ export class InMemoryProvider implements ServiceManager {
     public getProcessedRequest(name: string, id: string): Promise<ProcessedRequest> {
         debug('enter getProcessedRequest: ' + id)
         return new Promise<ProcessedRequest>((resolve, reject) => {
-            var logs = LoggerIntance.getInstance().getLogs();
+            var logs = InMemoryProcessedRequestContainer.getLogs();
             debug('logs length' + logs.length)
             try {
                 let index = +id - 1
@@ -154,7 +154,7 @@ export class InMemoryProvider implements ServiceManager {
 
     public async clearProcessedRequests(name: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
-            LoggerIntance.getInstance().clear();
+            InMemoryProcessedRequestContainer.clear();
             resolve(true);
         });
     }
