@@ -1,7 +1,7 @@
 import { MapDetail } from '../../models/MapDetail';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../ApiService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceResponseData } from '../../models/ServiceResponseData';
 import { Location } from '@angular/common'
 
@@ -18,7 +18,9 @@ export class ServiceTestComponent implements OnInit {
   errorMessage: string;
 
   constructor(private _route: ActivatedRoute,
-    private _apiService: ApiService, private _location: Location) {
+    private _apiService: ApiService, 
+    private _location: Location,
+    private _router: Router,) {
     this.name = this._route.snapshot.paramMap.get('name')
     this.mapname = this._route.snapshot.paramMap.get('mapname')
   }
@@ -49,4 +51,7 @@ export class ServiceTestComponent implements OnInit {
     this._location.back();
   }
 
+  logsClicked() {
+    this._router.navigate(['/logs']);
+  }
 }

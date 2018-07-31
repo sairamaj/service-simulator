@@ -3,6 +3,9 @@
 </div>
 
 <div class="text-right">
+    <a class='btn btn-info ' (click)='logsClicked()' style='width:80px'>
+        Logs
+    </a> &nbsp;
     <a class='btn btn-info ' (click)='backClicked()' style='width:80px'>
         Back
     </a>
@@ -25,7 +28,7 @@
                 <tr>
                     <td>
                         <div class="form-group">
-                          <textarea class="form-control" [ngModel]="request | xml" (ngModelChange)="request=$event" name="inputField" rows="35" cols="60">
+                            <textarea class="form-control" [ngModel]="request | xml" (ngModelChange)="request=$event" name="inputField" rows="35" cols="60">
                             </textarea>
                         </div>
                     </td>
@@ -34,21 +37,21 @@
                     </td>
                     <td>
                         <tbody>
-                                <tr>
-                                        <div class="form-group">
-                                                <textarea class="form-control" rows="1" cols="60">
+                            <tr>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="1" cols="60">
                                                     {{testResponse.status}}
                                                   </textarea>
-                                            </div>
-        
-                                </tr>
-                                <tr>
-                                    <div class="form-group">
-                                            <textarea class="form-control" rows="1" cols="60">
+                                </div>
+
+                            </tr>
+                            <tr>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="1" cols="60">
                                                 {{testResponse.matches}}
                                               </textarea>
-                                        </div>
-    
+                                </div>
+
                             </tr>
                             <tr>
                                 <td>
