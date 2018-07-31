@@ -35,7 +35,7 @@ describe('POST services', () => {
   });
 
   it('responds with service2 service', () => {
-    return chai.request(app).post('/service2').send('this is request_1 data')
+    return chai.request(app).post('/service2_multiple_matches').send('this is request_1 data')
       .then(res => {
         expect(res.status).to.equal(200);
         expect('<xml>service2_response_1</xml>').equal(res['text'])
@@ -43,7 +43,7 @@ describe('POST services', () => {
   });
 
   it('responds with service2 service with multiple matches', () => {
-    return chai.request(app).post('/service2').send('this is request_1 with input1')
+    return chai.request(app).post('/service2_multiple_matches').send('this is request_1 with input1')
       .then(res => {
         expect(res.status).to.equal(200);
         expect('<xml>service2_response_1_with_input1</xml>').equal(res['text'])

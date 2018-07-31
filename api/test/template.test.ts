@@ -9,13 +9,13 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 describe('POST services with date formatting', () => {
-    it('responds with todays date in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_1 data')
+    it ('responds with todays date in response', () => {
+        return chai.request(app).post('/service3_with_dynamic_dates').send(' this is request_1 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 let date = new Date();
-                let formattedDate = dateformat(new Date(), 'yyyy-MM-dd')
+                let formattedDate = dateformat(new Date(), 'yyyy-mm-dd')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)
@@ -23,13 +23,13 @@ describe('POST services with date formatting', () => {
     });
 
     it('responds with 2 days after todays date in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_2 data')
+        return chai.request(app).post('/service3_with_dynamic_dates').send(' this is request_2 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
                 var date = new Date()
                 var newDate = date.setDate(date.getDate() + 2);
-                let formattedDate = dateformat(newDate, 'yyyy-MM-dd')
+                let formattedDate = dateformat(newDate, 'yyyy-mm-dd')
                 console.log(res["text"])
                 let response = JSON.parse(res["text"])
                 expect(response.dateofbirth).to.be.equal(formattedDate)
@@ -37,7 +37,7 @@ describe('POST services with date formatting', () => {
     });
 
     it('responds with mm-dd-yyyy format  date in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_3 data')
+        return chai.request(app).post('/service3_with_dynamic_dates').send(' this is request_3 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
@@ -50,7 +50,7 @@ describe('POST services with date formatting', () => {
     });
 
     it('responds with yyyyymmdd format date with padded some extra data in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_7 data')
+        return chai.request(app).post('/service3_with_dynamic_dates').send(' this is request_4 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res.body)
@@ -66,7 +66,7 @@ describe('POST services with date formatting', () => {
 
 describe('POST services with random formatting', () => {
     it('responds with random number in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_4 data')
+        return chai.request(app).post('/service4_with_random_data').send(' this is request_1 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res["text"])
@@ -76,7 +76,7 @@ describe('POST services with random formatting', () => {
     });
 
     it('responds with random number in response', () => {
-        return chai.request(app).post('/service3').send(' this is request_5 data')
+        return chai.request(app).post('/service4_with_random_data').send(' this is request_2 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res["text"])
@@ -88,7 +88,7 @@ describe('POST services with random formatting', () => {
 
 describe('POST services with request variable formatting', () => {
     it('responds with value in request', () => {
-        return chai.request(app).post('/service3').send(' this is <input>test value</input> request_6 data')
+        return chai.request(app).post('/service5_with_extract_from_request').send(' this is <input>test value</input> request_1 data')
             .then(res => {
                 expect(res.status).to.equal(200);
                 console.log(res["text"])

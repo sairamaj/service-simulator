@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ServiceManagerFactory } from '../providers/ServiceManagerFactory';
 import debugx = require('debug');
 import { Log } from '../model/Log';
+import { ResponseTransformer } from '../transformers/ResponseTransformer';
 let debug = debugx('adminrouter');
 
 export class AdminRouter {
@@ -100,6 +101,7 @@ export class AdminRouter {
     try {
       var requestData = await this.getRequest(req);
       var processInfo = await ServiceManagerFactory.createServiceManager().getResponse(serviceName, requestData)
+      processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
       if (processInfo === undefined) {
         res.send({
           status: 404

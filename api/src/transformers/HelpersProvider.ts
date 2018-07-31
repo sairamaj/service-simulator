@@ -33,13 +33,12 @@ export class HelperProvider {
                 max = context.hash['max']
             }
 
-            var val = Math.floor(Math.random() * max) + min
-            return val;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         })
 
         map.set('date', function (context) {
             debug('enter date helper')
-            var format = 'yyyy-MM-dd'
+            var format = 'yyyy-mm-dd'
             if (context.hash["format"]) {
                 format = context.hash['format']
             }
