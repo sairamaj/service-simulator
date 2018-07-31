@@ -30,3 +30,46 @@
 <a class='btn btn-info' (click)='onLogs()' style='width:160px'>
         Logs
     </a>
+
+<div class="text-left">
+    <h1>Service-Simulator</h1>
+    <p>Service simulator app will allow you to write simulation data for any http service. It is simple matching some inputs with request and then respond accordingly.</p>
+    <p><img src="doc/images/summary.png" alt="summary"></p>
+    <h2>Features</h2>
+    <ul>
+    <li>dynamic end points (urls).</li>
+    <li>multiple matches in request to generate different responses</li>
+    <li>dynamic templating for dates, random numbers, extracting data from request to embed in response.</li>
+    <li>test configured responses.</li>
+    <li>Capture request arrived and responses served for service.</li>
+    <li>Performance and troubleshooting logging</li>
+    </ul>
+    <h1>Terminology</h1>
+    <h3>Service</h3>
+    <p>Listens at particular Url and accepts request and sends response.</p>
+    <h3>Matches</h3>
+    <p>Match strings matched against to request to find out which response needs to be sent.</p>
+    <h3>Request</h3>
+    <p>POST string coming from the client.</p>
+    <h3>Response</h3>
+    <p>Data sent back to client for POST request.</p>
+    <h3>Templating</h3>
+    <p>Response data can have some dynamic templating for dates, random numbers and extracting some data from input.</p>
+    <h3>Provider</h3>
+    <p>Data provider which serves the response</p>
+    <h4>In memory provider</h4>
+    <ul>
+    <li>Used for testing purpose</li>
+    </ul>
+    <h4>File provider</h4>
+    <ul>
+    <li>Configuration and Responses are stored on file system.</li>
+    </ul>
+    <h4>Mongo Db Provider</h4>
+    <ul>
+    <li>Configuration and Responses are stored in Mongo DB.</li>
+    </ul>
+    
+</div>
+
+    
