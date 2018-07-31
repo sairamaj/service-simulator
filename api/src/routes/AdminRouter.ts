@@ -3,6 +3,7 @@ import { ServiceManagerFactory } from '../providers/ServiceManagerFactory';
 import debugx = require('debug');
 import { Log } from '../model/Log';
 import { ResponseTransformer } from '../transformers/ResponseTransformer';
+import { LogManager } from '../providers/LogManager';
 let debug = debugx('adminrouter');
 
 export class AdminRouter {
@@ -116,8 +117,10 @@ export class AdminRouter {
     } catch (error) {
       debug('error:' + error)
       res.send({
-        status: 500
+        status: 500,
+        response: '' + error
       })
+      LogManager.log('error', '' + error)
 
     }
   }
