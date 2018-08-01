@@ -4,6 +4,7 @@ import debugx = require('debug');
 import { Log } from '../model/Log';
 import { ResponseTransformer } from '../transformers/ResponseTransformer';
 import { LogManager } from '../providers/LogManager';
+import { createWriteStream } from 'fs';
 let debug = debugx('adminrouter');
 
 export class AdminRouter {
@@ -22,6 +23,8 @@ export class AdminRouter {
    */
   public async getAll(req: Request, res: Response, next: NextFunction) {
     var services = await ServiceManagerFactory.createServiceManager().getServices();
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    services.forEach(s=> s.url = req.protocol + ':  //' + req.get('host') + '/' + s.name)
     res.send(services);
   }
 

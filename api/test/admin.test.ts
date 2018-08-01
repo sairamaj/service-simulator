@@ -45,6 +45,18 @@ describe('GET api/v1/admin/services/:name', () => {
       })
   })
 
+  it('should have service url', () => {
+    return chai.request(app).get('/api/v1/admin/services')
+      .then(res => {
+        expect(res.status).to.equal(200)
+        expect(res).to.be.json
+        expect(res.body).to.be.an('array')
+        let serivce1 = res.body.find(service => service.name === 'service1')
+        expect(serivce1).to.exist
+        expect(serivce1.url).to.be.contain('/service1')
+      })
+  })
+
   it('should return 404 for not available service', () => {
     return chai.request(app).get('/api/v1/admin/services/na')
       .catch(err => {

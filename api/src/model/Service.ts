@@ -5,4 +5,6 @@ export class Service{
         public config : ServiceConfigMap[]
     ){
     }
+
+    public url: string
 }
