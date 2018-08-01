@@ -21,7 +21,7 @@ const LogRequestDbSchema = mongoose.model('logs', LogRequestSchema);
 export class MongoDbProvider implements ServiceManager {
     public async getServices(): Promise<Service[]> {
         debug('enter getServices')
-        return await ServiceDbSchema.find({});
+        return await ServiceDbSchema.collection.find({}).toArray();
     }
 
     public async getService(name: string): Promise<Service> {

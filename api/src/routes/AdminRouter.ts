@@ -23,8 +23,7 @@ export class AdminRouter {
    */
   public async getAll(req: Request, res: Response, next: NextFunction) {
     var services = await ServiceManagerFactory.createServiceManager().getServices();
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    services.forEach(s=> s.url = req.protocol + ':  //' + req.get('host') + '/' + s.name)
+    services.forEach(s => s.url = req.protocol + '://' + req.get('host') + '/' + s.name)
     res.send(services);
   }
 
