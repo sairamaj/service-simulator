@@ -20,4 +20,8 @@ XCOPY dashboard\dist\dashboard deploy\dashboard\dist\dashboard /F /R /Y /S
 XCOPY doc deploy\dashboard\dist\dashboard\doc /F /R /Y /S
 echo "copying tools..."
 XCOPY toolset\*.* deploy /F /R /Y
-
+echo "Zipping the deploy"
+del service-simulator.zip
+powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::CreateFromDirectory('deploy', 'service-simulator.zip'); }"
+echo "Moving the zip"
+move service-simulator.zip deploy\dashboard\dist\dashboard
