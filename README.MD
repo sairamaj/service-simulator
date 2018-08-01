@@ -47,13 +47,17 @@ testdata.json is used for in memory and is used for unit test. The entire config
             "name" : "testcase1 name here",
             "matches" :[
                 "match1","match2"
-                ]
+            ],
+            "request": "sample request here",
+            "response" : "sample response here"
             },
             {
             "name" : "testcase2 name here",
             "matches" :[
                 "match1","match2"
-                ]
+            ],
+            "request": "sample request here",
+            "response" : "sample response here"
             }            
         ]
     },
@@ -64,7 +68,9 @@ testdata.json is used for in memory and is used for unit test. The entire config
             "name" : "testcase name here",
             "matches" :[
                 "match1","match2"
-                ]
+                ],
+            "request": "sample request here",
+            "response" : "sample response here"
             }
         ]
     },
@@ -123,8 +129,21 @@ Each directory under fileprovider will is a service. It will have below 4 direct
     ]
 ```
 ### logs
+Request along with served responses will be logged here
 ### requests
+Sample request files (used during testing in dashboard). The name of the file will be name specified in the configuration file with .xml as extension.
 ### responses
+Response files will be here. The name of the file is name specified in the match with .xml extension.
+
+### Mongo Db Provider
+One can configure to use Mongo db with connection string so that all requests and responses along with configuration will be stored in Mongo db.
+
+## How to build
+
+## How to Run
+
+## Build Docker image.
+
 
 
 
