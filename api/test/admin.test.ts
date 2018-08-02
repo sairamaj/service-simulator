@@ -97,6 +97,15 @@ describe('POST api/v1/admin/services/:name/test', () => {
         expect(resp.matches[0]).to.equal('request_1')
       })
   })
+
+  it.only('should return 404 with match not found', () => {
+    return chai.request(app).post('/api/v1/admin/services/service1/test').send('data does not match.')
+      .then(res => {
+        expect(res.status).to.equal(200)
+        console.log(res.body)
+      })
+  })
+
 })
 
 

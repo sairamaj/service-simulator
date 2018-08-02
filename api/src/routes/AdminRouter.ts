@@ -104,12 +104,12 @@ export class AdminRouter {
     try {
       var requestData = await this.getRequest(req);
       var processInfo = await ServiceManagerFactory.createServiceManager().getResponse(serviceName, requestData)
-      processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
       if (processInfo === undefined) {
         res.send({
           status: 404
         })
       } else {
+        processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
         res.send({
           status: 200,
           response: processInfo.response,

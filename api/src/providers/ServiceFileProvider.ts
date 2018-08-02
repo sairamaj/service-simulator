@@ -18,7 +18,9 @@ export class ServiceFileProvider {
             return;
         }
 
-        this.configMaps = JSON.parse(fs.readFileSync(mapFileName, 'utf-8'));
+        debug('reading ' + mapFileName)
+        this.configMaps = JSON.parse(fs.readFileSync(mapFileName, { encoding : 'utf-8', flag: 'rs' } ));
+        debug('configMaps' + JSON.stringify(this.configMaps))
     }
 
     public async getMapDetail(mapName: string): Promise<MapDetail> {

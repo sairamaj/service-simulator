@@ -63,7 +63,7 @@ export class ServicesFileProvider implements ServiceManager {
         var serviceProvider = new ServiceFileProvider(name, this.getFilesProviderLocation());
         var processInfo = await serviceProvider.getResponse(request);
         if (processInfo === undefined) {
-            return null;
+            return undefined;
         }
 
         return processInfo;
