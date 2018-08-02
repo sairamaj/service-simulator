@@ -5,6 +5,7 @@ import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
 import { InMemoryProcessedRequestContainer } from './InMemoryProcessedRequestContainer';
 import * as path from 'path';
+import { resolve } from 'url';
 const debug = require('debug')('inmemoryprovider')
 
 export class InMemoryProvider implements ServiceManager {
@@ -25,6 +26,17 @@ export class InMemoryProvider implements ServiceManager {
     public async getService(name: string): Promise<Service> {
         var services = await this.getServices();
         return services.find(h => h.name == name)
+    }
+
+    public addService(name: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            var newService = {
+                name : name,
+                config : []
+            }
+            InMemoryProvider.TestData.push(newService)
+            resolve(true)
+        })
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
@@ -73,9 +85,9 @@ export class InMemoryProvider implements ServiceManager {
                 reject(mapDetail.name + ' not found in ' + name)
             }
 
-            var foundMap = service.config.find(c=> c.name == mapDetail.name)
-            if( foundMap === undefined){
-                reject(mapDetail.name + ' not found in ' + name) 
+            var foundMap = service.config.find(c => c.name == mapDetail.name)
+            if (foundMap === undefined) {
+                reject(mapDetail.name + ' not found in ' + name)
             }
 
             foundMap.request = mapDetail.request

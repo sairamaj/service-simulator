@@ -45,6 +45,24 @@ export class AdminRouter {
     }
   }
 
+  public async addService(req: Request, res: Response, next: NextFunction) {
+    debug('enter addService')
+    var requestData = await this.getRequest(req)
+    debug('enter addService:' + requestData)
+    var request = JSON.parse(requestData)
+    var foundService = await ServiceManagerFactory.createServiceManager().getService(request.name)
+    if (foundService !== undefined) {
+      debug('foundservice. returning 422')
+      res.status(422).send({
+        
+      })
+    } else {
+      await ServiceManagerFactory.createServiceManager().addService(request.name)
+      res.status(200).send({
+        name: request.name
+      })
+    }
+  }
   public async getProcessedRequests(req: Request, res: Response) {
     let name = req.params.name;
     var processedRequests = await ServiceManagerFactory.createServiceManager().getProcessedRequests(name);
@@ -198,6 +216,9 @@ export class AdminRouter {
    */
   init() {
     this.router.get('/', this.getAll);
+    this.router.post('/', async (req: Request, resp: Response) => {
+      await this.addService(req, resp, null);
+    });
     this.router.get('/:name', this.getOne)
     this.router.get('/:name/processedrequests', this.getProcessedRequests)
     this.router.get('/:name/logs', this.getLogs)

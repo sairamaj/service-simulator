@@ -98,7 +98,7 @@ describe('POST api/v1/admin/services/:name/test', () => {
       })
   })
 
-  it.only('should return 404 with match not found', () => {
+  it('should return 404 with match not found', () => {
     return chai.request(app).post('/api/v1/admin/services/service1/test').send('data does not match.')
       .then(res => {
         expect(res.status).to.equal(200)
@@ -138,6 +138,36 @@ describe('Adding new test case', () => {
       });
   });
 });
+
+describe('Adding new service', () => {
+  it.only('responds with 200', () => {
+    var serviceName = 'service_' + Math.floor(Math.random() * 10000) + 1
+    return chai.request(app).post('/api/v1/admin/services').send({ name: serviceName })
+      .then(res => {
+        expect(res.status).to.equal(200);
+
+        return chai.request(app).get('/api/v1/admin/services/' + serviceName)
+          .then(res => {
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            expect(map.name).to.equal(serviceName)
+          })
+      });
+  });
+});
+
+describe('Adding existing service', () => {
+  it('responds with 422', () => {
+    return chai.request(app).post('/api/v1/admin/services').send({ name: 'service1' })
+      .then(res => {
+        
+      }).catch(err=>{
+        expect(err.status).to.equal(422)
+      })
+  });
+});
+
 
 describe('Editing test case', () => {
   it('responds with 200 and modified response', () => {

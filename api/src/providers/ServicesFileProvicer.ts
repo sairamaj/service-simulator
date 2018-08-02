@@ -40,6 +40,12 @@ export class ServicesFileProvider implements ServiceManager {
         return services.find(s => s.name == name);
     }
 
+    public addService(name: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            resolve(true)
+        })
+    }
+
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
         var serviceProvider = new ServiceFileProvider(name, this.getFilesProviderLocation());
         return await serviceProvider.getMapDetail(mapName);
