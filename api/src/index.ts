@@ -46,5 +46,8 @@ function onListening(): void {
   let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
   console.log(`Listening on ${bind}`);
   console.log(`provider: ` + config.app.provider);
+  if( config.app.provider === 'file'){
+    console.log('`t file provider location:' + config.app.fileProviderLocation)
+  }
 }
 

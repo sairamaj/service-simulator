@@ -5,8 +5,11 @@ export class Config {
     adminUrl: string
     adminServicesApiUrl: string;
     constructor() {
-        this.baseUrl = 'http://localhost:3000';
-        //this.baseUrl = ''
+        if (this.isDashboardDev()) {
+            this.baseUrl = 'http://localhost:3000';
+        } else {
+            this.baseUrl = ''
+        }
         this.adminServicesApiUrl = this.baseUrl + '/api/v1/admin/services'
         this.adminUrl = this.baseUrl + '/api/v1/admin/'
     }
@@ -49,6 +52,10 @@ export class Config {
 
     getLogRequestUrl() {
         return this.adminUrl + 'logs';
+    }
+
+    isDashboardDev(): boolean {
+        return true
     }
 }
 

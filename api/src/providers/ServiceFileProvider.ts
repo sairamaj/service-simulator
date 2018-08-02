@@ -19,7 +19,7 @@ export class ServiceFileProvider {
         }
 
         debug('reading ' + mapFileName)
-        this.configMaps = JSON.parse(fs.readFileSync(mapFileName, { encoding : 'utf-8', flag: 'rs' } ));
+        this.configMaps = JSON.parse(fs.readFileSync(mapFileName, 'utf-8' ));
         debug('configMaps' + JSON.stringify(this.configMaps))
     }
 
@@ -118,7 +118,7 @@ export class ServiceFileProvider {
     public getConfigMap(): ServiceConfigMap[] {
         let configFile = this.getConfigMapFile();
         if (fs.existsSync(configFile)) {
-            return require(configFile);
+            return JSON.parse(fs.readFileSync(configFile, 'utf-8'));
         }
     }
 

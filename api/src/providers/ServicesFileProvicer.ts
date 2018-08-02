@@ -12,13 +12,11 @@ import { MapDetail } from '../model/MapDetail';
 var debug = require('debug')('servicesfileprovider')
 
 export class ServicesFileProvider implements ServiceManager {
-
     constructor(public fileProviderLocation: string){
     }
  
     public getServices(): Promise<Service[]> {
         debug('enter:getServices')
-        var services = []
         debug('reading :' + this.getFilesProviderLocation() + '/*')
 
         return new Promise<Service[]>((resolve, reject) => {
