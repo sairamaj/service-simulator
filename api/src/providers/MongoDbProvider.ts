@@ -35,10 +35,10 @@ export class MongoDbProvider implements ServiceManager {
         return undefined;
     }
 
-    public addService(name: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
-            resolve(true)
-        })
+    public async addService(name: string): Promise<boolean> {
+        var newService = new Service(name, [])
+        await ServiceDbSchema.collection.insertOne(newService)
+        return true
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {

@@ -34,6 +34,10 @@ export class Config {
         return this.adminServicesApiUrl + '/' + name + '/maps';
     }
 
+    getAddNewServiceUrl(): string {
+        return this.adminServicesApiUrl ;
+    }
+
     getLastRequestUrl(name: string): string {
         return this.baseUrl + '/admin/api/hosts/' + name + '/lastrequests';
     }

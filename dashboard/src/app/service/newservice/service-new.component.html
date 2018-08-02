@@ -1,0 +1,32 @@
+<div class="container">
+
+    <div class="text-right">
+        <a class='btn btn-info ' (click)='backClicked()' style='width:80px'>
+            Back
+        </a>
+    </div>
+    
+    <h1>{{title}}</h1>
+    <form (ngSubmit)="onSubmit()" #ServiceNew="ngForm">
+
+        <div class="form-group">
+            <span class="label label-custom pull-left">Name</span>
+            <span class="label label-custom2 pull-left">(Service name)</span>
+            <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" required #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+
+        <div *ngIf='errorMessage' class='alert alert-danger'>
+            Error: {{ errorMessage }}
+        </div>
+        <div *ngIf='statusMessage' class='alert alert-success'>
+            {{ statusMessage }}
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!ServiceNew.form.valid">Submit</button>
+    </form>
+
+
+</div>

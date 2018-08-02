@@ -37,7 +37,7 @@ export class ServiceEditResponseComponent implements OnInit {
           this.model.request = mapDetail.request;
           this.model.response = mapDetail.response;
         },
-          error => this.errorMessage = <any>error);
+          error => this.errorMessage = <any>error.message);
     }
   }
 
@@ -51,7 +51,7 @@ export class ServiceEditResponseComponent implements OnInit {
     this.model.matchString.split(',').forEach(m => { this.model.matches.push(m); });
     this._apiService.addNewResponse(this.serviceName, this.model)
       .subscribe(msg => this.statusMessage = JSON.stringify(msg),
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error.message);
   }
 
   get diagnostic() { return JSON.stringify(this.model); }

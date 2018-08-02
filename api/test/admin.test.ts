@@ -45,6 +45,13 @@ describe('GET api/v1/admin/services/:name', () => {
       })
   })
 
+  it('should return service1 with case sensitive', () => {
+    return chai.request(app).get('/api/v1/admin/services/SERVICE1')
+      .then(res => {
+        expect(res.body.name).to.equal('service1');
+      })
+  })
+
   it('should have service url', () => {
     return chai.request(app).get('/api/v1/admin/services')
       .then(res => {
@@ -140,7 +147,7 @@ describe('Adding new test case', () => {
 });
 
 describe('Adding new service', () => {
-  it.only('responds with 200', () => {
+  it('responds with 200', () => {
     var serviceName = 'service_' + Math.floor(Math.random() * 10000) + 1
     return chai.request(app).post('/api/v1/admin/services').send({ name: serviceName })
       .then(res => {
@@ -161,13 +168,24 @@ describe('Adding existing service', () => {
   it('responds with 422', () => {
     return chai.request(app).post('/api/v1/admin/services').send({ name: 'service1' })
       .then(res => {
-        
-      }).catch(err=>{
+
+      }).catch(err => {
         expect(err.status).to.equal(422)
       })
   });
 });
 
+describe('Adding existing service with different case', () => {
+  it('responds with 422', () => {
+    return chai.request(app).post('/api/v1/admin/services').send({ name: 'SERVICE1' })
+      .then(res => {
+        console.log('in success:' + res.body)
+        chai.assert(false, 'supposed to get error.')
+      }).catch(err => {
+        expect(err.status).to.equal(422)
+      })
+  });
+});
 
 describe('Editing test case', () => {
   it('responds with 200 and modified response', () => {

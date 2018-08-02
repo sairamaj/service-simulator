@@ -25,7 +25,7 @@ export class ServiceDetailComponent implements OnInit {
   ngOnInit(): void {
     this._apiService.getServiceDetails(this.name)
       .subscribe(service => this.service = service,
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error.message);
   }
 
   onTest(requestFile: string): void {
@@ -38,7 +38,6 @@ export class ServiceDetailComponent implements OnInit {
 
   onNew(): void {
     this._router.navigate(['services/' + this.name + '/newresponse']);
-
   }
 
 

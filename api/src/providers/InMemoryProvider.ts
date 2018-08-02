@@ -25,7 +25,7 @@ export class InMemoryProvider implements ServiceManager {
 
     public async getService(name: string): Promise<Service> {
         var services = await this.getServices();
-        return services.find(h => h.name == name)
+        return services.find(h => h.name.toLocaleLowerCase() == name.toLocaleLowerCase())
     }
 
     public addService(name: string): Promise<boolean> {

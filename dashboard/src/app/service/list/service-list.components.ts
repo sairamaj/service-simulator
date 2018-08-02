@@ -20,7 +20,7 @@ export class ServiceListComponent implements OnInit {
     ngOnInit(): void {
         this._apiService.getServices()
             .subscribe(result => this.services = result,
-                error => this.errorMessage = <any>error)
+                error => this.errorMessage = <any>error.message)
     }
 
     constructor(private _apiService: ApiService, 
@@ -31,4 +31,9 @@ export class ServiceListComponent implements OnInit {
     onLogs(): void {
         this._router.navigate(['/logs']);
     }
+
+    onNew(): void {
+        this._router.navigate(['services/new']);
+    }
+
 }

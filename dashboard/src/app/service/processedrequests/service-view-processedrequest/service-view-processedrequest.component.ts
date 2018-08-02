@@ -25,7 +25,7 @@ export class ServiceViewProcessedRequestComponent implements OnInit {
   ngOnInit(): void {
     this._apiService.getProcessRequest(this.name, this.id)
       .subscribe(servedRequest => this.servedRequest = servedRequest,
-        error => this.errorMessage = <any>error)
+        error => this.errorMessage = <any>error.message)
   }
 
   backClicked() {

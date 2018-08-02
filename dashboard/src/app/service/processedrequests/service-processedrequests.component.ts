@@ -24,7 +24,7 @@ export class ServiceProcessedRequestComponent implements OnInit {
   ngOnInit(): void {
     this._apiService.getLastRequests(this.name)
       .subscribe(servedRequests => this.servedRequests = servedRequests,
-        error => this.errorMessage = <any>error)
+        error => this.errorMessage = <any>error.message)
   }
 
   backClicked() {

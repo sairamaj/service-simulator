@@ -39,6 +39,14 @@ export class ApiService {
                 catchError(this.handleError));
     }
 
+    addNewService(service: Service): Observable<any>{
+        const addUrl = this.Configuration.getAddNewServiceUrl();
+        console.log('adding service:' + JSON.stringify(service));
+        return this._http.post<string>(addUrl, service)
+            .pipe(tap(data => console.log('received')),
+                catchError(this.handleError));
+    }
+
     addNewResponse(service: string, info: SimulatedResponseData): Observable<any> {
         const addUrl = this.Configuration.getAddNewResponseUrl(service);
         console.log('posting to:' + addUrl);
@@ -92,6 +100,6 @@ export class ApiService {
                     additional info: ${additionalMessage}`;
         }
         console.error(errorMessage);
-        return throwError(errorMessage);
+        return throwError({ message: errorMessage, error: err});
     }
 }

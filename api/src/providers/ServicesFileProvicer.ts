@@ -9,12 +9,13 @@ import { ServiceFileProvider } from './ServiceFileProvider';
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { ProcessLogFileManager } from './ProcessedLogFileManager';
 import { MapDetail } from '../model/MapDetail';
+import { resolve } from 'dns';
 var debug = require('debug')('servicesfileprovider')
 
 export class ServicesFileProvider implements ServiceManager {
-    constructor(public fileProviderLocation: string){
+    constructor(public fileProviderLocation: string) {
     }
- 
+
     public getServices(): Promise<Service[]> {
         debug('enter:getServices')
         debug('reading :' + this.getFilesProviderLocation() + '/*')
@@ -37,13 +38,11 @@ export class ServicesFileProvider implements ServiceManager {
     public async getService(name: string): Promise<Service> {
         debug('enter:getService');
         var services = await this.getServices();
-        return services.find(s => s.name == name);
+        return services.find(s => s.name.toLocaleLowerCase() == name.toLocaleLowerCase());
     }
 
-    public addService(name: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
-            resolve(true)
-        })
+    public async addService(name: string): Promise<boolean> {
+        return await this.createNewService(name)
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
@@ -93,5 +92,36 @@ export class ServicesFileProvider implements ServiceManager {
     public async clearProcessedRequests(name: string): Promise<boolean> {
         await new ProcessLogFileManager(name, this.getFilesProviderLocation()).clearLogs();
         return true;
+    }
+
+    private async createNewService(name: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                // create directory
+                var directory = this.getFilesProviderLocation() + path.sep + name
+                if (!fs.existsSync(directory)) {
+                    fs.mkdirSync(directory);
+                }
+
+                var supportDirectories = ['config','requests','responses','logs']
+                supportDirectories.forEach(d =>{
+                    var supportDirectory = directory + path.sep + d
+                    if (!fs.existsSync(supportDirectory)) {
+                        fs.mkdirSync(supportDirectory);
+                    }
+                })
+
+                var mapFile = directory + path.sep + 'config' + path.sep + 'map.config'
+                // create empty map file.
+                if(!fs.existsSync(mapFile)){
+                    fs.writeFileSync(mapFile, '[]')
+                }
+
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+
     }
 }

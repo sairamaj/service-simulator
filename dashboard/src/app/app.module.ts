@@ -13,12 +13,14 @@ import { XmlPipe } from './pipes/XmlPipe';
 import { ServiceProcessedRequestComponent } from './service/processedrequests/service-processedrequests.component';
 import { ServiceViewProcessedRequestComponent } from './service/processedrequests/service-view-processedrequest/service-view-processedrequest.component';
 import { ServiceLogsComponent } from './service/logs/service-logs.components';
+import { ServiceNewComponent } from './service/newservice/service-new.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ServiceListComponent,
+    ServiceNewComponent,
     ServiceLogsComponent,
     ServiceDetailComponent,
     ServiceTestComponent,
@@ -35,6 +37,7 @@ import { ServiceLogsComponent } from './service/logs/service-logs.components';
     RouterModule.forRoot([
       { path: 'logs', component: ServiceLogsComponent },
       { path: 'services', component: ServiceListComponent },
+      { path: 'services/new', component: ServiceNewComponent },
       { path: 'services/:name/newresponse', component: ServiceEditResponseComponent },
       { path: 'services/:name/newresponse/:mapname', component: ServiceEditResponseComponent },
       { path: 'services/:name/:mapname/test', component: ServiceTestComponent },

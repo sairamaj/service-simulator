@@ -22,7 +22,7 @@ export class ServiceLogsComponent implements OnInit {
     ngOnInit(): void {
         this._apiService.getLogs()
             .subscribe(result => this.logs = result,
-                error => this.errorMessage = <any>error)
+                error => this.errorMessage = <any>error.message)
     }
 
     constructor(private _apiService: ApiService,

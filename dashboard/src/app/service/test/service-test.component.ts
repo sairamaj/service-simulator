@@ -35,7 +35,7 @@ export class ServiceTestComponent implements OnInit {
     this._apiService.getMapDetail(this.name, this.mapname)
       .subscribe(mapDetail =>
         this.request = mapDetail.request,
-        error => this.errorMessage = <any>error)
+        error => this.errorMessage = <any>error.message)
   }
 
   onSubmit(): void {
@@ -44,7 +44,7 @@ export class ServiceTestComponent implements OnInit {
     this.testResponse = null
     this._apiService.submitRequest(this.name, this.request)
       .subscribe(response => this.testResponse = response,
-        error => this.errorMessage = <any>error)
+        error => this.errorMessage = <any>error.message)
   }
 
   backClicked() {
