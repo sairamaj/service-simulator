@@ -50,6 +50,11 @@ export class AdminRouter {
     var requestData = await this.getRequest(req)
     debug('enter addService:' + requestData)
     var request = JSON.parse(requestData)
+    if( request.name === undefined || request.name.length === 0){
+      res.status(404).send({error: 'name cannot be empty.'})
+      return
+    }
+    
     var foundService = await ServiceManagerFactory.createServiceManager().getService(request.name)
     if (foundService !== undefined) {
       debug('foundservice. returning 422')

@@ -164,6 +164,18 @@ describe('Adding new service', () => {
   });
 });
 
+describe('Adding new service with no name', () => {
+  it('responds with 404', () => {
+    var serviceName = 'service_' + Math.floor(Math.random() * 10000) + 1
+    return chai.request(app).post('/api/v1/admin/services').send({})
+      .then(res => {
+        expect(res.status).to.equal(404);
+      }).catch(err => {
+        expect(err.status).to.equal(404);
+      })
+  });
+});
+
 describe('Adding existing service', () => {
   it('responds with 422', () => {
     return chai.request(app).post('/api/v1/admin/services').send({ name: 'service1' })
