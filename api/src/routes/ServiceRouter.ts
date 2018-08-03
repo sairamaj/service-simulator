@@ -55,9 +55,6 @@ export class ServiceRouter {
         this.router.post('*', async (req: Request, resp: Response, next: NextFunction) => {
             await this.handle(req, resp, next);
         });
-        this.router.get('*', async (req: Request, resp: Response, next: NextFunction) => {
-            resp.status(200).send('Post your request here to get response.')
-        });
     }
 
     async getRequest(req: Request): Promise<string> {
