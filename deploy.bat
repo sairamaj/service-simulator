@@ -25,3 +25,6 @@ del service-simulator.zip
 powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::CreateFromDirectory('deploy', 'service-simulator.zip'); }"
 echo "Moving the zip"
 move service-simulator.zip deploy\dashboard\dist\dashboard
+echo "copying certs"
+XCOPY utils\localhost.crt deploy\ /F /R /Y
+XCOPY utils\localhost.key deploy\ /F /R /Y

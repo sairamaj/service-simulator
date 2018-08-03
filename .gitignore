@@ -3,3 +3,5 @@ deploy
 node_modules
 */**/*.js
 */**/*.log
+api/*.key
+api/*.crt
