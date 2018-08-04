@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "registries_servicesimulator_name": {
+            "defaultValue": "ServiceSimulatorRegistry",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [{
+        "comments": "Generalized from resource: '/subscriptions/821d6eee-fe66-4c21-8e8b-ab80122b0d35/resourceGroups/TemplateTest1/providers/Microsoft.ContainerRegistry/registries/servicesimulator'.",
+        "type": "Microsoft.ContainerRegistry/registries",
+        "sku": {
+            "name": "Standard",
+            "tier": "Standard"
+        },
+        "name": "[parameters('registries_servicesimulator_name')]",
+        "apiVersion": "2017-10-01",
+        "location": "eastus",
+        "tags": {},
+        "scale": null,
+        "properties": {
+            "adminUserEnabled": true
+        },
+        "dependsOn": []
+    }]
+}

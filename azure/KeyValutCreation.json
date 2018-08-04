@@ -15,17 +15,16 @@
             "type": "String"
         },
         "secrets_servicesimulator_pull_pwd_value": {
-            "defaultValue": "pwd here",
+            "defaultValue": "<placeholder>",
             "type": "String"
         },
         "secrets_servicesimulator_pull_usr_value": {
-            "defaultValue": "userhere",
+            "defaultValue": "<placeholder>",
             "type": "String"
         }
     },
     "variables": {},
-    "resources": [
-        {
+    "resources": [{
             "type": "Microsoft.KeyVault/vaults",
             "name": "[parameters('servicesimulator_vault_name')]",
             "apiVersion": "2016-10-01",
@@ -38,61 +37,59 @@
                     "name": "standard"
                 },
                 "tenantId": "4925b807-9380-4135-93cc-9c23aa7c411b",
-                "accessPolicies": [
-                    {
-                        "tenantId": "4925b807-9380-4135-93cc-9c23aa7c411b",
-                        "objectId": "eb9ee576-df6d-4cd6-8da7-97605949d931",
-                        "permissions": {
-                            "keys": [
-                                "get",
-                                "create",
-                                "delete",
-                                "list",
-                                "update",
-                                "import",
-                                "backup",
-                                "restore",
-                                "recover"
-                            ],
-                            "secrets": [
-                                "get",
-                                "list",
-                                "set",
-                                "delete",
-                                "backup",
-                                "restore",
-                                "recover"
-                            ],
-                            "certificates": [
-                                "get",
-                                "list",
-                                "delete",
-                                "create",
-                                "import",
-                                "update",
-                                "managecontacts",
-                                "getissuers",
-                                "listissuers",
-                                "setissuers",
-                                "deleteissuers",
-                                "manageissuers",
-                                "recover"
-                            ],
-                            "storage": [
-                                "get",
-                                "list",
-                                "delete",
-                                "set",
-                                "update",
-                                "regeneratekey",
-                                "setsas",
-                                "listsas",
-                                "getsas",
-                                "deletesas"
-                            ]
-                        }
+                "accessPolicies": [{
+                    "tenantId": "4925b807-9380-4135-93cc-9c23aa7c411b",
+                    "objectId": "eb9ee576-df6d-4cd6-8da7-97605949d931",
+                    "permissions": {
+                        "keys": [
+                            "get",
+                            "create",
+                            "delete",
+                            "list",
+                            "update",
+                            "import",
+                            "backup",
+                            "restore",
+                            "recover"
+                        ],
+                        "secrets": [
+                            "get",
+                            "list",
+                            "set",
+                            "delete",
+                            "backup",
+                            "restore",
+                            "recover"
+                        ],
+                        "certificates": [
+                            "get",
+                            "list",
+                            "delete",
+                            "create",
+                            "import",
+                            "update",
+                            "managecontacts",
+                            "getissuers",
+                            "listissuers",
+                            "setissuers",
+                            "deleteissuers",
+                            "manageissuers",
+                            "recover"
+                        ],
+                        "storage": [
+                            "get",
+                            "list",
+                            "delete",
+                            "set",
+                            "update",
+                            "regeneratekey",
+                            "setsas",
+                            "listsas",
+                            "getsas",
+                            "deletesas"
+                        ]
                     }
-                ],
+                }],
                 "enabledForDeployment": false
             },
             "dependsOn": []
