@@ -59,7 +59,7 @@ export class Config {
     }
 
     isDashboardDev(): boolean {
-        return false
+        return true
     }
 }
 

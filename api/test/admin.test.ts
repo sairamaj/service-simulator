@@ -64,6 +64,30 @@ describe('GET api/v1/admin/services/:name', () => {
       })
   })
 
+  it('default tyep should be soap', () => {
+    return chai.request(app).get('/api/v1/admin/services')
+      .then(res => {
+        expect(res.status).to.equal(200)
+        expect(res).to.be.json
+        expect(res.body).to.be.an('array')
+        let serivce1 = res.body.find(service => service.name === 'service1')
+        expect(serivce1).to.exist
+        expect(serivce1.type).to.be.equal('soap')
+      })
+  })
+
+  it('should have service type', () => {
+    return chai.request(app).get('/api/v1/admin/services')
+      .then(res => {
+        expect(res.status).to.equal(200)
+        expect(res).to.be.json
+        expect(res.body).to.be.an('array')
+        let serivce1 = res.body.find(service => service.name === 'service7_json_content_type')
+        expect(serivce1).to.exist
+        expect(serivce1.type).to.be.equal('json')
+      })
+  })
+
   it('should return 404 for not available service', () => {
     return chai.request(app).get('/api/v1/admin/services/na')
       .catch(err => {
@@ -162,6 +186,41 @@ describe('Adding new service', () => {
           })
       });
   });
+
+  it('should have soap type in get', () => {
+    var serviceName = 'service_' + Math.floor(Math.random() * 10000) + 1
+    return chai.request(app).post('/api/v1/admin/services').send({ name: serviceName, type: "soap" })
+      .then(res => {
+        expect(res.status).to.equal(200);
+
+        return chai.request(app).get('/api/v1/admin/services/' + serviceName)
+          .then(res => {
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            expect(map.name).to.equal(serviceName)
+            expect(map.type).to.equal('soap')
+          })
+      });
+  });
+
+  it('should have json type in get', () => {
+    var serviceName = 'service_' + Math.floor(Math.random() * 10000) + 1
+    return chai.request(app).post('/api/v1/admin/services').send({ name: serviceName, type: "json" })
+      .then(res => {
+        expect(res.status).to.equal(200);
+
+        return chai.request(app).get('/api/v1/admin/services/' + serviceName)
+          .then(res => {
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            expect(map.name).to.equal(serviceName)
+            expect(map.type).to.equal('json')
+          })
+      });
+  });
+
 });
 
 describe('Adding new service with no name', () => {

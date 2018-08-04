@@ -35,10 +35,8 @@ export class MongoDbProvider implements ServiceManager {
         return undefined;
     }
 
-    public async addService(name: string): Promise<boolean> {
-        var newService = new Service(name, [])
-        await ServiceDbSchema.collection.insertOne(newService)
-        return true
+    public async addService(service: Service): Promise<boolean> {
+        return await ServiceDbSchema.collection.insertOne(service)
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {

@@ -2,7 +2,7 @@ import { ServiceConfigMap } from "./ServiceConfigMap";
 
 export class Service{
     constructor(public name: string,
-        public contentType: string,
+        public type: string = 'soap',
         public config : ServiceConfigMap[]
     ){
     }

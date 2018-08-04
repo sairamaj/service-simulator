@@ -28,13 +28,9 @@ export class InMemoryProvider implements ServiceManager {
         return services.find(h => h.name.toLocaleLowerCase() == name.toLocaleLowerCase())
     }
 
-    public addService(name: string): Promise<boolean> {
+    public addService(service: Service): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            var newService = {
-                name : name,
-                config : []
-            }
-            InMemoryProvider.TestData.push(newService)
+            InMemoryProvider.TestData.push(service)
             resolve(true)
         })
     }
@@ -121,7 +117,7 @@ export class InMemoryProvider implements ServiceManager {
         var processInfo = new ProcessInfo(request)
         processInfo.matches = foundConfig.matches
         processInfo.response = foundConfig.response
-        processInfo.contentType = service.contentType
+        processInfo.type = service.type
         return processInfo;
     }
 

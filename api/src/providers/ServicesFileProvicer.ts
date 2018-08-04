@@ -28,7 +28,7 @@ export class ServicesFileProvider implements ServiceManager {
 
                     resolve(dirs.map(d => {
                         var name = d.split('/').slice(-1)[0]
-                        return new Service(name, new ServiceFileProvider(name, this.getFilesProviderLocation()).getConfigMap())
+                        return new Service(name, '', new ServiceFileProvider(name, this.getFilesProviderLocation()).getConfigMap())
                     }));
                 }
             });
@@ -41,8 +41,8 @@ export class ServicesFileProvider implements ServiceManager {
         return services.find(s => s.name.toLocaleLowerCase() == name.toLocaleLowerCase());
     }
 
-    public async addService(name: string): Promise<boolean> {
-        return await this.createNewService(name)
+    public async addService(service: Service): Promise<boolean> {
+        return await this.createNewService(service)
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
@@ -94,11 +94,12 @@ export class ServicesFileProvider implements ServiceManager {
         return true;
     }
 
-    private async createNewService(name: string): Promise<boolean> {
+    private async createNewService(service: Service): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             try {
+                var serviceName = service.name
                 // create directory
-                var directory = this.getFilesProviderLocation() + path.sep + name
+                var directory = this.getFilesProviderLocation() + path.sep + serviceName
                 if (!fs.existsSync(directory)) {
                     fs.mkdirSync(directory);
                 }

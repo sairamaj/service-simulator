@@ -62,7 +62,7 @@ export class AdminRouter {
         
       })
     } else {
-      await ServiceManagerFactory.createServiceManager().addService(request.name)
+      await ServiceManagerFactory.createServiceManager().addService(request)
       res.status(200).send({
         name: request.name
       })
@@ -132,7 +132,6 @@ export class AdminRouter {
           status: 404
         })
       } else {
-        processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
         res.send({
           status: 200,
           response: processInfo.response,

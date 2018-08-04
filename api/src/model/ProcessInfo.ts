@@ -6,10 +6,10 @@ export class ProcessInfo {
 
     public response: string
     public matches: string[]
-    public contentType: string
+    public type: string
 
     public getResponseContentType() : string{
-        if( this.contentType === 'json'){
+        if( this.type === 'json'){
             return 'application/json'
         }
 

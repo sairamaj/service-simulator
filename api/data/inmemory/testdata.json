@@ -136,14 +136,14 @@
     },
     {
         "name": "service7_json_content_type",
-        "contentType" : "json",
+        "type" : "json",
         "config": [
             {
                 "name": "request_1",
                 "matches": [
                     "request_1"
                 ],
-                "request" : "{\"input\": \"val\"}",
+                "request" : "{\"input\": \"request_1\"}",
                 "response" : "{\"name\": \"val\"}"
             }
         ]

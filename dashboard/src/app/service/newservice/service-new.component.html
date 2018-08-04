@@ -16,6 +16,14 @@
             <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                 Name is required
             </div>
+
+            <span class="label label-custom pull-left">Type</span>
+            <span class="label label-custom2 pull-left">(soap,json)</span>
+            <input type="text" class="form-control" id="type" [(ngModel)]="model.type" 
+            name="type" required #type="ngModel">
+            <div [hidden]="type.valid || type.pristine" class="alert alert-danger">
+                Type is required
+            </div>            
         </div>
 
         <div *ngIf='errorMessage' class='alert alert-danger'>

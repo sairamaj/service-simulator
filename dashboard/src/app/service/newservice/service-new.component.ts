@@ -18,6 +18,7 @@ export class ServiceNewComponent implements OnInit {
 
   model = new Service(
     '',
+    'soap',
     '',
     []);
   constructor(private _route: ActivatedRoute,

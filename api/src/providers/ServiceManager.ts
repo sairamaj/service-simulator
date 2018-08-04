@@ -6,7 +6,7 @@ import { MapDetail } from '../model/MapDetail';
 export interface ServiceManager {
     getServices(): Promise<Service[]>;
     getService(name: string): Promise<Service>;
-    addService(name: string):Promise<boolean>;
+    addService(service: Service):Promise<boolean>;
     getMapDetail(name: string, mapName: string): Promise<MapDetail>;
     addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean>;
     modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean>;
