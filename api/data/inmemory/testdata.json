@@ -89,7 +89,7 @@
     },
     {
         "name": "service4_with_random_data",
-        "config":[
+        "config": [
             {
                 "name": "request_1_with_random_number",
                 "matches": [
@@ -110,7 +110,7 @@
     },
     {
         "name": "service5_with_extract_from_request",
-        "config" :[
+        "config": [
             {
                 "name": "request_1_with_extracting_input",
                 "matches": [
@@ -123,15 +123,30 @@
     },
     {
         "name": "service6_with_invalid_template",
-        "config":[
+        "config": [
             {
                 "name": "request_1_date_template_not_correct_format",
                 "matches": [
                     "request_1"
                 ],
-                "request" : "request_1 data",
+                "request": "request_1 data",
                 "response": "{ \"date\" : \"{{date format=\"yyyymmdd\"}120000.000\"}"
             }
-        ]        
+        ]
+    },
+    {
+        "name": "service7_json_content_type",
+        "contentType" : "json",
+        "config": [
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "request" : "{\"input\": \"val\"}",
+                "response" : "{\"name\": \"val\"}"
+            }
+        ]
     }
+
 ]

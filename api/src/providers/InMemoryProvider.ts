@@ -98,9 +98,9 @@ export class InMemoryProvider implements ServiceManager {
     }
 
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
-        var service = await this.getService(name);
+        var service = await this.getService(name)
         if (service === undefined || service.config === undefined) {
-            debug('warn: ' + name + ' not found.');
+            debug('warn: ' + name + ' not found.')
             return undefined;
         }
 
@@ -109,18 +109,19 @@ export class InMemoryProvider implements ServiceManager {
                 return false;
             }
 
-            return c.matches.every(m => request.includes(m));
+            return c.matches.every(m => request.includes(m))
         });
 
         if (foundConfig === undefined) {
-            debug('warn: matching not found.');
+            debug('warn: matching not found.')
             return undefined;
         }
-        debug('foundConfig:' + JSON.stringify(foundConfig));
+        debug('foundConfig:' + JSON.stringify(foundConfig))
 
-        var processInfo = new ProcessInfo(request);
-        processInfo.matches = foundConfig.matches;
-        processInfo.response = foundConfig.response;
+        var processInfo = new ProcessInfo(request)
+        processInfo.matches = foundConfig.matches
+        processInfo.response = foundConfig.response
+        processInfo.contentType = service.contentType
         return processInfo;
     }
 

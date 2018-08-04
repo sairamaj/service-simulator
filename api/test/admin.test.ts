@@ -13,7 +13,7 @@ describe('GET api/v1/admin/services', () => {
         expect(res.status).to.equal(200)
         expect(res).to.be.json
         expect(res.body).to.be.an('array')
-        expect(res.body).to.have.length(6)
+        expect(res.body).to.have.length(7)
       })
   })
 

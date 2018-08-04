@@ -30,7 +30,7 @@ export class ServiceRouter {
                 processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
                 serviceManager.logRequest(serviceName, new Date(), 200, processInfo);
                 res.status(200).
-                    set({ 'content-type': 'text/xml; charset=utf-8' })
+                    set({ 'content-type': processInfo.getResponseContentType() })
                     .send(processInfo.response)
             } else {
                 serviceManager.logRequest(serviceName, new Date(), 404, new ProcessInfo(requestData));
