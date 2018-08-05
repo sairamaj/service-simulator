@@ -45,7 +45,11 @@ export class ServiceDetailComponent implements OnInit {
     this._router.navigate(['services/' + this.name + '/processedrequests']);
   }
 
-  backClicked() {
+  onBack() {
     this._location.back();
   }
+  onRefresh() {
+    window.location.reload();
+  }
+
 } 

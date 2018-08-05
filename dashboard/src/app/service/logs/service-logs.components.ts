@@ -31,7 +31,11 @@ export class ServiceLogsComponent implements OnInit {
         private _location: Location) {
     }
 
-    backClicked() {
+    onBack() {
         this._location.back();
+    }
+
+    onRefresh() {
+        window.location.reload()
     }
 }

@@ -13,7 +13,7 @@ describe('GET api/v1/admin/services', () => {
         expect(res.status).to.equal(200)
         expect(res).to.be.json
         expect(res.body).to.be.an('array')
-        expect(res.body).to.have.length(7)
+        expect(res.body).to.have.length(8)
       })
   })
 
@@ -333,4 +333,47 @@ describe('Editing test case', () => {
           })
       });
   });
+});
+
+describe('Editing existing test case with add', () => {
+  it('should modify', () => {
+    // get current number maps
+    return chai.request(app).get('/api/v1/admin/services/service8')
+      .then(res => {
+        let service = res.body
+        let prevMapCount = service.config.length
+        console.log('prevMapCount:' + prevMapCount)
+
+        var mapRequest = service.config[0]  // grab the first one.
+        mapRequest.response = 'new response'
+        return chai.request(app).post('/api/v1/admin/services/service8/maps').send(mapRequest)
+          .then(res => {
+
+            expect(res.status).to.equal(200)
+            expect(res).to.be.json
+            let map = res.body
+            return chai.request(app).get('/api/v1/admin/services/service8/maps/' + mapRequest.name)
+              .then(res => {
+                let map = res.body
+                expect(map.name).to.equal(mapRequest.name)
+                expect(map.request).to.equal(mapRequest.request)
+                expect(map.response).to.equal(mapRequest.response)
+                expect(map.matches).to.not.be.undefined
+                expect(map.matches.length).to.equal(1)
+                expect(map.matches[0]).to.equal(mapRequest.name)
+
+                // map count should be same
+                return chai.request(app).get('/api/v1/admin/services/service8')
+                  .then(res => {
+                    let service = res.body
+                    let currentMapCount = service.config.length
+                    console.log('currentMapCount:' + currentMapCount)
+                    console.log('prevMapCount:' + prevMapCount)
+                    expect(currentMapCount).to.be.equal(prevMapCount)
+                  })
+              })
+          })
+      })
+
+  })
 });

@@ -31,7 +31,7 @@
         <div class="form-group">
             <span class="label label-custom pull-left">Request</span>
             <span class="label label-custom2 pull-left">(Request content.)</span>
-            <textarea class="form-control" id="request" [(ngModel)]='model.request' name="request" required #request="ngModel" rows="20">       </textarea>
+            <textarea class="form-control" id="request" [(ngModel)]='model.request' name="request" required #request="ngModel" rows="10">       </textarea>
             <div [hidden]="request.valid || request.pristine" class="alert alert-danger">
                 Request required
             </div>
@@ -50,7 +50,7 @@
         <div class="form-group">
             <span class="label label-custom pull-left">Response</span>
             <span class="label label-custom2 pull-left">(Response content. This will be returned when match happens against request)</span>
-            <textarea class="form-control" id="response" [(ngModel)]='model.response' name="response" required #response="ngModel" rows="20">
+            <textarea class="form-control" id="response" [(ngModel)]='model.response' name="response" required #response="ngModel" rows="10">
             </textarea>
             <div [hidden]="response.valid || response.pristine" class="alert alert-danger">
                 Response required

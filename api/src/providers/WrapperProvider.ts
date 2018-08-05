@@ -48,6 +48,11 @@ export class WrapperProvider implements ServiceManager {
 
     public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
         debug('enter addNewResponse')
+        var existing = await this.innerProvider.getMapDetail(name, mapDetail.name)
+        if( existing !== undefined){    
+            debug('detected exisitng and hence modifying...')
+            return await this.modifyNewResponse(name, mapDetail)
+        }
         return await this.innerProvider.addNewResponse(name, mapDetail)
     }
 

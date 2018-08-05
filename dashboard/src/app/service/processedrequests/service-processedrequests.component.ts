@@ -27,8 +27,11 @@ export class ServiceProcessedRequestComponent implements OnInit {
         error => this.errorMessage = <any>error.message)
   }
 
-  backClicked() {
+  onBack() {
     this._location.back();
   }
 
+  onRefresh(){
+    window.location.reload()
+  }
 }

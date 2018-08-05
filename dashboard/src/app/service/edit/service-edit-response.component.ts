@@ -50,7 +50,10 @@ export class ServiceEditResponseComponent implements OnInit {
     this.model.matches = [];
     this.model.matchString.split(',').forEach(m => { this.model.matches.push(m); });
     this._apiService.addNewResponse(this.serviceName, this.model)
-      .subscribe(msg => this.statusMessage = JSON.stringify(msg),
+      .subscribe(msg => {
+        this.statusMessage = JSON.stringify(msg)
+        this._location.back();
+      },
         error => this.errorMessage = <any>error.message);
   }
 

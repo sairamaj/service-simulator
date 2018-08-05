@@ -136,17 +136,30 @@
     },
     {
         "name": "service7_json_content_type",
-        "type" : "json",
+        "type": "json",
         "config": [
             {
                 "name": "request_1",
                 "matches": [
                     "request_1"
                 ],
-                "request" : "{\"input\": \"request_1\"}",
-                "response" : "{\"name\": \"val\"}"
+                "request": "{\"input\": \"request_1\"}",
+                "response": "{\"name\": \"val\"}"
+            }
+        ]
+    },
+    {
+        "name": "service8",
+        "type": "soap",
+        "config": [
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "request": "this is request1",
+                "response": "this is response1"
             }
         ]
     }
-
 ]
