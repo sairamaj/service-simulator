@@ -38,6 +38,7 @@ export class WrapperProvider implements ServiceManager {
 
     public async addService(service: Service): Promise<boolean> {
         debug('enter addService')
+        service.name = service.name.trim()
         return await this.innerProvider.addService(service)
     }
 
@@ -48,6 +49,7 @@ export class WrapperProvider implements ServiceManager {
 
     public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
         debug('enter addNewResponse')
+        mapDetail.name = mapDetail.name.trim()
         var existing = await this.innerProvider.getMapDetail(name, mapDetail.name)
         if( existing !== undefined){    
             debug('detected exisitng and hence modifying...')
@@ -58,6 +60,7 @@ export class WrapperProvider implements ServiceManager {
 
     public async modifyNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
         debug('enter modifyNewResponse')
+        mapDetail.name = mapDetail.name.trim()
         return await this.innerProvider.modifyNewResponse(name, mapDetail)
     }
 
