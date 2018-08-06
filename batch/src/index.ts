@@ -18,9 +18,15 @@ export class ServiceConfigMap {
     }
 }
 
-class Service {
-    constructor(public name: string, public path: string, public config: ServiceConfigMap[]) {
+class Service{
+    constructor(public name: string,
+        public path: string,
+        public type: string = 'soap',
+        public config : ServiceConfigMap[]
+    ){
     }
+
+    
 }
 
 
@@ -103,7 +109,7 @@ class ImportService {
                 } else {
                     resolve(dirs.map(d => {
                         var mapFile = d + path.sep + 'config' + path.sep + 'map.json';
-                        return new Service(d.split('/').slice(-1)[0], d, JSON.parse(fs.readFileSync(mapFile, 'utf-8')));
+                        return new Service(d.split('/').slice(-1)[0], d, 'soap',JSON.parse(fs.readFileSync(mapFile, 'utf-8')));
                     }));
                 }
             });
@@ -179,6 +185,11 @@ if (process.argv.length < 4) {
 
 var dataPath = process.argv[2]
 var mongodb = process.argv[3]
+if( !fs.existsSync(dataPath)){
+    console.error(dataPath + ' does not exists')
+    process.exit(-2)
+}
+
 console.log('importing:' + dataPath);
 var importService = new ImportService(dataPath, mongodb);
 async function clearAndImport() {

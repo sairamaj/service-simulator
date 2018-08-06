@@ -7,6 +7,7 @@ import LogRouter from './routes/LogRouter';
 import * as mongoose from "mongoose";
 import { LogManager } from './providers/LogManager';
 import { LoggerStream } from './LoggerStream';
+import { createWriteStream } from 'fs';
 const config = require('./config');
 let debug = require('debug')('app')
 

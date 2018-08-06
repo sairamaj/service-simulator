@@ -26,7 +26,7 @@ export class MongoDbProvider implements ServiceManager {
 
     public async getService(name: string): Promise<Service> {
         debug('enter getService')
-        const cursor = await ServiceDbSchema.find({ name: name });
+        const cursor = await ServiceDbSchema.collection.find({ name: name }).toArray();
         if (cursor.length > 0) {
             return cursor[0]
         }

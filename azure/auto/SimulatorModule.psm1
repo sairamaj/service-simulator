@@ -31,19 +31,22 @@ Function Test-ContainerRegistry {
     }
 }
 
-Function Test-ValutExists{
+Function Test-ValutExists {
     param(
         [parameter(Mandatory = $true)]
         $Name 
     )
 
     $valut = Get-AzureRmKeyVault -VaultName $Name
-    if( $null -eq $valut){
+    if ( $null -eq $valut) {
         $false
-    }else{
+    }
+    else {
         $true
     }
 }
+
+
 Function Login {
     $needLogin = $true
     Try {

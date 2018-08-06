@@ -1,0 +1,3 @@
+- fresh clone - buildall fail 
+- provider is case sensitive
+- mongodb errors giving unpromisied warning...
