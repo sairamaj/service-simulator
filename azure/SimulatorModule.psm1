@@ -91,5 +91,6 @@ Function Test-SimulatorHost {
         $Host
     )
     $servicesGetUrl = "http://$Host/api/v1/admin/services"
-    Invoke-RestMethod $servicesGetUrl
+    Write-Host "Invoking: $servicesGetUrl"
+    Invoke-RestMethod $servicesGetUrl -TimeoutSec 10
 }
