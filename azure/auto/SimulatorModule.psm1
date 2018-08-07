@@ -69,3 +69,27 @@ Function Login {
     }
 }
 
+Function Test-Container {
+    param(
+        [parameter(Mandatory = $true)]
+        $ResourceGroupName,
+        [parameter(Mandatory = $true)]
+        $Name
+    )
+    try {
+        Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroupName -Name $Name -ErrorAction Stop | Out-Null
+        $true
+    }
+    catch {
+        $false
+    }
+}
+
+Function Test-SimulatorHost {
+    param(
+        [parameter(Mandatory = $true)]
+        $Host
+    )
+    $servicesGetUrl = "http://$Host/api/v1/admin/services"
+    Invoke-RestMethod $servicesGetUrl
+}

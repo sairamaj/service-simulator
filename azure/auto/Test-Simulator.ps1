@@ -8,15 +8,13 @@ param(
 Import-Module './SimulatorModule'
 
 Login
-if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $true)
+if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $false)
 {
-    Write-Warning "$ContainerName exists in $ResourceGroup."
+    Write-Warning "$ContainerName does not exists in $ResourceGroup."
     return
 }
 
-New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName -Image sairamaj/servicesimulator:v1 -DnsNameLabel $ContainerName | Out-Null
 Write-Host "$ContainerName created. Checking the status."
-
 # Check the container status periodically for success status
 do{
     Write-Host 'Checking ....'
