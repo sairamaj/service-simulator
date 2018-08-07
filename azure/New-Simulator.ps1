@@ -28,8 +28,8 @@ Login
 
 if( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false){
     Write-Warning "$ResourceGroup does not exists, creating new one."
-    $resourceGroup = New-AzureRmResourceGroup -Name $ResourceGroup -Location $Location
-    Write-Host "Created successfully $ResourceGroup"
+    $newGroup = New-AzureRmResourceGroup -Name $ResourceGroup -Location $Location
+    Write-Host "Created successfully $newGroup"
 }
 
 if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $true)
