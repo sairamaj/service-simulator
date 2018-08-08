@@ -49,8 +49,7 @@ Function Get-MongoDbConnection {
     Input: something/?ssl=true 
     Output: something/database?ssl=true
 #>
-Function Add-DatabaseNameToMonDbConnectionString
-{
+Function Add-DatabaseNameToMonDbConnectionString {
     param(
         [parameter(Mandatory = $true)]
         $ConnectionString,
@@ -61,7 +60,7 @@ Function Add-DatabaseNameToMonDbConnectionString
     $parts = $ConnectionString.split('?')
     $conString = $parts[0]
     $conString += $Database
-    if($parts.length -gt 1){
+    if ($parts.length -gt 1) {
         $conString += '?'
         $conString += $parts[1]
     }
@@ -145,5 +144,19 @@ Function Test-SimulatorHost {
     )
     $servicesGetUrl = "http://$Host/api/v1/admin/services"
     Write-Host "Invoking: $servicesGetUrl"
-    Invoke-RestMethod $servicesGetUrl -TimeoutSec 10
+    $result = Invoke-RestMethod $servicesGetUrl -TimeoutSec 10
+    Write-Host $result
+}
+
+Function Show-Logs {
+    param(
+        [parameter(Mandatory = $true)]
+        $ResourceGroup,
+        [parameter(Mandatory = $true)]
+        $ContainerName
+    )
+    Write-Host "`t---------------------------------------------"
+    $logs = Get-AzureRmContainerInstanceLog -ResourceGroupName $ResourceGroup -ContainerGroupName $ContainerName 
+    Write-Host ($logs -split '\n' |  ForEach-Object { "`t" + $_ + "`n"}) -ForegroundColor DarkCyan
+    Write-Host "`t-------------------------------------------"
 }

@@ -3,6 +3,10 @@
     Creates New Service Simulator Azure Container 
 .DESCRIPTION
     New Service simulator azure container from the image sairamaj/servicesimulator:v1. For more information about this simulator visit https://github.com/sairamaj/service-simulator
+
+    - Creates the simulator host and url is availbale at : http://testhost.eastus.azurecontainer.io
+    - Verfies by running /api/v1/admin/services
+    - Open the dashboard
 .INPUTS
     ResourceGroup       - Azure resource group (creates one if one does not exist).
     ContainerName       - This is name of the new container. The simulator url will have this.
@@ -12,10 +16,6 @@
 .EXAMPLE
     .\New-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
     .\New-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost -MongoDbAccountName testdb
-
-    - Creates the simulator host and url is availbale at : http://testhost.eastus.azurecontainer.io
-    - Verfies by running /api/v1/admin/services
-    - Open the dashboard
 #>
 param(
     [parameter(Mandatory = $true)]
@@ -24,11 +24,99 @@ param(
     $ContainerName,
     $MongoDbAccountName
 )
-
 Import-Module '.\Simulator-Module.psm1'
 
-$Location = 'eastus'
+Function Test-SimulatorInitialize {
+    param(
+        [parameter(Mandatory = $true)]
+        $HostName
+    )
+    $tries = 0
+    do {
+        try {
+            $tries++
+            Write-Progress "Checking $HostName Try:$tries"
+            Test-SimulatorHost $HostName  
+            break          
+        }
+        catch {
+            Write-Warning $_.Exception.Message
+            Show-Logs -ResourceGroup $ResourceGroup -ContainerName $ContainerName  
+        }
 
+        if ( $tries -ge 5) {
+            Write-Warning "Tried $($tries) and gettting logs."
+            $false
+        }
+
+        Start-Sleep -Seconds 10
+    }while ($true)
+
+    $true
+}
+
+Function Test-ContainerForRunning {
+    # Check the container status periodically for success status
+    $tries = 0
+    $status = $false
+    do {
+        Write-Host 'Checking ....'
+        $tries++
+        $container = Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
+        Write-Progress "$ContainerName is in $($container.State) Try: $tries"
+        Write-Host "State: $($container.State)"
+        if ( $container.State -eq 'Running') {
+            $status = $true
+            break
+        }
+
+        if ( $tries -gt 15) {
+            break
+        }
+
+        Start-Sleep -Seconds 10
+    }while ($true) 
+    
+    Write-Host 'Status : $status'
+    $status
+}
+
+Function New-Container {
+    
+    $mongodbConnectionString = $null
+    <# If mongodb is given then get mongodb connection#>
+    if ( $null -ne $MongoDbAccountName) {
+        $MongoDatabaseName = 'simulator'
+    
+        if ( (Test-Mongodb -ResourceGroup $ResourceGroup -Name $MongoDbAccountName) -eq $false ) {
+            Write-Error "No mongodb account '$MongoDbAccountName' found"
+            return
+        }
+        # Get connection string
+        $connectionStringWithoutDb = Get-MongoDbConnection -ResourceGroup $ResourceGroup -Name $MongoDbAccountName
+        # Add database name
+        $mongodbConnectionString = Add-DatabaseNameToMonDbConnectionString -ConnectionString $connectionStringWithoutDb -Database $MongoDatabaseName
+    }
+    
+    $environment = @{}
+    if ( $null -ne $mongodbConnectionString) {
+        Write-Host "Creating with mongo provider"
+        $environment['PROVIDER'] = 'mongo'
+        $environment['MONGODB_CONNECTION'] = $mongodbConnectionString
+    }
+    else {
+        $environment['PROVIDER'] = 'inmemory'
+    }
+    
+    # Create container
+    Write-Host "$ContainerName Creating $ContainerName."
+    New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
+        -Name $ContainerName -Image sairamaj/servicesimulator:v1 `
+        -DnsNameLabel $ContainerName `
+        -EnvironmentVariable $environment  | Out-Null
+}
+
+$Location = 'eastus'
 Login
 
 if ( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false) {
@@ -37,65 +125,25 @@ if ( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false) {
     Write-Host "Created successfully $newGroup"
 }
 
-if ( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $true) {
+if ( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $fasle) {
     Write-Warning "$ContainerName exists in $ResourceGroup."
     return
 }
 
-$mongodbConnectionString = $null
-<# If mongodb is given then get mongodb connection#>
-if ( $null -ne $MongoDbAccountName) {
-    $MongoDatabaseName = 'simulator'
-
-    if ( (Test-Mongodb -ResourceGroup $ResourceGroup -Name $MongoDbAccountName) -eq $false ) {
-        Write-Error "No mongodb account '$MongoDbAccountName' found"
-        return
-    }
-
-    # Get connection string
-    $connectionStringWithoutDb = Get-MongoDbConnection -ResourceGroup $ResourceGroup -Name $MongoDbAccountName
-    # Add database name
-    $mongodbConnectionString = Add-DatabaseNameToMonDbConnectionString -ConnectionString $connectionStringWithoutDb -Database $MongoDatabaseName
-}
-
-$environment = @{}
-if ( $null -ne $mongodbConnectionString) {
-    Write-Host "Creating with mongo provider"
-    $environment['PROVIDER'] = 'mongo'
-    $environment['MONGODB_CONNECTION'] = $mongodbConnectionString
-}else{
-    $environment['PROVIDER'] = 'inmemory'
-}
-
 # Create container
-Write-Host "$ContainerName Creating $ContainerName."
-New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
-    -Name $ContainerName -Image sairamaj/servicesimulator:v1 `
-    -DnsNameLabel $ContainerName `
-    -EnvironmentVariable $environment  | Out-Null
+New-Container
 
 Write-Host "$ContainerName created. Checking the status."
+if ( !(Test-ContainerForRunning)) {
+    Write-Error "Container could not start properly."
+    return
+}
 
-
-# Check the container status periodically for success status
-do {
-    Write-Host 'Checking ....'
-    $container = Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
-    Write-Progress "$ContainerName is in $($container.State)"
-    
-    if ( $container.State -eq 'Running') {
-        break
-    }
-
-    Start-Sleep -Seconds 10
-}while ($true)
-
-$waitForServiceToInitialize = 30
-Write-Host "Waiting for $waitForServiceToInitialize for service to get fully initialize."
-Start-Sleep -Seconds $waitForServiceToInitialize
-
-Write-Host "Verifying... $($container.Fqdn)"
-Test-SimulatorHost $container.Fqdn
-Write-Host "Open the dashboard."
-Start-Process "http://$($container.Fqdn)"
+Write-Host "Verifying... $($container.IpAddress)"
+$container = Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
+if ( (Test-SimulatorInitialize -Host $container.IpAddress) -eq $true ) {
+    Write-Host "Open the dashboard."
+    Start-Process "http://$($container.IpAddress)"
+}
+Write-Host "You can use with DNS entry... $($container.Fqdn)"
 

@@ -25,4 +25,5 @@ if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq
     return
 }
 
-Get-AzureRmContainerInstanceLog -ResourceGroupName $ResourceGroup -ContainerGroupName $ContainerName 
+Show-Logs -ResourceGroup $ResourceGroup -ContainerName $ContainerName  
+
