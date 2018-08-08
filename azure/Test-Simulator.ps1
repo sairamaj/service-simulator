@@ -1,3 +1,15 @@
+<#
+.SYNOPSIS
+    Tests simulator container.
+.DESCRIPTION
+    Used for verifying the container.
+.INPUTS
+    ResourceGroup       - Azure resource group (creates one if one does not exist).
+    ContainerName       - This is name of the new container. The simulator url will have this. 
+.EXAMPLE
+    .\Test-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
+#>
+
 param(
     [parameter(Mandatory=$true)]
     $ResourceGroup,
@@ -31,3 +43,4 @@ do{
 
 Write-Host "Verifying..."
 Test-SimulatorHost $container.Fqdn
+Start-Process "http://$($container.Fqdn)"

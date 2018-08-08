@@ -32,5 +32,10 @@ Once created it will open the dashboard in browser.If resource group does not ex
     .\Remove-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
 ```
 
+## Creating a mongodb for simulator to use
+
+```powershell
+    .\New-MongoDb.ps1 -ResourceGroup simulator -Name simdb
+```
 
 
