@@ -15,6 +15,59 @@ Function Test-ResourceGroup {
     }
 }
 
+
+Function Test-Mongodb {
+    param(
+        [parameter(Mandatory = $true)]
+        $ResourceGroup,
+        [parameter(Mandatory = $true)]
+        $Name        
+    )
+
+    $null -ne (Get-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" -ResourceGroupName $ResourceGroup  -Name $Name)
+}
+
+Function Get-MongoDbConnection {
+    param(
+        [parameter(Mandatory = $true)]
+        $ResourceGroup,
+        [parameter(Mandatory = $true)]
+        $Name        
+    ) 
+    $result = Invoke-AzureRmResourceAction -Action listConnectionStrings `
+        -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
+        -ResourceGroupName $ResourceGroup `
+        -Name $Name `
+        -Force 
+
+    $result[0].connectionStrings.connectionString
+}
+
+<#
+    Adds database name to connection string. Azure connection string comes with options and we need
+    to insert database before options
+    Input: something/?ssl=true 
+    Output: something/database?ssl=true
+#>
+Function Add-DatabaseNameToMonDbConnectionString
+{
+    param(
+        [parameter(Mandatory = $true)]
+        $ConnectionString,
+        [parameter(Mandatory = $true)]
+        $Database        
+    )
+
+    $parts = $ConnectionString.split('?')
+    $conString = $parts[0]
+    $conString += $Database
+    if($parts.length -gt 1){
+        $conString += '?'
+        $conString += $parts[1]
+    }
+    $conString
+} 
+
 Function Test-ContainerRegistry {
     param(
         [parameter(Mandatory = $true)]

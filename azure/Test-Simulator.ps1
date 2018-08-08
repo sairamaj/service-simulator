@@ -17,7 +17,7 @@ param(
     $ContainerName
 )
 
-Import-Module './SimulatorModule'
+Import-Module '.\Simulator-Module.psm1'
 
 Login
 if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $false)

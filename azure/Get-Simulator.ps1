@@ -4,9 +4,9 @@
 .DESCRIPTION
     Useful for showing the existing containers after they have been crated.
 .INPUTS
-    ResourceGroup       - Azure resource group (creates one if one does not exist).
+    ResourceGroup       - Azure resource group 
 .EXAMPLE
-    .\Get-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
+    .\Get-Simulator.ps1 -ResourceGroup simulator
 #>
 
 param(
@@ -14,7 +14,7 @@ param(
     $ResourceGroup
 )
 
-Import-Module './SimulatorModule'
+Import-Module '.\Simulator-Module.psm1'
 
 $Location = 'eastus'
 
@@ -25,4 +25,4 @@ if( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false){
     return
 }
 
-Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup | select ProvisioningState, Name, @{Name="Url";Expression = {"http://" + $_.Fqdn} }
+Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup | Select-Object ProvisioningState, Name, @{Name="Url";Expression = {"http://" + $_.Fqdn} }

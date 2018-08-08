@@ -17,7 +17,7 @@ param(
     $Name        
 )
 
-Import-Module './SimulatorModule'
+Import-Module '.\Simulator-Module.psm1'
 $Location = 'eastus'
 
 Login
