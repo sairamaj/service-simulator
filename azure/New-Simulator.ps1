@@ -8,7 +8,7 @@
     ContainerName       - This is name of the new container. The simulator url will have this.
     MongoDbAccountName  - Optional - Mongodb account name. If not given provider will be in memory and if given mongodb
                           connection string will be retrieved and container will be configured using mongo provider.
-                          (Node: Mongo database should exists)
+                          (Note: Mongo database should exists)
 .EXAMPLE
     .\New-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
     .\New-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost -MongoDbAccountName testdb
@@ -63,6 +63,8 @@ if ( $null -ne $mongodbConnectionString) {
     Write-Host "Creating with mongo provider"
     $environment['PROVIDER'] = 'mongo'
     $environment['MONGODB_CONNECTION'] = $mongodbConnectionString
+}else{
+    $environment['PROVIDER'] = 'inmemory'
 }
 
 # Create container
@@ -88,7 +90,7 @@ do {
     Start-Sleep -Seconds 10
 }while ($true)
 
-$waitForServiceToInitialize = 20
+$waitForServiceToInitialize = 30
 Write-Host "Waiting for $waitForServiceToInitialize for service to get fully initialize."
 Start-Sleep -Seconds $waitForServiceToInitialize
 
