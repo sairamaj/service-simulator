@@ -6,7 +6,11 @@ const Schema = mongoose.Schema;
 export const ServiceSchema = new Schema({
     name: {
         type: String,
-        required: 'Name required'
+        required: 'Name required',
+        index: {
+            unique: true,
+            dropDups: true
+        }
     },
 
     config: [{
