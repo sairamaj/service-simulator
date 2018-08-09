@@ -7,7 +7,7 @@
     ResourceGroup       - Azure resource group (creates one if one does not exist).
     Name                - This is name of the new mongodb account.
 .EXAMPLE
-    .\Test-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
+    .\New-MongoDb.ps1 -ResourceGroup simulator -ContainerName testhost
 #>
 
 param(
@@ -23,15 +23,14 @@ $Location = 'eastus'
 Login
 
 <# Check resource group and create if one does not exist.#>
-if( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false){
+if ( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false) {
     Write-Warning "$ResourceGroup does not exists, creating new one."
     $newGroup = New-AzureRmResourceGroup -Name $ResourceGroup -Location $Location
     Write-Host "Created successfully $newGroup"
 }
 
 <# Check whether already exists.#>
-$resource = Get-AzureRmResource -ResourceType Microsoft.DocumentDb/databaseAccounts -Name $Name
-if( $null -ne $resource){
+if ( Test-Mongodb -ResourceGroup $ResourceGroup -Name $Name ) {
     Write-Warning "$Name already exists."
     return
 }
@@ -63,6 +62,7 @@ New-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
     -Name $Name `
     -PropertyObject $DBProperties `
     -Kind "MongoDB"  `
+    -ErrorAction Stop `
     -Force
-Write-Host '$Name has been added successfully.' -ForegroundColor Green
+Write-Host "$Name has been added successfully." -ForegroundColor Green
 

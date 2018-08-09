@@ -24,7 +24,7 @@ Function Test-Mongodb {
         $Name        
     )
 
-    $null -ne (Get-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" -ResourceGroupName $ResourceGroup  -Name $Name)
+    $null -ne (Get-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" -ResourceGroupName $ResourceGroup  -Name $Name -ErrorAction SilentlyContinue)
 }
 
 Function Get-MongoDbConnection {

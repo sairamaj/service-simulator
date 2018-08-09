@@ -88,8 +88,8 @@ Function New-Container {
     if ( $null -ne $MongoDbAccountName) {
         $MongoDatabaseName = 'simulator'
     
-        if ( (Test-Mongodb -ResourceGroup $ResourceGroup -Name $MongoDbAccountName) -eq $false ) {
-            Write-Error "No mongodb account '$MongoDbAccountName' found"
+        if ( !(Test-Mongodb -ResourceGroup $ResourceGroup -Name $MongoDbAccountName)) {
+            Write-Error "No mongodb account '$MongoDbAccountName' found. add using .\New-MongoDb -ResourceGroup $ResourceGroup $Name $MongoDbAccountName"
             return
         }
         # Get connection string
@@ -110,10 +110,11 @@ Function New-Container {
     
     # Create container
     Write-Host "$ContainerName Creating $ContainerName."
-    New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
+    $container = New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
         -Name $ContainerName -Image sairamaj/servicesimulator:v1 `
         -DnsNameLabel $ContainerName `
-        -EnvironmentVariable $environment  | Out-Null
+        -EnvironmentVariable $environment -ErrorAction Stop
+    $container
 }
 
 $Location = 'eastus'
@@ -122,7 +123,7 @@ Login
 if ( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false) {
     Write-Warning "$ResourceGroup does not exists, creating new one."
     $newGroup = New-AzureRmResourceGroup -Name $ResourceGroup -Location $Location
-    Write-Host "Created successfully $newGroup"
+    Write-Host "Created successfully $($newGroup.ResourceGroupName)"
 }
 
 if ( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $fasle) {
@@ -131,7 +132,10 @@ if ( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -e
 }
 
 # Create container
-New-Container
+$container = New-Container
+if( $null -eq $container){
+    return
+}
 
 Write-Host "$ContainerName created. Checking the status."
 if ( !(Test-ContainerForRunning)) {
