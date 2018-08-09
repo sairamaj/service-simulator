@@ -1,0 +1,26 @@
+[
+	{
+		"name": "request_1_with_today_date",
+		"matches": [
+			"request_1"
+		]
+	},
+	{
+		"name": "request_2_with_2days_ahead_date",
+		"matches": [
+			"request_2"
+		]
+	},
+	{
+		"name": "request_3_with_datein_ddmmyyyy_format",
+		"matches": [
+			"request_3"
+		]
+	},
+	{
+		"name": "request_4_with_date_yyyymmdd_format",
+		"matches": [
+			"request_4"
+		]
+	}
+]

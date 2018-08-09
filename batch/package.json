@@ -3,7 +3,10 @@
     "version": "1.0.0",
     "description": "batch",
     "main": "import.ts",
-    "dependencies": {},
+    "dependencies": {
+        "fs-extra": "^7.0.0",
+        "minimist": "^1.2.0"
+    },
     "devDependencies": {
         "glob": "^7.1.2",
         "gulp": "^3.9.1",

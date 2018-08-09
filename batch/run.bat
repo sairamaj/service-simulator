@@ -1,4 +1,5 @@
 call gulp scripts
-pause
-node dist\index.js mongodb://127.0.0.1:27017/simulator inmemory "C:\sai\dev\service-simulator\api\data\inmemory\testdata.json"
+rem pause
+rem node dist\index.js --provider inmemory --providerpath "..\api\data\inmemory\testdata.json" --consumer mongo --consumermongodb mongodb://127.0.0.1:27017/simulator
+node dist\index.js --provider inmemory --providerpath "..\api\data\inmemory\testdata.json" --consumer file --consumerpath ..\api\data\fileprovider
 

@@ -1,0 +1,14 @@
+[
+	{
+		"name": "request_1_with_random_number",
+		"matches": [
+			"request_1"
+		]
+	},
+	{
+		"name": "request_1_withrandom_min_max",
+		"matches": [
+			"request_2"
+		]
+	}
+]

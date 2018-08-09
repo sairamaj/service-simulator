@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import { Provider } from "./Provider";
 import { Service } from "../model/Service";
 import { TestCase } from "../model/TestCase";
@@ -5,9 +6,10 @@ import { TestCase } from "../model/TestCase";
 export class InMemoryProvider implements Provider{
     data: any[];
     constructor(fileName: string){
-        this.data = require(fileName)
+        this.data = JSON.parse(fs.readFileSync(fileName,'utf-8'))
     }
 
+    public name: string = 'inmemory'
     public* getServices(): Iterable<Service> {
         for(let s of this.data){
             yield new Service(s.name, s.type,[])
