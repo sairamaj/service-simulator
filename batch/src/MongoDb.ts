@@ -57,6 +57,7 @@ export class MongoDb {
     private async getService(name: string): Promise<Service> {
         debug('enter getService : ' + name)
         var service = await (ServiceDbSchema.findOne({ name: name }))
+        debug('returing service:' + service)
         return service;
     }
 
@@ -72,7 +73,7 @@ export class MongoDb {
         var responseNameKey = name + "_response_" + testcase.name;
         debug('addRequest inserting :' + responseNameKey)
         await ResponseDbSchema.findOneAndUpdate({ name: responseNameKey },
-            { name: responseNameKey, response: testcase.request },
+            { name: responseNameKey, response: testcase.response },
             { upsert: true })
     }
 

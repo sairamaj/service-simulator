@@ -13,7 +13,7 @@ describe('GET api/v1/admin/services', () => {
         expect(res.status).to.equal(200)
         expect(res).to.be.json
         expect(res.body).to.be.an('array')
-        expect(res.body).to.have.length(8)
+        expect(res.body).to.be.length.greaterThan(7)
       })
   })
 
@@ -386,7 +386,6 @@ describe('Editing existing test case with add', () => {
               .then(res => {
                 let map = res.body
                 expect(map.name).to.equal(mapRequest.name)
-                expect(map.request).to.equal(mapRequest.request)
                 expect(map.response).to.equal(mapRequest.response)
                 expect(map.matches).to.not.be.undefined
                 expect(map.matches.length).to.equal(1)

@@ -56,6 +56,7 @@ export class AdminRouter {
     }
     
     var foundService = await ServiceManagerFactory.createServiceManager().getService(request.name)
+    debug('foundService:' + foundService)
     if (foundService !== undefined) {
       debug('foundservice. returning 422')
       res.status(422).send({

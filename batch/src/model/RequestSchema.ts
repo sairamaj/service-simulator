@@ -9,7 +9,8 @@ export const RequestSchema = new Schema({
         required: 'Name required',
         index: {
             unique: true,
-            dropDups: true
+            dropDups: true,
+            uniqueCaseInsensitive: true 
         }
     },
 

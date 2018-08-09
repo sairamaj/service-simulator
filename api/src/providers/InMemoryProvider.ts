@@ -24,11 +24,13 @@ export class InMemoryProvider implements ServiceManager {
     }
 
     public async getService(name: string): Promise<Service> {
+        debug('enter getService:' + name)
         var services = await this.getServices();
         return services.find(h => h.name.toLocaleLowerCase() == name.toLocaleLowerCase())
     }
 
     public addService(service: Service): Promise<boolean> {
+        debug('enter addService:' + service.name)
         return new Promise<boolean>((resolve, reject) => {
             InMemoryProvider.TestData.push(service)
             resolve(true)

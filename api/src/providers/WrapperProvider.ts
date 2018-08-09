@@ -24,9 +24,10 @@ export class WrapperProvider implements ServiceManager {
 
     public async getService(name: string): Promise<Service> {
         debug('enter getService')
+        name = name.toLocaleLowerCase().trim()
         var service = await this.innerProvider.getService(name)
-        if( service === undefined){
-            return service
+        if( service === undefined || service === null){
+            return undefined
         }
 
         if( service.type === undefined){
@@ -38,7 +39,7 @@ export class WrapperProvider implements ServiceManager {
 
     public async addService(service: Service): Promise<boolean> {
         debug('enter addService')
-        service.name = service.name.trim()
+        service.name = service.name.toLocaleLowerCase().trim()
         return await this.innerProvider.addService(service)
     }
 
