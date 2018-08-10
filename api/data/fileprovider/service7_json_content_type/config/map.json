@@ -1,8 +1,11 @@
-[
-	{
-		"name": "request_1",
-		"matches": [
-			"request_1"
-		]
-	}
-]
+{
+	"type": "json",
+	"maps": [
+		{
+			"name": "request_1",
+			"matches": [
+				"request_1"
+			]
+		}
+	]
+}

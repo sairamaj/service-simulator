@@ -28,7 +28,8 @@ export class ServicesFileProvider implements ServiceManager {
 
                     resolve(dirs.map(d => {
                         var name = d.split('/').slice(-1)[0]
-                        return new Service(name, '', new ServiceFileProvider(name, this.getFilesProviderLocation()).getConfigMap())
+                        var serviceInfo = new ServiceFileProvider(name, this.getFilesProviderLocation())
+                        return new Service(name, serviceInfo.type, serviceInfo.getConfigMap())
                     }));
                 }
             });
@@ -104,18 +105,19 @@ export class ServicesFileProvider implements ServiceManager {
                     fs.mkdirSync(directory);
                 }
 
-                var supportDirectories = ['config','requests','responses','logs']
-                supportDirectories.forEach(d =>{
+                var supportDirectories = ['config', 'requests', 'responses', 'logs']
+                supportDirectories.forEach(d => {
                     var supportDirectory = directory + path.sep + d
                     if (!fs.existsSync(supportDirectory)) {
                         fs.mkdirSync(supportDirectory);
                     }
                 })
 
-                var mapFile = directory + path.sep + 'config' + path.sep + 'map.config'
+                var mapFile = directory + path.sep + 'config' + path.sep + 'map.json'
                 // create empty map file.
-                if(!fs.existsSync(mapFile)){
-                    fs.writeFileSync(mapFile, '[]')
+                if (!fs.existsSync(mapFile)) {
+                    var serviceInfo = { type: service.type, maps: [] }
+                    fs.writeFileSync(mapFile, JSON.stringify(serviceInfo, null, '\t'))
                 }
 
                 resolve(true)

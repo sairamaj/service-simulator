@@ -14,7 +14,7 @@ export class WrapperProvider implements ServiceManager {
         debug('enter getServices')
         var services = await this.innerProvider.getServices()
         services.forEach(s => {
-            if( s.type === undefined){
+            if( s.type === undefined || s.type == ''){
                 s.type = 'soap' // default
             }
         })
@@ -29,8 +29,7 @@ export class WrapperProvider implements ServiceManager {
         if( service === undefined || service === null){
             return undefined
         }
-
-        if( service.type === undefined){
+        if( service.type === undefined || service.type == ''){
             service.type = 'soap'
         }
 

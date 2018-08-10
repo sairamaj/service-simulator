@@ -64,11 +64,12 @@ export class FileConsumer implements Consumer {
 
                 debug('returning true.')
 
+                var info = { type: service.type, maps: [] }
                 var maps = []
                 var mapFile = configPath + path.sep + 'map.json'
                 if (!fsextra.pathExistsSync(mapFile)) {
                     debug('reading ' + mapFile)
-                    fsextra.outputJsonSync(mapFile, maps, { spaces: '\t' })
+                    fsextra.outputJsonSync(mapFile, info, { spaces: '\t' })
                 }
 
                 resolve(true)
@@ -106,19 +107,20 @@ export class FileConsumer implements Consumer {
             try {
                 debug('addConfig.' + configPath)
                 var mapFile = configPath + path.sep + 'map.json'
-                var maps = []
+                var serviceInfo = { type: "soap", maps: [] }
                 if (fsextra.pathExistsSync(mapFile)) {
                     debug('reading ' + mapFile)
-                    maps = fsextra.readJsonSync(mapFile)
+                    serviceInfo = fsextra.readJsonSync(mapFile)
                 }
 
-                maps.push({
+                serviceInfo.maps.push({
                     name: testcase.name,
                     matches: testcase.matches
                 })
 
                 debug('writing json...')
-                fsextra.outputJsonSync(mapFile, maps, { spaces: '\t' })
+
+                fsextra.outputJsonSync(mapFile, serviceInfo, { spaces: '\t' })
                 resolve()
             } catch (error) {
                 reject(error)

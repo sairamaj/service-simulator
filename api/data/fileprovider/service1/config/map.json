@@ -1,32 +1,137 @@
-[
-	{
-		"name": "request_1",
-		"matches": [
-			"request_1"
-		]
-	},
-	{
-		"name": "request_2",
-		"matches": [
-			"request_2"
-		]
-	},
-	{
-		"name": "request_8701",
-		"matches": [
-			"request_8701"
-		]
-	},
-	{
-		"name": "request_98401",
-		"matches": [
-			"request_98401"
-		]
-	},
-	{
-		"name": "request_18711",
-		"matches": [
-			"request_18711"
-		]
-	}
-]
+{
+	"type": "soap",
+	"maps": [
+		{
+			"name": "request_1",
+			"matches": [
+				"request_1"
+			]
+		},
+		{
+			"name": "request_2",
+			"matches": [
+				"request_2"
+			]
+		},
+		{
+			"name": "request_40421",
+			"matches": [
+				"request_40421"
+			]
+		},
+		{
+			"name": "request_55831",
+			"matches": [
+				"request_55831"
+			]
+		},
+		{
+			"name": "request_31001",
+			"matches": [
+				"request_31001"
+			]
+		},
+		{
+			"name": "request_32021",
+			"matches": [
+				"request_32021"
+			]
+		},
+		{
+			"name": "request_96461",
+			"matches": [
+				"request_96461"
+			]
+		},
+		{
+			"name": "request_34861",
+			"matches": [
+				"request_34861"
+			]
+		},
+		{
+			"name": "request_15371",
+			"matches": [
+				"request_15371"
+			]
+		},
+		{
+			"name": "request_50971",
+			"matches": [
+				"request_50971"
+			]
+		},
+		{
+			"name": "request_20021",
+			"matches": [
+				"request_20021"
+			]
+		},
+		{
+			"name": "request_67041",
+			"matches": [
+				"request_67041"
+			]
+		},
+		{
+			"name": "request_83781",
+			"matches": [
+				"request_83781"
+			]
+		},
+		{
+			"name": "request_98261",
+			"matches": [
+				"request_98261"
+			]
+		},
+		{
+			"name": "request_72001",
+			"matches": [
+				"request_72001"
+			]
+		},
+		{
+			"name": "request_21121",
+			"matches": [
+				"request_21121"
+			]
+		},
+		{
+			"name": "request_27291",
+			"matches": [
+				"request_27291"
+			]
+		},
+		{
+			"name": "request_97401",
+			"matches": [
+				"request_97401"
+			]
+		},
+		{
+			"name": "request_42401",
+			"matches": [
+				"request_42401"
+			]
+		},
+		{
+			"name": "request_30051",
+			"matches": [
+				"request_30051"
+			]
+		},
+		{
+			"name": "request_4821",
+			"matches": [
+				"request_4821"
+			]
+		},
+		{
+			"name": "request_18851",
+			"matches": [
+				"request_18851"
+			]
+		}
+	]
+}

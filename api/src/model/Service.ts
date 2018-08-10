@@ -1,10 +1,10 @@
 import { ServiceConfigMap } from "./ServiceConfigMap";
 
-export class Service{
+export class Service {
     constructor(public name: string,
-        public type: string = 'soap',
-        public config : ServiceConfigMap[]
-    ){
+        public type: string,
+        public config: ServiceConfigMap[]
+    ) {
     }
 
     public url: string

@@ -9,6 +9,8 @@ var debug = require('debug')('servicefileprovider')
 
 export class ServiceFileProvider {
     configMaps: ServiceConfigMap[];
+    type: string
+
     constructor(public name: string, public fileProviderLocation: string) {
         this.configMaps = [];
         var mapFileName = this.getConfigMapFile();
@@ -19,7 +21,9 @@ export class ServiceFileProvider {
         }
 
         debug('reading ' + mapFileName)
-        this.configMaps = JSON.parse(fs.readFileSync(mapFileName, 'utf-8' ));
+        var serviceInfo = JSON.parse(fs.readFileSync(mapFileName, 'utf-8'));
+        this.configMaps = serviceInfo.maps
+        this.type = serviceInfo.type
         debug('configMaps' + JSON.stringify(this.configMaps))
     }
 
@@ -52,16 +56,18 @@ export class ServiceFileProvider {
                 this.configMaps = []
             }
 
-            var foundConfig = this.configMaps.find(c=> c.name == mapDetail.name)
-            if( foundConfig === undefined){
-                this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))    
-            }else{
-                foundConfig.matches =  mapDetail.matches
+            var foundConfig = this.configMaps.find(c => c.name == mapDetail.name)
+            if (foundConfig === undefined) {
+                this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+            } else {
+                foundConfig.matches = mapDetail.matches
             }
 
             // Update config
             let configMapFileName = this.getConfigMapFile();
-            fs.writeFileSync(configMapFileName, JSON.stringify(this.configMaps, null, '\t'))
+
+            fs.writeFileSync(configMapFileName, JSON.stringify(
+                { type: this.type, maps: this.configMaps }, null, '\t'))
 
             // write request
             let requestFileName = this.getRequestFileName(mapDetail.name);
@@ -108,6 +114,7 @@ export class ServiceFileProvider {
                 } else {
                     var processInfo = new ProcessInfo(request);
                     processInfo.response = data;
+                    processInfo.type = this.type;
                     processInfo.matches = foundConfig.matches;
                     resolve(processInfo);
                 }
@@ -118,7 +125,8 @@ export class ServiceFileProvider {
     public getConfigMap(): ServiceConfigMap[] {
         let configFile = this.getConfigMapFile();
         if (fs.existsSync(configFile)) {
-            return JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+            var serviceInfo =  JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+            return serviceInfo.maps
         }
     }
 

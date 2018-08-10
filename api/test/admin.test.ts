@@ -371,6 +371,7 @@ describe('Editing existing test case with add', () => {
     return chai.request(app).get('/api/v1/admin/services/service8')
       .then(res => {
         let service = res.body
+        console.log(service)
         let prevMapCount = service.config.length
         console.log('prevMapCount:' + prevMapCount)
 
@@ -385,6 +386,7 @@ describe('Editing existing test case with add', () => {
             return chai.request(app).get('/api/v1/admin/services/service8/maps/' + mapRequest.name)
               .then(res => {
                 let map = res.body
+                console.log(map)
                 expect(map.name).to.equal(mapRequest.name)
                 expect(map.response).to.equal(mapRequest.response)
                 expect(map.matches).to.not.be.undefined
