@@ -1,0 +1,1 @@
+<response><id>{{request tags="<id>|</id>"}}</id><email>{{dataextract dataname="users.txt" match="<id>|</id>" key="email"}}</email></response>

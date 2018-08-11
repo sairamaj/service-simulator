@@ -161,5 +161,19 @@
                 "response": "this is response1"
             }
         ]
+    },
+    {
+        "name": "service9withfileextract",
+        "type": "soap",
+        "config": [
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "request": "<request><id>1</id></request>",
+                "response": "<response><id>{{request tags=\"<id>|</id>\"}}</id><email>{{dataextract dataname=\"users.txt\" match=\"<id>|</id>\" key=\"email\"}}</email></response>"
+            }
+        ]
     }
 ]

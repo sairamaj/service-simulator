@@ -1,9 +1,11 @@
+import { InMemoryTemplateDataProvider } from './InMemoryTemplateDataProvider';
 import { ServiceManager } from './ServiceManager';
 import { Service } from '../model/Service';
 import { ProcessInfo } from '../model/ProcessInfo';
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
 import { ResponseTransformer } from '../transformers/ResponseTransformer';
+const config = require('./../config');
 const debug = require('debug')('wrapperProvider')
 
 export class WrapperProvider implements ServiceManager {
@@ -69,7 +71,9 @@ export class WrapperProvider implements ServiceManager {
 
         var processInfo = await this.innerProvider.getResponse(name, request)
         if( processInfo !== undefined){
-            processInfo.response = await new ResponseTransformer().transform(processInfo.request, processInfo.response)
+            processInfo.response = await new ResponseTransformer(
+                new InMemoryTemplateDataProvider(config.app.templateDataFilesLocation))
+                .transform(processInfo.request, processInfo.response)
             await this.innerProvider.logRequest(name, new Date(), 200, processInfo);
         }
 

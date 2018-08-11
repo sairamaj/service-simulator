@@ -18,8 +18,13 @@ export class InMemoryProvider implements ServiceManager {
     }
 
     public async getServices(): Promise<Service[]> {
-        return new Promise<Service[]>((resolve) => {
-            resolve(InMemoryProvider.TestData);
+        debug('enter getServices.')
+        return new Promise<Service[]>((resolve, reject) => {
+            try {
+                resolve(InMemoryProvider.TestData);
+            } catch (error) {
+                reject(error)
+            }
         });
     }
 
@@ -38,6 +43,7 @@ export class InMemoryProvider implements ServiceManager {
     }
 
     public async getMapDetail(name: string, mapName: string): Promise<MapDetail> {
+        debug(`enter getMapDetail ${name}:${mapName}`)
         return new Promise<MapDetail>((resolve) => {
             var service = InMemoryProvider.TestData.find(s => s.name === name);
             if (service === undefined) {

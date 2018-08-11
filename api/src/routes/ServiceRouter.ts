@@ -38,7 +38,9 @@ export class ServiceRouter {
             }
         } catch (error) {
             debug('error:' + error)
-            serviceManager.logRequest(serviceName, new Date(), 500, new ProcessInfo(requestData));
+            if (serviceManager !== undefined) {
+                serviceManager.logRequest(serviceName, new Date(), 500, new ProcessInfo(requestData));
+            }
             next(error)
         }
     }

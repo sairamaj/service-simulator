@@ -1,5 +1,9 @@
+import { ITemplateDataProvider } from './../providers/ITemplateDataProvider';
+import { InMemoryTemplateDataProvider } from './../providers/InMemoryTemplateDataProvider';
 import * as dateformat from 'dateformat'
-var debug = require('debug')('handlebarhelpers')
+import { fstat } from 'fs';
+import { DataExtractor } from './DataExtractor';
+const debug = require('debug')('handlebarhelpers')
 
 export class HelperProvider {
 
@@ -10,8 +14,9 @@ export class HelperProvider {
 
         var pos1 = input.indexOf(start)
         if (pos1 > 0) {
-            console.log(pos1)
+            console.log('pos1:' + pos1)
             var pos2 = input.indexOf(end, pos1 + 1);
+            console.log('pos2:' + pos2)
             if (pos2 > 0) {
                 return input.substr(pos1 + start.length, pos2 - pos1 - start.length)
             }
@@ -19,10 +24,43 @@ export class HelperProvider {
         return ''
     }
 
+    private static dataExtractor(context) {
+        debug('data extractor...')
+        var dataname = ''
+        if (context.hash['dataname']) {
+            dataname = context.hash['dataname']
+        } else {
+            return ''       // no data.
+        }
+
+        var match = ''
+        if (context.hash['match']) {
+            match = context.hash['match']
+        } else {
+            return ''       // no match.
+        }
+
+        var key = ''
+        if (context.hash['key']) {
+            key = context.hash['key']
+        } else {
+            return ''       // no key.
+        }
+
+        console.log(`data: ${dataname} match:${match} key:${key}`)
+        let dataProvider: ITemplateDataProvider = context.data.root.dataProvider
+        if (dataProvider === undefined) {
+            return ''
+        }
+
+        var request = context.data.root.request
+        return new DataExtractor(dataProvider, '', request, dataname, match, key).getData()
+    }
+
     static getHelpers(): Map<string, any> {
         let map = new Map<string, any>();
 
-        map.set('random',function (context) {
+        map.set('random', function (context) {
             debug('enter random helper')
             var min = 0
             if (context.hash["min"]) {
@@ -53,7 +91,7 @@ export class HelperProvider {
             return formattedDate;
         })
 
-        
+
         map.set('request', function (context) {
             debug('enter request helper')
 
@@ -70,9 +108,15 @@ export class HelperProvider {
                 return ''
             }
 
-            return HelperProvider.extract(context.data.root, start, end)
+            var data = context.data
+            console.log('request:' + data.root.request)
+            return HelperProvider.extract(data.root.request, start, end)
         })
-        
+
+        map.set('dataextract', context => {
+            return HelperProvider.dataExtractor(context)
+        })
+
         return map
     }
 }

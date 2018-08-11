@@ -25,7 +25,7 @@ class App {
 
 
     this.express.use((err: any, req, res, next) => {
-      debug('in error handler.')
+      console.log('in error handler:' + err)
       LogManager.log('error', '' + err)
       res.status(500).send(err)
     })

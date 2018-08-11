@@ -1,12 +1,12 @@
-import { resolve } from "url";
+    import { resolve } from "url";
 import * as handlebars from 'handlebars'
 import { HelperProvider } from "./HelpersProvider";
+import { ITemplateDataProvider } from "../providers/ITemplateDataProvider";
 var debug = require('debug')('responsetransformer')
 
 export class ResponseTransformer {
 
-    constructor() {
-
+    constructor(public dataProvider: ITemplateDataProvider) {
         for (let [k, v] of HelperProvider.getHelpers()) {
             handlebars.registerHelper(k, v);
         }
@@ -16,7 +16,10 @@ export class ResponseTransformer {
         return new Promise<string>((resolve, reject) => {
             var template = handlebars.compile(response)
             try {
-                resolve(template(request))
+                resolve(template({
+                    request : request,
+                    dataProvider: this.dataProvider
+                }))
             } catch (error) {
                 reject(error)
             }

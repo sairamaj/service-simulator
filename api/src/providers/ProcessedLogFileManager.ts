@@ -84,6 +84,7 @@ export class ProcessLogFileManager {
         debug('logDirectory:' + logDirectory)
         if (!fs.existsSync(logDirectory)) {
             debug('log directory ' + logDirectory + ' does not exists and hence not writing')
+            return
         }
 
         debug('checking for available log file name.')
