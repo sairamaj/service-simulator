@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 describe('serice with file extract', () => {
-    it.only('should return email for id 100.', () => {
+    it('should return email for id 100.', () => {
         return chai.request(app)
             .post('/service9withfileextract')
             .send('<request_1><id>100</id></request_1>')
@@ -20,7 +20,7 @@ describe('serice with file extract', () => {
             })
     })
 
-    it.only('should return email for id 200.', () => {
+    it('should return email for id 200.', () => {
         return chai.request(app)
             .post('/service9withfileextract')
             .send('<request_1><id>200</id></request_1>')

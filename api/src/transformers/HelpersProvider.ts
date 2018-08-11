@@ -54,7 +54,8 @@ export class HelperProvider {
         }
 
         var request = context.data.root.request
-        return new DataExtractor(dataProvider, '', request, dataname, match, key).getData()
+        var serviceName = context.data.root.serviceName
+        return new DataExtractor(dataProvider, serviceName, request, dataname, match, key).getData()
     }
 
     static getHelpers(): Map<string, any> {

@@ -12,12 +12,13 @@ export class ResponseTransformer {
         }
     }
 
-    public async transform(request: string, response: string): Promise<string> {
+    public async transform(serviceName : string, request: string, response: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             var template = handlebars.compile(response)
             try {
                 resolve(template({
                     request : request,
+                    serviceName : serviceName,
                     dataProvider: this.dataProvider
                 }))
             } catch (error) {
