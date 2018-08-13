@@ -5,3 +5,4 @@ node_modules
 */**/*.log
 api/*.key
 api/*.crt
+api/data
