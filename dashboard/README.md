@@ -1,5 +1,5 @@
 #HomePage 
-![secreent](../blob/mater/doc/images/home.png)
+![secreent](../blob/master/doc/images/home.png)
 
 #CreateNewService 
 ![secreent](..\doc\images\newservice.png)
