@@ -71,4 +71,4 @@ To use [here]()
 ## Importing file data in to Mongo
 
 
-[full documentation](.\doc\README.MD)
+[full documentation](doc\README.MD)

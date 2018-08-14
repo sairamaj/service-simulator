@@ -1,0 +1,6 @@
+az aks create --name simcluster --resource-group simtest --node-count 1 --generate-ssh-keys
+az aks get-credentials --name simcluster --resource-group simtest
+kubectl get nodes
+kubectl apply -f service-simulator.yaml
+kubectl get service coaspsimulator --watch
+kubectl get service  -o wide

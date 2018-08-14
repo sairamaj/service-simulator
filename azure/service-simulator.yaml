@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: coaspsimulator
-        image: saireg.azurecr.io/helloacrbuild:v101
+        image: sairamaj/servicesimulator:v2
         ports:
         - containerPort: 80
         resources:

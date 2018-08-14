@@ -2,7 +2,7 @@
 .SYNOPSIS
     Creates New Service Simulator Azure Container 
 .DESCRIPTION
-    New Service simulator azure container from the image sairamaj/servicesimulator:v1. For more information about this simulator visit https://github.com/sairamaj/service-simulator
+    New Service simulator azure container from the image sairamaj/servicesimulator:v2. For more information about this simulator visit https://github.com/sairamaj/service-simulator
 
     - Creates the simulator host and url is availbale at : http://testhost.eastus.azurecontainer.io
     - Verfies by running /api/v1/admin/services
@@ -111,7 +111,7 @@ Function New-Container {
     # Create container
     Write-Host "$ContainerName Creating $ContainerName."
     $container = New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
-        -Name $ContainerName -Image sairamaj/servicesimulator:v1 `
+        -Name $ContainerName -Image sairamaj/servicesimulator:v2 `
         -DnsNameLabel $ContainerName `
         -EnvironmentVariable $environment -ErrorAction Stop
     $container

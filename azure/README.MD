@@ -17,8 +17,8 @@ __tip__ : sometimes you need to run __ipconfig /flushdns__ to flush your dns as 
 ```powershell
     # ResourceGroup      - Azure resource group (creates one if one does not exist).
     # ContainerName       - This is name of the new container. The simulator url will have this. 
-    # MongoDbAccountName  - Optional - Mongodb account name. If not given provider will be in memory and if
-    #                       given mongodb  connection string will be retrieved and container will be configured                         
+    # MongoDbAccountName  - Optional - Mongodb account name. If not given provider will be in memory 
+    #                       and if given mongodb  connection string will be retrieved and container will be #                       configured                         
     #                       using mongo provider.(Note: Mongo database should exists)
 
     .\New-Simulator.ps1 -ResourceGroup simulator -ContainerName testhost
@@ -75,6 +75,45 @@ In service-simulator/azure directory
 ```powershell
     Invoke-Pester tests 
 ```
+## Kubernetes
+To create cluster in the begining
 
+Install AzureRMAks module from [here](https://www.powershellgallery.com/packages/AzureRM.Aks/0.0.5-preview)
 
+### Creating Cluster
+
+```powershell
+# Use the ssh-keygen utility (it is part of git install in c:\program files\git\usr\bin on windows)
+# Creates new cluster
+    $ResourceGroup = 'simtest'
+    $ClusterName = 'simcluster'
+    New-AzureRmAks -ResourceGroupName $ResourceGroup -Name $ClusterName -NodeCount 1 -SshKeyPath sshkeypathfile(ex: c:\test\test.key.pub)
+```
+
+```shell
+    az aks create --name simcluster --resource-group simtest --node-count 1 --generate-ssh-keys
+```
+### Importing cluster credentials
+With this step you can use local __kubectl__ tool to work with above created cluster.
+
+```powershell
+    $ResourceGroup = 'simtest'
+    $ClusterName = 'simcluster'
+    Import-AzureRmAksCredential -ResourceGroupName $ResourceGroup -Name $ClusterName
+```
+
+```shell
+    az aks get-credentials --name simcluster --resource-group simtest
+```
+### Deploying 
+At this point you are ready with deploying.
+
+```shell
+    kubectl apply -f service-simulator.yaml
+```
+* Watch the status
+    * kubectl get service coaspsimulator --watch
+* Get public ip address
+    * kubectl get service  -o wide
+    
 
