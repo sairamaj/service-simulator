@@ -106,7 +106,13 @@ With this step you can use local __kubectl__ tool to work with above created clu
     az aks get-credentials --name simcluster --resource-group simtest
 ```
 ### Deploying 
+
+####Installing kubectl
 At this point you are ready with deploying.
+
+```powershell
+    curl https://storage.googleapis.com/kubernetes-release/release/v1.11.2/bin/windows/amd64/kubectl.exe -O:kubectl.exe
+```
 
 ```shell
     kubectl apply -f service-simulator.yaml
@@ -115,5 +121,7 @@ At this point you are ready with deploying.
     * kubectl get service coaspsimulator --watch
 * Get public ip address
     * kubectl get service  -o wide
-    
+
+#### Remove Kubectl
+
 

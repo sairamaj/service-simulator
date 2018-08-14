@@ -1,7 +1,7 @@
-#HomePage 
+# HomePage 
 ![homepage](https://github.com/sairamaj/service-simulator/blob/master/doc/images/Home.PNG)
 
-#CreateNewService 
+# CreateNewService 
 ![secreent](..\doc\images\newservice.png)
 
 #Service1Details 
