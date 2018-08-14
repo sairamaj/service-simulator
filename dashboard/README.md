@@ -1,27 +1,53 @@
-# Dashboard
+#HomePage 
+![secreent](..\doc\images\home.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
+#CreateNewService 
+![secreent](..\doc\images\newservice.png)
 
-## Development server
+#Service1Details 
+![secreent](..\doc\images\service1.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#Service1Test 
+![secreent](..\doc\images\service1example.png)
 
-## Code scaffolding
+#Service2Details 
+![secreent](..\doc\images\service2.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#Service2Test 
+![secreent](..\doc\images\service2example.png)
 
-## Build
+#Service3Details 
+![secreent](..\doc\images\service3.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+#Service3Test 
+![secreent](..\doc\images\service3example.png)
 
-## Running unit tests
+#Service4Details 
+![secreent](..\doc\images\service4.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#Service4Test 
+![secreent](..\doc\images\service4example.png)
 
-## Running end-to-end tests
+#Service5Details 
+![secreent](..\doc\images\service5.png)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#Service5Test 
+![secreent](..\doc\images\service5example.png)
 
-## Further help
+#Service6Details 
+![secreent](..\doc\images\service6.png)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#Service6Test 
+![secreent](..\doc\images\service6example.png)
+
+#Service7Details 
+![secreent](..\doc\images\service7.png)
+
+#Service7Test 
+![secreent](..\doc\images\service7example.png)
+
+#Service8Details 
+![secreent](..\doc\images\service8.png)
+
+#Service8Test 
+![secreent](..\doc\images\service8example.png)
