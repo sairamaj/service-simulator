@@ -1,53 +1,53 @@
-#HomePage 
+# HomePage 
 ![homepage](https://github.com/sairamaj/service-simulator/blob/master/doc/images/Home.PNG)
 
-#CreateNewService 
-![secreent](..\doc\images\newservice.png)
+# CreateNewService 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/newservice.PNG)
 
-#Service1Details 
-![secreent](..\doc\images\service1.png)
+# Service1Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service1.PNG)
 
-#Service1Test 
-![secreent](..\doc\images\service1example.png)
+# Service1Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service1example.PNG)
 
-#Service2Details 
-![secreent](..\doc\images\service2.png)
+# Service2Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service2.PNG)
 
-#Service2Test 
-![secreent](..\doc\images\service2example.png)
+# Service2Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service2example.PNG)
 
-#Service3Details 
-![secreent](..\doc\images\service3.png)
+# Service3Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service3.PNG)
 
-#Service3Test 
-![secreent](..\doc\images\service3example.png)
+# Service3Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service3example.PNG)
 
-#Service4Details 
-![secreent](..\doc\images\service4.png)
+# Service4Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service4.PNG)
 
-#Service4Test 
-![secreent](..\doc\images\service4example.png)
+# Service4Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service4example.PNG)
 
-#Service5Details 
-![secreent](..\doc\images\service5.png)
+# Service5Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service5.PNG)
 
-#Service5Test 
-![secreent](..\doc\images\service5example.png)
+# Service5Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service5example.PNG)
 
-#Service6Details 
-![secreent](..\doc\images\service6.png)
+# Service6Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service6.PNG)
 
-#Service6Test 
-![secreent](..\doc\images\service6example.png)
+# Service6Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service6example.PNG)
 
-#Service7Details 
-![secreent](..\doc\images\service7.png)
+# Service7Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service7.PNG)
 
-#Service7Test 
-![secreent](..\doc\images\service7example.png)
+# Service7Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service7example.PNG)
 
-#Service8Details 
-![secreent](..\doc\images\service8.png)
+# Service8Details 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service8.PNG)
 
-#Service8Test 
-![secreent](..\doc\images\service8example.png)
+# Service8Test 
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service8example.PNG)
