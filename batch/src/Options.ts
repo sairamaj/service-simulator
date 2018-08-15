@@ -21,11 +21,17 @@ export class Options {
 
     public parse(): number {
         var options = require('minimist')(process.argv.slice(2));
-        if (options.provider === undefined || options.consumer === undefined) {
+        if (options.provider === undefined) {
+            this.printError('Error: provider missing.')
             this.printUsage()
             return -1
         }
 
+        if (options.consumer === undefined) {
+            this.printError('Error: consumer missing.')
+            this.printUsage()
+            return -2
+        }
         let result = this.setProvider(options)
         if (result !== 0) {
             return result
@@ -43,7 +49,7 @@ export class Options {
         switch (options.provider) {
             case 'file':
                 if (options.providerpath === undefined) {
-                    console.error('provider file requires providerpath')
+                    this.printError('Error:provider file requires providerpath')
                     this.printUsage()
                     return -10
                 }
@@ -51,14 +57,14 @@ export class Options {
                 break
             case 'inmemory':
                 if (options.providerpath === undefined) {
-                    console.error('provider inmemory requires jsonfile')
+                    this.printError('Error:provider inmemory requires jsonfile')
                     this.printUsage()
                     return -11
                 }
                 this.provider = new InMemoryProvider(options.providerpath)
                 break
             default:
-                console.error(`invalid provider ${options.provider}`)
+            this.printError(`Error:invalid provider ${options.provider}`)
                 return -12
         }
 
@@ -69,7 +75,7 @@ export class Options {
         switch (options.consumer) {
             case 'file':
                 if (options.consumerpath === undefined) {
-                    console.error('consumer file requires consumerpath')
+                    console.error('Error:consumer file requires consumerpath')
                     this.printUsage()
                     return -20
                 }
@@ -77,20 +83,27 @@ export class Options {
                 break
             case 'mongo':
                 if (options.consumermongodb === undefined) {
-                    console.error('consumer mongo requires consumermongodb')
+                    this.printError('Error:consumer mongo requires consumermongodb')
                     this.printUsage()
                     return -21
                 }
                 this.consumer = new MongoDbConsumer(options.consumermongodb)
                 break
             default:
-                console.error(`invalid consumer ${options.consumer}`)
+                this.printError(`Error:invalid consumer ${options.consumer}`)
                 return -22
         }
 
         return 0
     }
+
     private printUsage() {
-        console.log(`Usage --provider file|inmemory --consumer file|mongo --providerfilepath path --consumerfilepath path --consumermongodb mongodbconnection`)
+        console.log(`Usage --provider file|inmemory --consumer file|mongo --providerpath path --consumerpath path --consumermongodb mongodbconnection`)
+    }
+
+    private printError(message: string) {
+        console.error('--------------------------------------')
+        console.error(message)
+        console.error('--------------------------------------')
     }
 }

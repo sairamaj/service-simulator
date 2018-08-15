@@ -21,7 +21,7 @@ export class MongoDbConsumer implements Consumer{
         debug('connected...')
     }
 
-    public name: string = 'file'
+    public name: string = 'mongo'
     public async clear() : Promise<boolean>{
         await ServiceDbSchema.collection.remove({})
         await ResponseDbSchema.collection.remove({})
@@ -30,6 +30,7 @@ export class MongoDbConsumer implements Consumer{
     }
 
     public async addService(service: Service): Promise<boolean> {
+        debug('enter addService:' + service.name)
         await ServiceDbSchema.collection.insertOne(service)
         return true
     }
