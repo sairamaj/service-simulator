@@ -49,17 +49,9 @@
 
 <br/><br/>
 <div class="panel panel-success">
-    <div class="panel-heading">
-        <h3 class="panel-title">Info</h3>
-    </div>
 
     <div class="panel-body">
         <div class="text-left">
-            <b>Click service to get service details (for edit and test).</b>
-            <br/>
-            <b>Url is the post url for service where you can post request to get the response.</b>
-            <br/>
-            <br/>
             <a href="service-simulator.zip">download for offline usage (where you can run this on your box)</a>
             <br/>
             <br/>
@@ -70,19 +62,18 @@
 
 
 <div class="text-left">
-    <h1>Service-Simulator</h1>
-    <p>Service simulator app will allow you to write simulation data for any http service. It is simple matching some inputs
-        with request and then respond accordingly.</p>
+    <h3>Service-Simulator</h3>
+    <p>Service simulator app will allow you to write simulation data for any http service. It is simple matching some inputs with request and then respond accordingly.</p>
     <p>
         <img src="doc/images/summary.png" alt="summary">
     </p>
 
-    <h2>Overview</h2>
+    <h3>Overview</h3>
     <p>
         <img src="doc/images/overview.png" alt="overview">
     </p>
 
-    <h2>Features</h2>
+    <h3>Features</h3>
     <ul>
         <li>dynamic end points (urls).</li>
         <li>multiple matches in request to generate different responses</li>
@@ -91,132 +82,35 @@
         <li>Capture request arrived and responses served for service.</li>
         <li>Performance and troubleshooting logging</li>
     </ul>
-    <h1>Terminology</h1>
-    <h3>Service</h3>
-    <p>Listens at particular Url and accepts request and sends response.</p>
-    <h3>Matches</h3>
-    <p>Match strings matched against to request to find out which response needs to be sent.</p>
-    <h3>Request</h3>
-    <p>POST string coming from the client.</p>
-    <h3>Response</h3>
-    <p>Data sent back to client for POST request.</p>
-    <h3>Templating</h3>
-    <p>Response data can have some dynamic templating for dates, random numbers and extracting some data from input.</p>
-    <h3>Provider</h3>
-    <p>Data provider which serves the response</p>
-    <h4>In memory provider</h4>
-    <ul>
-        <li>Used for testing purpose</li>
-    </ul>
-    <h4>File provider</h4>
-    <ul>
-        <li>Configuration and Responses are stored on file system.</li>
-    </ul>
-    <h4>Mongo Db Provider</h4>
-    <ul>
-        <li>Configuration and Responses are stored in Mongo DB.</li>
-    </ul>
+    <h3>Terminology</h3>
+    <h4>Service</h4>
+    <p class="indented">Listens at particular Url and accepts request and sends response.</p>
+    <h4>Matches</h4>
+    <p class="indented">Match strings matched against to request to find out which response needs to be sent.</p>
+    <h4>Request</h4>
+    <p class="indented">POST string coming from the client.</p>
+    <h4>Response</h4>
+    <p class="indented">Data sent back to client for POST request.</p>
+    <h4>Templating</h4>
+    <p class="indented">Response data can have some dynamic templating for dates, random numbers and extracting some data from input.</p>
+    <h4>Provider</h4>
+    <p class="indented">Data provider which serves the response</p>
+    <div class="indented">
+        <h5>In memory provider</h5>
+        <ul>
+            <li>Used for testing purpose</li>
+        </ul>
+        <h5>File provider</h5>
 
-    <h2>Configuration</h2>
-    <h3>In Memory</h3>
-    <p>testdata.json is used for in memory and is used for unit test. The entire configuration is part of single json file.
-        Simple configuration is like below</p>
-
-    <div ng-non-bindable>
-        <pre><code class="language-json">[
-                &#123;
-                    &quot;name&quot;: &quot;service1name&quot;,
-                    &quot;config&quot; :[
-                        &#123;
-                        &quot;name&quot; : &quot;testcase1 name here&quot;,
-                        &quot;matches&quot; :[
-                            &quot;match1&quot;,&quot;match2&quot;
-                        ],
-                        &quot;request&quot;: &quot;sample request here&quot;,
-                        &quot;response&quot; : &quot;sample response here&quot;
-                        &#125;,
-                        &#123;
-                        &quot;name&quot; : &quot;testcase2 name here&quot;,
-                        &quot;matches&quot; :[
-                            &quot;match1&quot;,&quot;match2&quot;
-                        ],
-                        &quot;request&quot;: &quot;sample request here&quot;,
-                        &quot;response&quot; : &quot;sample response here&quot;
-                        &#125;            
-                    ]
-                &#125;,
-                &#123;
-                    &quot;name&quot;: &quot;service2name&quot;,
-                    &quot;config&quot; :[
-                        &#123;
-                        &quot;name&quot; : &quot;testcase name here&quot;,
-                        &quot;matches&quot; :[
-                            &quot;match1&quot;,&quot;match2&quot;
-                            ],
-                        &quot;request&quot;: &quot;sample request here&quot;,
-                        &quot;response&quot; : &quot;sample response here&quot;
-                        &#125;
-                    ]
-                &#125;,
-            
-            ]</code></pre> Sample JSON file can be viewed here: ![testdata.json](api\data\inmemory\testdata.json))
-
-        <pre><code class="language-json"> &#123;
-                    &quot;name&quot;: &quot;service1&quot;,
-                    &quot;config&quot;: [
-                        &#123;
-                            &quot;name&quot;: &quot;request_1&quot;,
-                            &quot;matches&quot;: [
-                                &quot;request_1&quot;
-                            ],
-                            &quot;request&quot;: &quot;request_1 here&quot;,
-                            &quot;response&quot;: &quot;&lt;xml&gt;service1_response_1&lt;/xml&gt;&quot;
-                        &#125;,
-                        &#123;
-                            &quot;name&quot;: &quot;request_2&quot;,
-                            &quot;matches&quot;: [
-                                &quot;request_2&quot;
-                            ],
-                            &quot;request&quot;: &quot;request_2 here&quot;,
-                            &quot;response&quot;: &quot;&lt;xml&gt;service1_response_2&lt;/xml&gt;&quot;
-                        &#125;
-                    ]
-                &#125;,
-            </code></pre>
-
-        <p>In above we have a
-            <strong>service1</strong> which will be exposed and has 2 test cases.</p>
-
-        <h3>File Provider</h3>
-        <p>Below shows the file system.
-            <img src="doc/images/fileprovider.png" alt="fileprovider"> Each directory under fileprovider will is a service. It will have below 4 directories</p>
-        <h3>config</h3>
-        <pre><code>Contains single json file which has mapping of requests and responses.
-            </code></pre>
-        <pre><code class="language-json">    [
-                    &#123;
-                        &quot;name&quot;: &quot;request_1&quot;,
-                        &quot;matches&quot;: [
-                            &quot;request_1&quot;
-                        ]
-                    &#125;,
-                    &#123;
-                        &quot;name&quot;: &quot;request_2&quot;,
-                        &quot;matches&quot;: [
-                            &quot;request_2&quot;
-                        ]
-                    &#125;
-                ]
-            </code></pre>
-        <h3>logs</h3>
-        <p>Request along with served responses will be logged here</p>
-        <h3>requests</h3>
-        <p>Sample request files (used during testing in dashboard). The name of the file will be name specified in the configuration
-            file with .xml as extension.</p>
-        <h3>responses</h3>
-        <p>Response files will be here. The name of the file is name specified in the match with .xml extension.</p>
-        <h3>Mongo Db Provider</h3>
-        <p>One can configure to use Mongo db with connection string so that all requests and responses along with configuration
-            will be stored in Mongo db.</p>
-
+        <ul>
+            <li>Configuration and Responses are stored on file system.</li>
+        </ul>
+        <h5>Mongo Db Provider</h5>
+        <ul>
+            <li>Configuration and Responses are stored in Mongo DB.</li>
+        </ul>
     </div>
+    <hr/>
+    <a href="https://github.com/sairamaj/service-simulator">Full documentation</a>
+
+</div>
