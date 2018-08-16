@@ -15,6 +15,14 @@ Service simulator app will allow you to write simulation data for any http servi
 * Performance and troubleshooting logging
 * dashboard ui to view/edit
 
+## Technology
+* NodeJS
+* TypeScript
+* Angular 2.0
+* MongoDB
+* Azure container
+* Handlebars module for template
+
 # Terminology
 ### Service  
 Listens at particular Url and accepts request and sends response.
@@ -142,11 +150,49 @@ Response files will be here. The name of the file is name specified in the match
 ### Mongo Db Provider
 One can configure to use Mongo db with connection string so that all requests and responses along with configuration will be stored in Mongo db.
 
-## How to build
+# How to build it
+* Clone the repository
+* At command prompt
+    * Run __buildAll__ ( *first time takes time as it installs node modules*)
+    * Run __deploy__
+        * which will ask you to remove deploy directory
+    * The deploy directory is your entire package 
 
-## How to Run
+# How to run it
+* Running Locally
+    * in deploy directory 
+        * run setup.bat (*one time*)
+        * node dist\index.js
+    * Open browser and http://localhost:3000 to open dashboard
+* Running as Windows Service
+    * In deploy directory
+        * node installAsService.js
+    * use service control manager start __service-simulator__ service 
+* Running in Azure Container
+    * [here](./azure/README.MD)
+* Running Kubernetes cluster
+    * here
 
-## Build Docker image.
+## Running with different providers
+Default is in memory (uses data\inmemory\testdata.json)
+
+* Running File provider
+    * Run __runwithfileprovider.bat__
+* Running with Mongo db provider
+    * Change mongodb provider connection in runwithmongoprovider.bat (if mongo is not local)
+    * Run __runwithmongoprovider.bat__
+
+## Using https
+By default localhost.crt localhost.key are available and you can use them. Import localhost.crt in to your Trusted Root store so that you won't get warning when using in browser and also in powershell.
+
+## Test it
+* Running unit test
+    * cd api
+    * npm test
+
+## Dashboard
+Default dashboard is available at http://localhost:3000 and https://localhost:3443. Dashboard is explained [here](./dashboard/readme.md)
+
 
 
 

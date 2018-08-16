@@ -4,7 +4,7 @@ Here you will see all the services available from this simulator. One can create
 
 ## Create New Service 
 One can create new service by giving a unique name. The type of services supported are __soap__ and __json__. Currently there is no validation on this and hence type exactly (soap or json)
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/NewService.PNG)
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/NewService.png)
 
 ## Service responses with different formats
 

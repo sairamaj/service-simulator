@@ -64,11 +64,9 @@ By default localhost.crt localhost.key are available and you can use them. Impor
     * npm test
 
 ## Dashboard
-Default dashboard is available at http://localhost:3000 and https://localhost:3443
-
-To use [here]()
+Default dashboard is available at http://localhost:3000 and https://localhost:3443. Dashboard is explained [here](./dashboard/readme.md)
 
 ## Importing file data in to Mongo
 
 
-[full documentation](doc\README.MD)
+[full documentation](./doc/README.MD)
