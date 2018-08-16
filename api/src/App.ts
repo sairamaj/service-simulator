@@ -8,6 +8,7 @@ import * as mongoose from "mongoose";
 import { LogManager } from './providers/LogManager';
 import { LoggerStream } from './LoggerStream';
 import { createWriteStream } from 'fs';
+import ProviderRouter from './routes/ProviderRouter';
 const config = require('./config');
 let debug = require('debug')('app')
 
@@ -78,6 +79,7 @@ class App {
   // Configure API endpoints.
   private routes(): void {
     let router = express.Router();
+    this.express.use('/api/v1/admin/provider', ProviderRouter);
     this.express.use('/api/v1/admin/logs', LogRouter);
     this.express.use('/api/v1/admin/services', AdminRouter);
     this.express.all("*", ServiceRouter);

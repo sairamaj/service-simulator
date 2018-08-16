@@ -408,3 +408,14 @@ describe('Editing existing test case with add', () => {
 
   })
 });
+
+describe('GET api/v1/admin/provider', () => {
+  it('responds with provider', () => {
+    return chai.request(app).get('/api/v1/admin/provider')
+      .then(res => {
+        expect(res.status).to.equal(200)
+        expect(res).to.be.json
+        expect(res.body.provider).to.equal('inmemory')
+      })
+  })
+})

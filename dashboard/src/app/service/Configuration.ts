@@ -18,6 +18,10 @@ export class Config {
         return this.adminServicesApiUrl + '/' + name;
     }
 
+    getProviderInfoUrl(): string {
+        return this.adminUrl + 'provider';
+    }
+
     getServiceResponseFileUrl(name: string, file: string): string {
         return this.baseUrl + '/admin/api/hosts/' + name + '/details/response/' + file;
     }
@@ -59,7 +63,7 @@ export class Config {
     }
 
     isDashboardDev(): boolean {
-        return false
+        return true
     }
 }
 

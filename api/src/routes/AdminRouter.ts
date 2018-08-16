@@ -50,17 +50,17 @@ export class AdminRouter {
     var requestData = await this.getRequest(req)
     debug('enter addService:' + requestData)
     var request = JSON.parse(requestData)
-    if( request.name === undefined || request.name.length === 0){
-      res.status(404).send({error: 'name cannot be empty.'})
+    if (request.name === undefined || request.name.length === 0) {
+      res.status(404).send({ error: 'name cannot be empty.' })
       return
     }
-    
+
     var foundService = await ServiceManagerFactory.createServiceManager().getService(request.name)
     debug('foundService:' + foundService)
     if (foundService !== undefined) {
       debug('foundservice. returning 422')
       res.status(422).send({
-        
+
       })
     } else {
       await ServiceManagerFactory.createServiceManager().addService(request)
@@ -214,6 +214,8 @@ export class AdminRouter {
       resolve(logs)
     });
   }
+
+ 
 
   /**
    * Take each handler, and attach to one of the Express.Router's

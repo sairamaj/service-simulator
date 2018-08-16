@@ -10,6 +10,7 @@ import { ProcessedRequest } from '../models/ProcessedRequest';
 import { ServiceResponseData } from '../models/ServiceResponseData';
 import { SimulatedResponseData } from '../models/SimulatedResponseData';
 import { Log } from '../models/Log';
+import { Provider } from '../models/Provider';
 
 
 @Injectable()
@@ -17,6 +18,12 @@ export class ApiService {
     Configuration: Config;
     constructor(private _http: HttpClient, private _location: Location) {
         this.Configuration = new Config();
+    }
+
+    getProvider(): Observable<Provider> {
+        return this._http.get<Provider>(this.Configuration.getProviderInfoUrl()).pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError(this.handleError), );
     }
 
     getServices(): Observable<Service[]> {
