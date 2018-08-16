@@ -1,60 +1,39 @@
-# HomePage 
+# Home
+Here you will see all the services available from this simulator. One can create a new service using New service button.
 ![homepage](https://github.com/sairamaj/service-simulator/blob/master/doc/images/Home.PNG)
 
-# CreateNewService 
+## Create New Service 
+One can create new service by giving a unique name. The type of services supported are __soap__ and __json__. Currently there is no validation on this and hence type exactly (soap or json)
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/NewService.PNG)
 
-# Service1Details 
+## Service responses with different formats
+
+### Service showing simple request and response 
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service1.PNG)
 
-# Service1Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service1example.PNG)
-
-# Service2Details 
+### Service showing with multiple matches.
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service2.PNG)
 
-# Service2Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service2example.PNG)
-
-# Service3Details 
+### Service showing using dynamic date with different format 
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service3.PNG)
 
-# Service3Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service3example.PNG)
-
-# Service4Details 
+### Service showing random numbers in the response
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service4.PNG)
 
-# Service4Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service4example.PNG)
-
-# Service5Details 
+### Service showing the response to extract a value from request
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service5.PNG)
 
-# Service5Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service5example.PNG)
+## Adding a new test case
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/newresponse.PNG)
 
-# Service6Details 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service6.PNG)
+## Testing service
 
-# Service6Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service6example.PNG)
+### Getting response with matching request.
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service3example.PNG)
 
-# Service7Details 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service7.PNG)
 
-# Service7Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service7example.PNG)
-
-# Service8Details 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service8.PNG)
-
-# Service8Test 
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/service8example.PNG)
-
-# Logs
-![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/logs.PNG)
-
-# LastServedRequest
+## Viewing the Posted requests.
 ![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/lastservedrequest.PNG)
 
+## Viewing Logs
+![secreent](https://github.com/sairamaj/service-simulator/blob/master/doc/images/logs.PNG)
