@@ -38,6 +38,11 @@ export class DataExtractor {
         })
 
         debug('matched record:' + matchedRecord)
+        if( matchedRecord === undefined){
+            debug(`no match found: ${matchValue}`)
+            return ''
+        }
+        
         var subParts = matchedRecord.split('|')
         if( subParts[1] === undefined){
             return ''

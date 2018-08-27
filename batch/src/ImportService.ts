@@ -14,9 +14,11 @@ export class ImportService {
     public async import(): Promise<void> {
         for (let service of this.provider.getServices()) {
             debug('addService:' + service.name)
+            console.log(`adding :${service.name}`)
             if (await this.consumer.addService(service)) {
                 for (let testcase of this.provider.getTestCases(service)) {
                     debug('addTestCase:' + testcase.name)
+                    console.log(`\t${testcase.name}`)
                     await this.consumer.addTestCase(service.name, testcase)
                 }
             }

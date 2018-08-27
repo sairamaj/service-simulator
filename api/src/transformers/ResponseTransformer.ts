@@ -22,6 +22,7 @@ export class ResponseTransformer {
                     dataProvider: this.dataProvider
                 }))
             } catch (error) {
+                debug('transform:' + error)
                 reject(error)
             }
         })

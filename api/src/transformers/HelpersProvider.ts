@@ -102,6 +102,7 @@ export class HelperProvider {
             }
 
             var tags = context.hash['tags']
+            debug(`tags: ${tags}`)
             var [start, end] = tags.split('|')
 
             debug(`in request processor start: ${start}  end:${end}.`)

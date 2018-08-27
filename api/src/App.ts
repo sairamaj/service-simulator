@@ -26,8 +26,10 @@ class App {
 
 
     this.express.use((err: any, req, res, next) => {
-      console.log('in error handler:' + err)
-      LogManager.log('error', '' + err)
+      console.log('in error handler:')
+      console.log(err)
+      console.error(err.stack);
+      LogManager.log('error', '' + err + ' stack:' + err.stack)
       res.status(500).send(err)
     })
     this.mongoSetup();

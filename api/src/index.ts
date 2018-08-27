@@ -10,20 +10,23 @@ import App from './App';
 debug('ts-express:server');
 
 const port = normalizePort(config.app.port);
+const sslport = normalizePort(config.app.sslport);
 App.set('port', port);
 
 const server = http.createServer(App);
 server.listen(port);
+let portListening = true
 server.on('error', onError);
 server.on('listening', onListening);
 
 var sslOptions = {
-  key: fs.readFileSync('localhost.key'),
-  cert: fs.readFileSync('localhost.crt'),
+  key: fs.readFileSync( config.app.certname + '.key'),
+  cert: fs.readFileSync(config.app.certname + '.crt'),
   passphrase: '1234'
 };
 const httpsServer = https.createServer(sslOptions, App)
-httpsServer.listen(3443)
+httpsServer.listen(sslport)
+let sslPortListening = true
 httpsServer.on('error', onError);
 httpsServer.on('listening', onHttpsListening);
 
@@ -37,6 +40,8 @@ function normalizePort(val: number | string): number | string | boolean {
 function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== 'listen') throw error;
   let bind = (typeof port === 'string') ? 'Pipe ' + port : 'Port ' + port;
+  let sslbind = (typeof sslport === 'string') ? 'Pipe ' + sslport : 'Port ' + sslport;
+  
   console.log('in onError...')
   switch (error.code) {
     case 'EACCES':
@@ -44,7 +49,11 @@ function onError(error: NodeJS.ErrnoException): void {
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(`${bind} is already in use`);
+      if( portListening == false){
+        console.error(`${bind} is already in use`);
+      }else{
+        console.error(`${sslbind} is already in use`);
+      }
       process.exit(1);
       break;
     default:
@@ -61,6 +70,7 @@ function onListening(): void {
   if (config.app.provider === 'file') {
     console.log('`t file provider location:' + config.app.fileProviderLocation)
   }
+  console.log('using stubservice domain.')
 }
 
 function onHttpsListening(): void {
