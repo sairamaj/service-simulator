@@ -11,6 +11,7 @@ import { createWriteStream } from 'fs';
 import ProviderRouter from './routes/ProviderRouter';
 const config = require('./config');
 let debug = require('debug')('app')
+var cors = require('cors')
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -50,17 +51,12 @@ class App {
       stream: new LoggerStream()
     }));
 
-    this.express.use(function (req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      next();
-    });
-
-    this.express.use(function (req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      next();
-    });
+    this.express.use(cors())
+    // this.express.use(function (req, res, next) {
+    //   res.header("Access-Control-Allow-Origin", "*");
+    //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    //   next();
+    // });
 
     // this interceptor is some of the service will append the additional info in the query. (fis: /fissignOnVS.signOnVSsoaphttps )
     this.express.use(function (req, res, next) {

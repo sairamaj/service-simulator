@@ -94,7 +94,6 @@ export class AdminRouter {
     }
   }
 
-
   public async deleteProcessedRequests(req: Request, res: Response) {
     let name = req.params.name;
     var result = await ServiceManagerFactory.createServiceManager().clearProcessedRequests(name);
