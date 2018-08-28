@@ -183,7 +183,7 @@ export class MongoDbProvider implements ServiceManager {
         }).toArray();
 
         response.forEach(r => {
-            var processRequest = new ProcessedRequest(r.date, r.status, r.request, r.response, r.matches)
+            var processRequest = new ProcessedRequest(r.date, r.status, r.name, r.request, r.response, r.matches)
             processRequest.id = r._id
             results.push(processRequest);
         });
@@ -194,8 +194,10 @@ export class MongoDbProvider implements ServiceManager {
     public async getProcessedRequest(name: string, id: string): Promise<ProcessedRequest> {
         var processedRequest = await LogRequestDbSchema.findById(id)
         if (processedRequest !== undefined) {
-            var processRequest = new ProcessedRequest(processedRequest.date,
+            var processRequest = new ProcessedRequest(
+                processedRequest.date,
                 processedRequest.status,
+                processedRequest.name,
                 processedRequest.request,
                 processedRequest.response, processedRequest.matches)
             processRequest.id = id

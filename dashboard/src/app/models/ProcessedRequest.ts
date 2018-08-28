@@ -3,6 +3,7 @@ export class ProcessedRequest {
     constructor(
         public id: string,
         public status: string,
+        public name: string,
         public date: Date,
         public matches: string,
         public file: string,

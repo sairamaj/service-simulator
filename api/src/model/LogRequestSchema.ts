@@ -28,4 +28,4 @@ export const LogRequestSchema = new Schema({
     matches: {
         type: String,
     }
-},{ capped: { size: 1024*1024, max: 200, autoIndexId: true } });
+});

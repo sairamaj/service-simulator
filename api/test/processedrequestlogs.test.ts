@@ -98,8 +98,22 @@ describe('logs', () => {
         })
     });
 
-    it('500 log should have status as 500', () => {
+    it('should get name of the testcase for 200', () => {
         return chai.request(app).del('/api/v1/admin/services/service1/processedrequests')
+        .then(res=>{
+            return chai.request(app).post('/service1').send('request_1')
+            .then(res=>{
+                return chai.request(app).get('/api/v1/admin/services/service1/processedrequests')
+                .then(res=>{
+                    console.log(res.body[0])
+                    expect(res.body[0].name).to.be.equal('request_1')
+                })
+            })
+        })
+    });
+
+    it('500 log should have status as 500', () => {
+        return chai.request(app).del('/api/v1/admin/services/service6_with_invalid_template/processedrequests')
         .then(res=>{
             return chai.request(app).post('/service6_with_invalid_template').send('this is request_1 data.')
             .then(res=>{

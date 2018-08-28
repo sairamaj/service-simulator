@@ -116,6 +116,7 @@ export class ServiceFileProvider {
                     processInfo.response = data;
                     processInfo.type = this.type;
                     processInfo.matches = foundConfig.matches;
+                    processInfo.name = foundConfig.name;
                     resolve(processInfo);
                 }
             });

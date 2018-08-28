@@ -22,17 +22,21 @@
       <thead>
         <th>Date</th>
         <th>Status</th>
+        <th>Name</th>
         <th>Id</th>
       </thead>
 
       <tbody>
-        <tr *ngFor="let req of servedRequests">
+        <tr *ngFor="let req of servedRequests | sortBy: 'date' : true">
           <td>
-            {{ req.date | date:'dd/MM HH:mm'}}
+            {{ req.date | date:'MM/dd HH:mm:ss'}}
           </td>
           <td>
             {{ req.status}}
-          </td>          
+          </td>
+          <td>
+            {{ req.name}}
+          </td>
           <td>
             <a [routerLink]="['/services/' + name + '/processedrequests/', req.id]">
               {{req.id}}

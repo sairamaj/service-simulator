@@ -5,6 +5,7 @@ export class ProcessInfo {
     }
 
     public response: string
+    public name: string
     public matches: string[]
     public type: string
 

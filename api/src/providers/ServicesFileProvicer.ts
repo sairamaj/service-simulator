@@ -78,7 +78,14 @@ export class ServicesFileProvider implements ServiceManager {
     }
 
     public async logRequest(name: string, date: Date, status: number, processInfo: ProcessInfo): Promise<boolean> {
-        await new ProcessLogFileManager(name, this.getFilesProviderLocation()).writeLog(new ProcessedRequest(date, status, processInfo.request, processInfo.response, processInfo.matches));
+        await new ProcessLogFileManager(name, this.getFilesProviderLocation()).writeLog(
+            new ProcessedRequest(
+                date, 
+                status, 
+                processInfo.name,
+                processInfo.request, 
+                processInfo.response, 
+                processInfo.matches));
         return true;
     }
 
