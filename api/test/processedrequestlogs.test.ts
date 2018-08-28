@@ -3,6 +3,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import app from '../src/App';
+import { fail } from 'assert';
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -58,7 +59,7 @@ describe('logs', () => {
                                 let logReturned = res.body
                                 console.log(logReturned)
                                 expect(logReturned.id).to.be.equal(log.id)
-                                            
+
                             });
 
                     })
@@ -79,6 +80,40 @@ describe('logs', () => {
                             })
                     })
             });
+    });
+
+    it('404 log should have status as 404', () => {
+        return chai.request(app).del('/api/v1/admin/services/service1/processedrequests')
+        .then(res=>{
+            return chai.request(app).post('/service1').send('no matching.')
+            .then(res=>{
+                throw Error('should have failed with 404.')
+            })
+            .catch(err => {
+                return chai.request(app).get('/api/v1/admin/services/service1/processedrequests')
+                .then(res=>{
+                    expect(res.body[0].status).to.be.equal(404)
+                })
+            })
+        })
+    });
+
+    it('500 log should have status as 500', () => {
+        return chai.request(app).del('/api/v1/admin/services/service1/processedrequests')
+        .then(res=>{
+            return chai.request(app).post('/service6_with_invalid_template').send('this is request_1 data.')
+            .then(res=>{
+                throw Error('should have failed with 500.')
+            })
+            .catch(err => {
+                return chai.request(app).get('/api/v1/admin/services/service6_with_invalid_template/processedrequests')
+                .then(res=>{
+                    expect(res.body).to.be.an('array');                
+                    expect(res.body).to.have.length(1); 
+                    expect(res.body[0].status).to.be.equal(500)
+                })
+            })
+        })
     });
 
 });

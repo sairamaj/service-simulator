@@ -68,6 +68,7 @@ export class ProcessLogFileManager {
     }
 
     public async writeLog(processRequest: ProcessedRequest) {
+        debug('enter writeLog')
         return new Promise<void>((resolve, reject) => {
             try {
                 this.writeLogSync(processRequest);
@@ -143,8 +144,10 @@ export class ProcessLogFileManager {
         var requestStarted: boolean;
         var responseStarted: boolean;
         var matchStarted: boolean;
+        var statusStarted: boolean;
         var firstLine: boolean = true;
         var date: Date;
+        var status:number;
 
         data.split('\r\n').forEach(line => {
             if (firstLine) {
@@ -165,6 +168,9 @@ export class ProcessLogFileManager {
                 response += line
             } else if (matchStarted) {
                 matches = line.split(',');
+            } else if(statusStarted){
+                status = +line
+                statusStarted = false
             }
 
             if (line.includes('BEGIN REQUEST')) {
@@ -173,10 +179,12 @@ export class ProcessLogFileManager {
                 responseStarted = true
             } else if (line.includes('BEGIN MATCHES')) {
                 matchStarted = true
+            } else if (line.includes('BEGIN STATUS')) {
+                statusStarted = true
             }
         });
 
-        var processedRequest = new ProcessedRequest(date, 0, request, response, matches);
+        var processedRequest = new ProcessedRequest(date, status, request, response, matches);
         // file comes with either '/' or with '\'
         processedRequest.id = file.split(path.sep).slice(-1)[0].split('/').slice(-1)[0];
         return processedRequest;

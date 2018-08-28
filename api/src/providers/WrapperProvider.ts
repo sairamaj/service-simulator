@@ -10,14 +10,14 @@ const config = require('./../config');
 const debug = require('debug')('wrapperProvider')
 
 export class WrapperProvider implements ServiceManager {
-    constructor(public innerProvider :ServiceManager, ) {
+    constructor(public innerProvider: ServiceManager, ) {
     }
 
     public async getServices(): Promise<Service[]> {
         debug('enter getServices')
         var services = await this.innerProvider.getServices()
         services.forEach(s => {
-            if( s.type === undefined || s.type == ''){
+            if (s.type === undefined || s.type == '') {
                 s.type = 'soap' // default
             }
         })
@@ -29,10 +29,10 @@ export class WrapperProvider implements ServiceManager {
         debug('enter getService')
         name = name.toLocaleLowerCase().trim()
         var service = await this.innerProvider.getService(name)
-        if( service === undefined || service === null){
+        if (service === undefined || service === null) {
             return undefined
         }
-        if( service.type === undefined || service.type == ''){
+        if (service.type === undefined || service.type == '') {
             service.type = 'soap'
         }
 
@@ -54,7 +54,7 @@ export class WrapperProvider implements ServiceManager {
         debug('enter addNewResponse')
         mapDetail.name = mapDetail.name.trim()
         var existing = await this.innerProvider.getMapDetail(name, mapDetail.name)
-        if( existing !== undefined){    
+        if (existing !== undefined) {
             debug('detected exisitng and hence modifying...')
             return await this.modifyNewResponse(name, mapDetail)
         }
@@ -70,20 +70,27 @@ export class WrapperProvider implements ServiceManager {
     public async getResponse(name: string, request: string): Promise<ProcessInfo> {
         debug('enter getResponse')
 
-        var processInfo = await this.innerProvider.getResponse(name, request)
-        if( processInfo !== undefined){
-            processInfo.response = await new ResponseTransformer(
-                TemplateDataProviderFactory.getTemplateDataProvider())
-                .transform(name, processInfo.request, processInfo.response)
-            await this.innerProvider.logRequest(name, new Date(), 200, processInfo);
+        try {
+            var processInfo = await this.innerProvider.getResponse(name, request)
+            if (processInfo !== undefined) {
+                processInfo.response = await new ResponseTransformer(
+                    TemplateDataProviderFactory.getTemplateDataProvider())
+                    .transform(name, processInfo.request, processInfo.response)
+                await this.innerProvider.logRequest(name, new Date(), 200, processInfo);
+            }else{
+                await this.logRequest(name, new Date(), 404, new ProcessInfo(request));
+            }
+    
+            return processInfo
+        } catch (error) {
+            await this.logRequest(name, new Date(), 500, new ProcessInfo(request));
+            throw error
         }
-
-        return processInfo
     }
 
     public async logRequest(name: string, date: Date, status: number, processInfo: ProcessInfo): Promise<boolean> {
         debug('enter logRequest')
-        return await this.innerProvider.logRequest(name, date, status,processInfo)
+        return await this.innerProvider.logRequest(name, date, status, processInfo)
     }
 
     public async getProcessedRequests(name: string): Promise<ProcessedRequest[]> {

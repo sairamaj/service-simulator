@@ -30,7 +30,6 @@ export class ServiceRouter {
                     set({ 'content-type': processInfo.getResponseContentType() })
                     .send(processInfo.response)
             } else {
-                serviceManager.logRequest(serviceName, new Date(), 404, new ProcessInfo(requestData));
                 res.status(404)
                     .send({
                         message: 'no match found.'
@@ -38,9 +37,6 @@ export class ServiceRouter {
             }
         } catch (error) {
             debug('error:' + error)
-            if (serviceManager !== undefined) {
-                serviceManager.logRequest(serviceName, new Date(), 500, new ProcessInfo(requestData));
-            }
             next(error)
         }
     }

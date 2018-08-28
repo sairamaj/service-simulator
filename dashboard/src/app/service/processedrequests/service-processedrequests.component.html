@@ -21,6 +21,7 @@
     <table class='table'>
       <thead>
         <th>Date</th>
+        <th>Status</th>
         <th>Id</th>
       </thead>
 
@@ -29,6 +30,9 @@
           <td>
             {{ req.date | date:'dd/MM HH:mm'}}
           </td>
+          <td>
+            {{ req.status}}
+          </td>          
           <td>
             <a [routerLink]="['/services/' + name + '/processedrequests/', req.id]">
               {{req.id}}
