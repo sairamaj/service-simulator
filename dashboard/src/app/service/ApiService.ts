@@ -77,6 +77,13 @@ export class ApiService {
             catchError(this.handleError), );
     }
 
+    clearLastRequests(name:string): Observable<any>{
+        const servedRequestUrl = this.Configuration.getClearLastRequestUrl(name);
+        return this._http.delete<any>(servedRequestUrl).pipe(
+            tap(data => console.log('clearLastRequests:')),
+            catchError(this.handleError), );
+    }
+    
     getProcessRequest(service, id): Observable<ProcessedRequest> {
         const servedRequestUrl = this.Configuration.getProcessedRequest(service, id);
         return this._http.get<ProcessedRequest>(servedRequestUrl).pipe(

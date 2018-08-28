@@ -31,6 +31,12 @@ export class ServiceProcessedRequestComponent implements OnInit {
     this._location.back();
   }
 
+  onClear() {
+    this._apiService.clearLastRequests(this.name)
+    .subscribe(servedRequests => this.servedRequests = [],
+      error => this.errorMessage = <any>error.message)
+  }
+
   onRefresh(){
     window.location.reload()
   }

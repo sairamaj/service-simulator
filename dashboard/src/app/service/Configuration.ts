@@ -58,6 +58,10 @@ export class Config {
         return this.adminServicesApiUrl + '/' + serviceName + '/processedrequests/' + id;
     }
 
+    getClearLastRequestUrl(serviceName: string){
+        return this.adminServicesApiUrl + '/' + serviceName + '/processedrequests/';
+    }
+
     getLogRequestUrl() {
         return this.adminUrl + 'logs';
     }
