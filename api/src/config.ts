@@ -8,7 +8,7 @@ const dev = {
     app: {
         port: process.env.PORT || 3000,
         sslport: process.env.SSLPORT || 3443,
-        certname:process.env.CERTNAME || 'localhost',
+        certname:process.env.CERTNAME || 'stubservices',
         provider: process.env.PROVIDER || 'inmemory',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
@@ -21,7 +21,7 @@ const prod = {
     app: {
         port: process.env.PORT || 3000,
         sslport: process.env.SSLPORT || 3443,
-        certname:process.env.CERTNAME || 'localhost',
+        certname:process.env.CERTNAME || 'stubservices',
         provider: process.env.PROVIDER || 'file',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
@@ -34,7 +34,7 @@ const azure = {
     app: {
         port: process.env.PORT || 80,
         sslport: process.env.SSLPORT || 3443,
-        certname:process.env.CERTNAME || 'localhost',
+        certname:process.env.CERTNAME || 'stubservices',
         provider: process.env.PROVIDER || 'mongo',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
