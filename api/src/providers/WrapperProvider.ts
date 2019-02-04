@@ -8,6 +8,7 @@ import { ResponseTransformer } from '../transformers/ResponseTransformer';
 import { TemplateDataProviderFactory } from './TemplateDataProviderFactory';
 const config = require('./../config');
 const debug = require('debug')('wrapperProvider')
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export class WrapperProvider implements ServiceManager {
     constructor(public innerProvider: ServiceManager, ) {
@@ -73,6 +74,13 @@ export class WrapperProvider implements ServiceManager {
         try {
             var processInfo = await this.innerProvider.getResponse(name, request)
             if (processInfo !== undefined) {
+                
+                if( processInfo.sleep !== undefined){
+                    debug(`sleeping:${processInfo.sleep}`)
+                    await sleep(processInfo.sleep)
+                    debug(`sleeping done:${processInfo.sleep}`)
+                }
+                    
                 processInfo.response = await new ResponseTransformer(
                     TemplateDataProviderFactory.getTemplateDataProvider())
                     .transform(name, processInfo.request, processInfo.response)

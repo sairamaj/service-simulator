@@ -73,7 +73,7 @@ export class MongoDbProvider implements ServiceManager {
         var isUpdate = false
         var foundConfig = service.config.find(c => c.name == mapDetail.name)
         if (foundConfig === undefined) {
-            service.config.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+            service.config.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches))
         } else {
             foundConfig.matches = mapDetail.matches
             isUpdate = true

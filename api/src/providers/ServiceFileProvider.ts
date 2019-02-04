@@ -58,7 +58,7 @@ export class ServiceFileProvider {
 
             var foundConfig = this.configMaps.find(c => c.name == mapDetail.name)
             if (foundConfig === undefined) {
-                this.configMaps.push(new ServiceConfigMap(mapDetail.name, mapDetail.matches))
+                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches))
             } else {
                 foundConfig.matches = mapDetail.matches
             }
@@ -117,6 +117,7 @@ export class ServiceFileProvider {
                     processInfo.type = this.type;
                     processInfo.matches = foundConfig.matches;
                     processInfo.name = foundConfig.name;
+                    processInfo.sleep = foundConfig.sleep;
                     resolve(processInfo);
                 }
             });
