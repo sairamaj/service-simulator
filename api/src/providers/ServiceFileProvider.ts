@@ -35,7 +35,7 @@ export class ServiceFileProvider {
             }
 
             var response = ''
-            var responseFileName = this.getResponseFileName(foundMap.name)
+            var responseFileName = this.getResponseFileName(foundMap.name, foundMap.type)
             if (fs.existsSync(responseFileName)) {
                 response = fs.readFileSync(responseFileName, 'utf-8')
             }
@@ -46,7 +46,7 @@ export class ServiceFileProvider {
                 request = fs.readFileSync(requestFileName, 'utf-8')
             }
 
-            resolve(new MapDetail(foundMap.name, request, response, foundMap.matches));
+            resolve(new MapDetail(foundMap.name, foundMap.type, request, response, foundMap.matches));
         });
     }
 
@@ -58,7 +58,7 @@ export class ServiceFileProvider {
 
             var foundConfig = this.configMaps.find(c => c.name == mapDetail.name)
             if (foundConfig === undefined) {
-                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches))
+                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.type, foundConfig.sleep, mapDetail.matches))
             } else {
                 foundConfig.matches = mapDetail.matches
             }
@@ -74,7 +74,7 @@ export class ServiceFileProvider {
             fs.writeFileSync(requestFileName, mapDetail.request)
 
             // write response
-            let responseFileName = this.getResponseFileName(mapDetail.name);
+            let responseFileName = this.getResponseFileName(mapDetail.name, mapDetail.type);
             fs.writeFileSync(responseFileName, mapDetail.response)
 
             debug('done addNewResponse')
@@ -99,7 +99,7 @@ export class ServiceFileProvider {
             return undefined;
         }
 
-        var responseFileName = this.getResponseFileName(foundConfig.name);
+        var responseFileName = this.getResponseFileName(foundConfig.name, foundConfig.type);
 
         return new Promise<ProcessInfo>((resolve, reject) => {
             debug('getResponse: reading file:' + responseFileName);
@@ -108,13 +108,32 @@ export class ServiceFileProvider {
                 return;
             }
 
-            return fs.readFile(responseFileName, 'utf-8', (err, data) => {
+            var encoding = foundConfig.type.length == 0 ? 'utf-8' : foundConfig.type;
+            debug(`encoding used: ${encoding}`);
+            return fs.readFile(responseFileName, (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
                     var processInfo = new ProcessInfo(request);
+                    debug(`data length: ${data.length}`);
+                    processInfo.responseBuffer = data;
+                    processInfo.type = this.type;
+                    processInfo.responseType = foundConfig.type;
+                    processInfo.matches = foundConfig.matches;
+                    processInfo.name = foundConfig.name;
+                    processInfo.sleep = foundConfig.sleep;
+                    resolve(processInfo);
+                }
+            });            
+            return fs.readFile(responseFileName, { encoding: encoding}, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    var processInfo = new ProcessInfo(request);
+                    debug(`data length: ${data.length}`);
                     processInfo.response = data;
                     processInfo.type = this.type;
+                    processInfo.responseType = foundConfig.type;
                     processInfo.matches = foundConfig.matches;
                     processInfo.name = foundConfig.name;
                     processInfo.sleep = foundConfig.sleep;
@@ -127,7 +146,7 @@ export class ServiceFileProvider {
     public getConfigMap(): ServiceConfigMap[] {
         let configFile = this.getConfigMapFile();
         if (fs.existsSync(configFile)) {
-            var serviceInfo =  JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+            var serviceInfo = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
             return serviceInfo.maps
         }
     }
@@ -166,7 +185,10 @@ export class ServiceFileProvider {
         return this.getDataDirectory() + path.sep + this.name + path.sep + 'requests';
     }
 
-    getResponseFileName(requestName: string): string {
+    getResponseFileName(requestName: string, type: string): string {
+        if (type == "binary") {
+            return this.getServiceResponseDirectory() + path.sep + requestName + '.gif';
+        }
         return this.getServiceResponseDirectory() + path.sep + requestName + '.xml';
     }
 

@@ -1,0 +1,1 @@
+e:\tools\ThirdParty\openssl\bin\openssl req -days 1095 -x509 -out stubservices.crt -keyout stubservices.key -newkey rsa:2048 -nodes -sha256 -subj "/CN=stubservices" -extensions EXT -config ./stubservices.config

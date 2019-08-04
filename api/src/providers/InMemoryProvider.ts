@@ -59,6 +59,7 @@ export class InMemoryProvider implements ServiceManager {
 
       var mapDetail = new MapDetail(
         mapInfo.name,
+        '',
         mapInfo.request,
         mapInfo.response,
         mapInfo.matches

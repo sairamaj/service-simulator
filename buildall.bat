@@ -3,6 +3,7 @@ echo off
 echo "Building Api"
 pushd api
 call npm install
+call npm install natives@1.1.6
 call npm run-script build
 popd
 pushd dashboard

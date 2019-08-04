@@ -80,10 +80,14 @@ export class WrapperProvider implements ServiceManager {
                     await sleep(processInfo.sleep)
                     debug(`sleeping done:${processInfo.sleep}`)
                 }
-                    
-                processInfo.response = await new ResponseTransformer(
-                    TemplateDataProviderFactory.getTemplateDataProvider())
-                    .transform(name, processInfo.request, processInfo.response)
+                
+                if( processInfo.responseType != "binary"){
+                    debug(`not a binary: going thorugh response transformation to get any dynamic data.`);
+                    processInfo.response = await new ResponseTransformer(
+                        TemplateDataProviderFactory.getTemplateDataProvider())
+                        .transform(name, processInfo.request, processInfo.response)
+                }
+
                 await this.innerProvider.logRequest(name, new Date(), 200, processInfo);
             }else{
                 await this.logRequest(name, new Date(), 404, new ProcessInfo(request));
