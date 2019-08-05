@@ -108,24 +108,29 @@ export class ServiceFileProvider {
                 return;
             }
 
-            var encoding = foundConfig.type.length == 0 ? 'utf-8' : foundConfig.type;
+            var encoding = 'utf-8';
+            if (foundConfig.type !== undefined && foundConfig.type.length > 0) {
+                encoding = foundConfig.type;
+            }
             debug(`encoding used: ${encoding}`);
-            return fs.readFile(responseFileName, (err, data) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    var processInfo = new ProcessInfo(request);
-                    debug(`data length: ${data.length}`);
-                    processInfo.responseBuffer = data;
-                    processInfo.type = this.type;
-                    processInfo.responseType = foundConfig.type;
-                    processInfo.matches = foundConfig.matches;
-                    processInfo.name = foundConfig.name;
-                    processInfo.sleep = foundConfig.sleep;
-                    resolve(processInfo);
-                }
-            });            
-            return fs.readFile(responseFileName, { encoding: encoding}, (err, data) => {
+            if (encoding != 'utf-8') {
+                return fs.readFile(responseFileName, (err, data) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        var processInfo = new ProcessInfo(request);
+                        debug(`data length: ${data.length}`);
+                        processInfo.responseBuffer = data;
+                        processInfo.type = this.type;
+                        processInfo.responseType = foundConfig.type;
+                        processInfo.matches = foundConfig.matches;
+                        processInfo.name = foundConfig.name;
+                        processInfo.sleep = foundConfig.sleep;
+                        resolve(processInfo);
+                    }
+                });
+            }
+            return fs.readFile(responseFileName, { encoding: encoding }, (err, data) => {
                 if (err) {
                     reject(err);
                 } else {

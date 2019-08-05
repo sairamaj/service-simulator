@@ -4,6 +4,7 @@ import { ProcessedRequest } from '../model/ProcessedRequest';
 import { ProcessInfo } from '../model/ProcessInfo';
 var debug = require('debug')('servicerouter')
 const url = require('url');
+var parse = require('url-parse');
 
 export class ServiceRouter {
     router: Router
@@ -25,10 +26,9 @@ export class ServiceRouter {
             var serviceManager = ServiceManagerFactory.createServiceManager();
             var processInfo = await serviceManager.getResponse(serviceName, requestData);
             if (processInfo) {
-                debug(`processInfo.responseAsAny: ${processInfo.responseBuffer.length}`);
                 res.status(200).
                     set({ 'content-type': processInfo.getResponseContentType() })
-                    .send(processInfo.responseBuffer)
+                    .send(processInfo.getResponse())
             } else {
                 res.status(404)
                     .send({
@@ -54,15 +54,10 @@ export class ServiceRouter {
             await this.handle(req, resp, serviceName, requestData, next);
         });
         this.router.get('*', async (req: Request, resp: Response, next: NextFunction) => {
-            debug(`init.get ${req.url}`);
-            var parts = req.url.split('/')
-            const urlData = url.parse(req.url);
-            await this.handle(req, resp, urlData.pathname.replace('/',''), req.url , next);
-        //     var parts = req.url.split('/')
-        //     var serviceName = parts[parts.length - 1]
-        //     debug(`init.get servicename : ${serviceName}`);
-        //     resp.send(`dummy data for now ${serviceName}`);
-         });
+            const urlData = url.parse(req.originalUrl, true);
+            debug(`urlDataPath: ${urlData.path}`);
+            await this.handle(req, resp, urlData.pathname.replace('/', ''), urlData.path, next);
+        });
     }
 
     async getRequest(req: Request): Promise<string> {

@@ -24,4 +24,11 @@ export class ProcessInfo {
 
         return 'text/xml; charset=utf-8'
     }
+
+    public getResponse(): any{
+        if( this.responseBuffer !== undefined){
+            return this.responseBuffer;
+        }
+        return this.response;
+    }
 }

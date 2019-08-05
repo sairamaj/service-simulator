@@ -179,6 +179,7 @@ export class AdminRouter {
       }
     } catch (error) {
       debug('error:' + error)
+      debug('stack:' + error.stack())
       res.status(500).send({})
     }
   }

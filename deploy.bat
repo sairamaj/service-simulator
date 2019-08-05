@@ -25,6 +25,8 @@ XCOPY toolset\*.* deploy /F /R /Y
 echo "copying certs"
 XCOPY utils\localhost.crt deploy\ /F /R /Y
 XCOPY utils\localhost.key deploy\ /F /R /Y
+XCOPY utils\stub*.* deploy\ /F /R /Y
+
 
 echo "Zipping the deploy"
 del service-simulator.zip
