@@ -12,21 +12,19 @@ export class ProcessInfo {
     public sleep: number
     public responseType: string
 
-    public getResponseContentType() : string{
-        if (this.responseType.length !== 0){
-            if( this.responseType === 'binary'){
-                return 'image/jpeg'         // need to read from map.config
-            }
+    public getResponseContentType(): string {
+        if (this.responseType === 'binary') {
+            return 'image/jpeg'         // need to read from map.config
         }
-        if( this.type === 'json'){
+        if (this.type === 'json') {
             return 'application/json'
         }
 
         return 'text/xml; charset=utf-8'
     }
 
-    public getResponse(): any{
-        if( this.responseBuffer !== undefined){
+    public getResponse(): any {
+        if (this.responseBuffer !== undefined) {
             return this.responseBuffer;
         }
         return this.response;
