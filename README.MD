@@ -1,4 +1,6 @@
 # Service-Simulator
+__Note__: Currently this has some issues with __Node 10.x.*__. Use __Node 8.17.*__ for now.
+
 Service simulator app will allow you to write simulation data for any http service. It is simple matching some inputs with request and then respond accordingly. 
 
   ![summary](doc/images/summary.png)
