@@ -1,4 +1,8 @@
 import { Log } from "../model/Log";
+import * as fs from "fs";
+import * as path from "path";
+var dateFormat = require('dateformat');
+let debug = require('debug')('logmanager')
 
 export class LogManager {
     public static Logs: Log[] = []
@@ -13,6 +17,7 @@ export class LogManager {
                     this.ErrorLogs = LogManager.ErrorLogs.slice(this.TrimSize)
                 }
             } else {
+                // this.logMessage(message);
                 this.Logs.push(new Log(type, message))
                 if (this.Logs.length > this.LogLimit) {
                     this.Logs = LogManager.Logs.slice(this.TrimSize)
@@ -27,4 +32,17 @@ export class LogManager {
             resolve(this.ErrorLogs.concat(this.Logs))
         })
     }
+
+    private static async logMessage(message): Promise<void> {
+        var traceFile = this.getTraceLog()
+        await fs.appendFile(traceFile, message, (error) =>{
+            debug('error' + error)
+        })
+    }
+
+    private static getTraceLog() {
+        var now = new Date();
+        var date = dateFormat(now,"mm_dd");
+        return process.cwd() + path.sep + `${date}_trace.txt`
+      }
 }
