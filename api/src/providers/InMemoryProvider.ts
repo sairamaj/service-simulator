@@ -61,7 +61,8 @@ export class InMemoryProvider implements ServiceManager {
         mapInfo.name,
         mapInfo.request,
         mapInfo.response,
-        mapInfo.matches
+        mapInfo.matches,
+        mapInfo.script,
       );
       resolve(mapDetail);
     });

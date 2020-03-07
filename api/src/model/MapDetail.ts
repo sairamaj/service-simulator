@@ -4,6 +4,8 @@ export class MapDetail {
         public request: string,
         public response: string,
         public matches: string[],
+        public script: string
     ) {
     }
 }
+

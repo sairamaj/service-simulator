@@ -4,6 +4,7 @@ export class ServiceConfigMap {
         public name: string,
         public sleep: number,
         public matches: string[],
+        public script: string,
     ) {
     }
 }

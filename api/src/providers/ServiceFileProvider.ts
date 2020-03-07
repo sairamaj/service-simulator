@@ -46,7 +46,7 @@ export class ServiceFileProvider {
                 request = fs.readFileSync(requestFileName, 'utf-8')
             }
 
-            resolve(new MapDetail(foundMap.name, request, response, foundMap.matches));
+            resolve(new MapDetail(foundMap.name, request, response, foundMap.matches, foundMap.script));
         });
     }
 
@@ -58,7 +58,7 @@ export class ServiceFileProvider {
 
             var foundConfig = this.configMaps.find(c => c.name == mapDetail.name)
             if (foundConfig === undefined) {
-                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches))
+                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches, mapDetail.script))
             } else {
                 foundConfig.matches = mapDetail.matches
             }
@@ -112,6 +112,16 @@ export class ServiceFileProvider {
                 if (err) {
                     reject(err);
                 } else {
+                    if( foundConfig.script != null){
+                        const scriptFullPath = this.getScriptDirectory(foundConfig.script)
+                        debug(`processing script ${foundConfig.name}:${foundConfig.script}`)
+                        try{
+                            data = this.processScript(scriptFullPath, request)
+                        }catch(e){
+                            debug(`error while processing:${scriptFullPath} ${e}`)
+                            reject(e)
+                        }
+                    }
                     var processInfo = new ProcessInfo(request);
                     processInfo.response = data;
                     processInfo.type = this.type;
@@ -180,5 +190,13 @@ export class ServiceFileProvider {
 
     getConfigMapFile(): string {
         return this.getConfigMapDirectory(this.name) + path.sep + 'map.json';
+    }
+
+    getScriptDirectory(scriptName: string) : string{
+        return this.getServiceDirectory() + path.sep + "scripts" + path.sep + scriptName;
+    }
+    processScript(scriptName, request): string {
+        var script = require(scriptName)
+        return script.process(request)
     }
 }

@@ -55,7 +55,7 @@ export class MongoDbProvider implements ServiceManager {
 
         var responseData = await this.getResponseData(name, mapName)
         var requestData = await this.getRequestData(name, mapName)
-        return new MapDetail(mapName, requestData, responseData, foundConfig.matches)
+        return new MapDetail(mapName, requestData, responseData, foundConfig.matches, foundConfig.script)
     }
 
     public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
@@ -73,7 +73,7 @@ export class MongoDbProvider implements ServiceManager {
         var isUpdate = false
         var foundConfig = service.config.find(c => c.name == mapDetail.name)
         if (foundConfig === undefined) {
-            service.config.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches))
+            service.config.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches, mapDetail.script))
         } else {
             foundConfig.matches = mapDetail.matches
             isUpdate = true
