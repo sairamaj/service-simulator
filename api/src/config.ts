@@ -14,6 +14,7 @@ const dev = {
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
         fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
+        responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     }
 };
 
@@ -27,6 +28,7 @@ const prod = {
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
         fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
+        responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     }
 };
 
@@ -40,6 +42,7 @@ const azure = {
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
         fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
+        responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     },
 };
 

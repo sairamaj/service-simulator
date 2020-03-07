@@ -12,7 +12,7 @@ import ProviderRouter from './routes/ProviderRouter';
 const config = require('./config');
 let debug = require('debug')('app')
 var cors = require('cors')
-
+var responseTime = require('response-time')
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -25,7 +25,6 @@ class App {
     this.middleware();
     this.routes();
 
-
     this.express.use((err: any, req, res, next) => {
       console.log('in error handler:')
       console.log(err)
@@ -33,6 +32,8 @@ class App {
       LogManager.log('error', '' + err + ' stack:' + err.stack)
       res.status(500).send(err)
     })
+
+
     this.mongoSetup();
   }
 
@@ -45,6 +46,13 @@ class App {
 
   // Configure Express middleware.
   private middleware(): void {
+
+    // timing
+    this.express.use(responseTime(function (req, res, time) {
+      if (time > config.app.responseLogLimit) {
+        LogManager.logTimingMessage(`${req.method} ${req.url} ${time}\r\n`)
+      }
+    }))
 
     this.express.use(express.static('dashboard/dist/dashboard'))
     this.express.use(logger(':method :url :status :res[content-length] - :response-time ms', {

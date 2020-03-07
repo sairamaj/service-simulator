@@ -3,12 +3,14 @@ import * as fs from "fs";
 import * as path from "path";
 var dateFormat = require('dateformat');
 let debug = require('debug')('logmanager')
+// let logResponseTimeLimit = require('config').getConfig().responseLogLimit
 
 export class LogManager {
     public static Logs: Log[] = []
     public static ErrorLogs: Log[] = []
     public static LogLimit = 50;
     public static TrimSize = 10;
+
     public static async log(type: string, message: string): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             if (type === 'error') {
@@ -17,7 +19,6 @@ export class LogManager {
                     this.ErrorLogs = LogManager.ErrorLogs.slice(this.TrimSize)
                 }
             } else {
-                // this.logMessage(message);
                 this.Logs.push(new Log(type, message))
                 if (this.Logs.length > this.LogLimit) {
                     this.Logs = LogManager.Logs.slice(this.TrimSize)
@@ -33,7 +34,7 @@ export class LogManager {
         })
     }
 
-    private static async logMessage(message): Promise<void> {
+    public static async logTimingMessage(message): Promise<void> {
         var traceFile = this.getTraceLog()
         await fs.appendFile(traceFile, message, (error) =>{
             debug('error' + error)
