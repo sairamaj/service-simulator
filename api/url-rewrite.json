@@ -1,0 +1,11 @@
+[
+    {
+        "match" : "/api/item1",
+        "route" : "/newapi"
+    },
+    {
+        "match" : "/api/item2",
+        "route" : "/newapi"
+    }
+]
+

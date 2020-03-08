@@ -4,5 +4,5 @@ param(
     $Request
 )
 
-$Uri = "http://localhost:3000/api/v1/admin/services/$($Service)/test"
+$Uri = "http://localhost:3000/$($Service)"
 Invoke-WebRequest -Uri $Uri -Method Post -Body $Request -ContentType 'application/json'

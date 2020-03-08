@@ -13,6 +13,9 @@ const config = require('./config');
 let debug = require('debug')('app')
 var cors = require('cors')
 var responseTime = require('response-time')
+var rewrite = require('express-urlrewrite')
+var fs = require('fs')
+
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -46,7 +49,15 @@ class App {
 
   // Configure Express middleware.
   private middleware(): void {
-
+    
+    var urlrewriteFile = 'url-rewrite.json'    
+    if( fs.existsSync(urlrewriteFile)){
+      JSON.parse(fs.readFileSync(urlrewriteFile, 'utf-8')).forEach(map => {
+        console.log(`map: ${map.match} ${map.route}`)
+        this.express.use(rewrite(map.match, map.route));    
+      });
+    }
+    
     // timing
     this.express.use(responseTime(function (req, res, time) {
       if (time > config.app.responseLogLimit) {
