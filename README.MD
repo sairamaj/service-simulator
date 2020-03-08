@@ -13,6 +13,9 @@ Service simulator app will allow you to write simulation data for any http servi
 * multiple matches in request to generate different responses
 * dynamic templates for __dates__, __random numbers__, __extracting data from request__ to embed in response, __linking to   external data__.
 * test the responses before publishing.
+* Dynamic response generation through custom java script for advanced scenarios
+* Log timings for requests for given time threshold
+* Custom URL rewrites 
 * Capture request arrived and responses served for service.
 * Performance and troubleshooting logging
 * dashboard ui to view/edit
