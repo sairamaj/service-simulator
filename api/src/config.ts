@@ -12,7 +12,7 @@ const dev = {
         provider: process.env.PROVIDER || 'inmemory',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
-        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
+        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + `data${path.sep}fileprovider`),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
         responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     }
@@ -26,7 +26,7 @@ const prod = {
         provider: process.env.PROVIDER || 'file',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
-        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
+        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + `data${path.sep}fileprovider`),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
         responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     }
@@ -40,7 +40,7 @@ const azure = {
         provider: process.env.PROVIDER || 'mongo',
         inMemoryDataFile: process.env.INMEMORY_DATAFILE || (process.cwd() + path.sep + 'data/inmemory/testdata.json'),
         mongoDbConnection: process.env.MONGODB_CONNECTION || 'mongodb://127.0.0.1:27017/simulator',
-        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + 'data/fileprovider'),
+        fileProviderLocation: process.env.FILEPROVIDER_LOCATION || (process.cwd() + path.sep + `data${path.sep}fileprovider`),
         templateDataFilesLocation: process.env.TEMPLATEDATAFILES_LOCATION || (process.cwd() + path.sep + 'data/inmemory'),
         responseLogLimit : process.env.LOG_THRESHOLD_TIME_LIMIT || 3000
     },

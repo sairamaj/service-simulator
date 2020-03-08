@@ -116,7 +116,7 @@ export class ServiceFileProvider {
                         const scriptFullPath = this.getScriptDirectory(foundConfig.script)
                         debug(`processing script ${foundConfig.name}:${foundConfig.script}`)
                         try {
-                            data = this.processScript(scriptFullPath, request, data)
+                            data = this.processScript(scriptFullPath, foundConfig.name, request, data)
                         } catch (e) {
                             debug(`error while processing:${scriptFullPath} ${e}`)
                             reject(e)
@@ -196,8 +196,8 @@ export class ServiceFileProvider {
         return this.getServiceDirectory() + path.sep + "scripts" + path.sep + scriptName;
     }
 
-    processScript(scriptName, request, response): string {
+    processScript(scriptName, name, request, response): string {
         var script = require(scriptName)
-        return script.process(request, response)
+        return script.process(name, this.getServiceResponseDirectory(), request, response)
     }
 }
