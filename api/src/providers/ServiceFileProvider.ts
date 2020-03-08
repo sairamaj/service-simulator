@@ -112,12 +112,12 @@ export class ServiceFileProvider {
                 if (err) {
                     reject(err);
                 } else {
-                    if( foundConfig.script != null){
+                    if (foundConfig.script != null) {
                         const scriptFullPath = this.getScriptDirectory(foundConfig.script)
                         debug(`processing script ${foundConfig.name}:${foundConfig.script}`)
-                        try{
-                            data = this.processScript(scriptFullPath, request)
-                        }catch(e){
+                        try {
+                            data = this.processScript(scriptFullPath, request, data)
+                        } catch (e) {
                             debug(`error while processing:${scriptFullPath} ${e}`)
                             reject(e)
                         }
@@ -137,7 +137,7 @@ export class ServiceFileProvider {
     public getConfigMap(): ServiceConfigMap[] {
         let configFile = this.getConfigMapFile();
         if (fs.existsSync(configFile)) {
-            var serviceInfo =  JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+            var serviceInfo = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
             return serviceInfo.maps
         }
     }
@@ -192,11 +192,12 @@ export class ServiceFileProvider {
         return this.getConfigMapDirectory(this.name) + path.sep + 'map.json';
     }
 
-    getScriptDirectory(scriptName: string) : string{
+    getScriptDirectory(scriptName: string): string {
         return this.getServiceDirectory() + path.sep + "scripts" + path.sep + scriptName;
     }
-    processScript(scriptName, request): string {
+
+    processScript(scriptName, request, response): string {
         var script = require(scriptName)
-        return script.process(request)
+        return script.process(request, response)
     }
 }
