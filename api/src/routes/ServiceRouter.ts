@@ -24,7 +24,7 @@ export class ServiceRouter {
             var parts = req.url.split('/')
             var serviceName = parts[parts.length - 1]
             var serviceManager = ServiceManagerFactory.createServiceManager();
-            var processInfo = await serviceManager.getResponse(serviceName, requestData);
+            var processInfo = await serviceManager.getResponse(serviceName, requestData, req);
             if (processInfo) {
                 res.status(200).
                     set({ 'content-type': processInfo.getResponseContentType() })
@@ -48,6 +48,9 @@ export class ServiceRouter {
     init() {
         //   this.router.post('*', this.handle);
         this.router.post('*', async (req: Request, resp: Response, next: NextFunction) => {
+            await this.handle(req, resp, next);
+        });
+        this.router.put('*', async (req: Request, resp: Response, next: NextFunction) => {
             await this.handle(req, resp, next);
         });
     }

@@ -8,7 +8,17 @@
                     "request_1"
                 ],
                 "request": "request_1 here",
-                "response": "<xml>service1_response_1</xml>"
+                "response": "<xml>service1_response_1</xml>",
+                "method" : "post"
+            },
+            {
+                "name": "request_1",
+                "matches": [
+                    "request_1"
+                ],
+                "request": "request_1 here",
+                "response": "<xml>service1_response_1_put_specific_data</xml>",
+                "method" : "put"
             },
             {
                 "name": "request_2",

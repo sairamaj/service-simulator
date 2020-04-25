@@ -1,10 +1,12 @@
 import { ServiceConfigMap } from "../model/ServiceConfigMap";
+import { Request } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { Service } from "../model/Service";
 import { ProcessInfo } from "../model/ProcessInfo";
 import { ProcessedRequest } from "../model/ProcessedRequest";
 import { MapDetail } from "../model/MapDetail";
+import { METHODS } from "http";
 var debug = require('debug')('servicefileprovider')
 
 export class ServiceFileProvider {
@@ -46,7 +48,13 @@ export class ServiceFileProvider {
                 request = fs.readFileSync(requestFileName, 'utf-8')
             }
 
-            resolve(new MapDetail(foundMap.name, request, response, foundMap.matches, foundMap.script));
+            resolve(new MapDetail(
+                foundMap.name,
+                request,
+                response,
+                foundMap.method,
+                foundMap.matches,
+                foundMap.script));
         });
     }
 
@@ -58,7 +66,13 @@ export class ServiceFileProvider {
 
             var foundConfig = this.configMaps.find(c => c.name == mapDetail.name)
             if (foundConfig === undefined) {
-                this.configMaps.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches, mapDetail.script))
+                this.configMaps.push(
+                    new ServiceConfigMap(
+                        mapDetail.name,
+                        foundConfig.sleep,
+                        mapDetail.matches,
+                        mapDetail.method,
+                        mapDetail.script))
             } else {
                 foundConfig.matches = mapDetail.matches
             }
@@ -82,7 +96,7 @@ export class ServiceFileProvider {
         });
     }
 
-    public async getResponse(request: string): Promise<ProcessInfo> {
+    public async getResponse(request: string, req: Request): Promise<ProcessInfo> {
         debug('enter:getResponse');
 
         debug('getResponse: finding map.')
@@ -90,7 +104,16 @@ export class ServiceFileProvider {
             if (c.matches === undefined) {
                 return false;
             }
-            return c.matches.every(m => request.includes(m));
+            
+            if(c.matches.every(m => request.includes(m))){
+                // found and look for method also.
+                if( c.method == null || c.method.length == 0){  
+                    return true;       // method agnostic.
+                }
+                return c.method.toLowerCase() == req.method.toLowerCase();
+            }
+
+            return false;
         })
 
         debug('getResponse:foundConfig:' + foundConfig);
@@ -116,7 +139,7 @@ export class ServiceFileProvider {
                         const scriptFullPath = this.getScriptDirectory(foundConfig.script)
                         debug(`processing script ${foundConfig.name}:${foundConfig.script}`)
                         try {
-                            data = this.processScript(scriptFullPath, foundConfig.name, request, data)
+                            data = this.processScript(scriptFullPath, foundConfig.name, request, data, req)
                         } catch (e) {
                             debug(`error while processing:${scriptFullPath} ${e}`)
                             reject(e)
@@ -196,8 +219,8 @@ export class ServiceFileProvider {
         return this.getServiceDirectory() + path.sep + "scripts" + path.sep + scriptName;
     }
 
-    processScript(scriptName, name, request, response): string {
+    processScript(scriptName, name, request, response, req): string {
         var script = require(scriptName)
-        return script.process(name, this.getServiceResponseDirectory(), request, response)
+        return script.process(name, this.getServiceResponseDirectory(), request, response, req)
     }
 }

@@ -5,7 +5,15 @@
 			"name": "request_1",
 			"matches": [
 				"request_1"
-			]
+			],
+			"method": "post"
+		},
+		{
+			"name": "request_1_for_put",
+			"matches": [
+				"request_1"
+			],
+			"method" : "put"
 		},
 		{
 			"name": "request_2",

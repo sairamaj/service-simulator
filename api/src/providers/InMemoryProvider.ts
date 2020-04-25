@@ -4,6 +4,7 @@ import { ProcessInfo } from "../model/ProcessInfo";
 import { ProcessedRequest } from "../model/ProcessedRequest";
 import { MapDetail } from "../model/MapDetail";
 import { InMemoryProcessedRequestContainer } from "./InMemoryProcessedRequestContainer";
+import { Request } from 'express';
 import * as path from "path";
 import { resolve } from "url";
 const debug = require("debug")("inmemoryprovider");
@@ -61,6 +62,7 @@ export class InMemoryProvider implements ServiceManager {
         mapInfo.name,
         mapInfo.request,
         mapInfo.response,
+        mapInfo.method,
         mapInfo.matches,
         mapInfo.script,
       );
@@ -114,7 +116,8 @@ export class InMemoryProvider implements ServiceManager {
 
   public async getResponse(
     name: string,
-    request: string
+    request: string,
+    req: Request
   ): Promise<ProcessInfo> {
     var service = await this.getService(name);
     if (service === undefined || service.config === undefined) {
@@ -127,7 +130,15 @@ export class InMemoryProvider implements ServiceManager {
         return false;
       }
 
-      return c.matches.every(m => request.includes(m));
+      if (c.matches.every(m => request.includes(m))) {
+        // found and look for method also.
+        if (c.method == null || c.method.length == 0) {
+          return true;       // method agnostic.
+        }
+        return c.method.toLowerCase() == req.method.toLowerCase();
+      }
+
+      return false;
     });
 
     if (foundConfig === undefined) {

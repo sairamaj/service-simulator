@@ -9,6 +9,7 @@ import { ServiceFileProvider } from './ServiceFileProvider';
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { ProcessLogFileManager } from './ProcessedLogFileManager';
 import { MapDetail } from '../model/MapDetail';
+import { Request } from 'express';
 import { resolve } from 'dns';
 var debug = require('debug')('servicesfileprovider')
 
@@ -61,11 +62,11 @@ export class ServicesFileProvider implements ServiceManager {
         return await serviceProvider.addNewResponse(mapDetail);
     }
 
-    public async getResponse(name: string, request: string): Promise<ProcessInfo> {
+    public async getResponse(name: string, request: string, req: Request): Promise<ProcessInfo> {
         debug('enter:getResponse');
 
         var serviceProvider = new ServiceFileProvider(name, this.getFilesProviderLocation());
-        var processInfo = await serviceProvider.getResponse(request);
+        var processInfo = await serviceProvider.getResponse(request, req);
         if (processInfo === undefined) {
             return undefined;
         }

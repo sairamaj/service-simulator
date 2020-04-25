@@ -9,6 +9,7 @@ import * as mongoose from "mongoose";
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
 import { ServiceConfigMap } from '../model/ServiceConfigMap';
+import { Request } from 'express';
 import { resolve } from 'url';
 const debug = require('debug')('mongodbprovider')
 
@@ -55,7 +56,7 @@ export class MongoDbProvider implements ServiceManager {
 
         var responseData = await this.getResponseData(name, mapName)
         var requestData = await this.getRequestData(name, mapName)
-        return new MapDetail(mapName, requestData, responseData, foundConfig.matches, foundConfig.script)
+        return new MapDetail(mapName, requestData, responseData, foundConfig.method, foundConfig.matches, foundConfig.script)
     }
 
     public async addNewResponse(name: string, mapDetail: MapDetail): Promise<boolean> {
@@ -73,7 +74,12 @@ export class MongoDbProvider implements ServiceManager {
         var isUpdate = false
         var foundConfig = service.config.find(c => c.name == mapDetail.name)
         if (foundConfig === undefined) {
-            service.config.push(new ServiceConfigMap(mapDetail.name, foundConfig.sleep, mapDetail.matches, mapDetail.script))
+            service.config.push(new ServiceConfigMap(
+                mapDetail.name, 
+                foundConfig.sleep, 
+                mapDetail.matches,
+                mapDetail.method,
+                 mapDetail.script))
         } else {
             foundConfig.matches = mapDetail.matches
             isUpdate = true
@@ -106,7 +112,7 @@ export class MongoDbProvider implements ServiceManager {
         return await this.addNewResponse(name, mapDetail)
     }
 
-    public async getResponse(name: string, request: string): Promise<ProcessInfo> {
+    public async getResponse(name: string, request: string, req: Request): Promise<ProcessInfo> {
         debug('enter getResponse: ' + name)
         var service = await this.getService(name);
 

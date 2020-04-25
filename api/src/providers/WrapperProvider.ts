@@ -6,6 +6,7 @@ import { ProcessedRequest } from '../model/ProcessedRequest';
 import { MapDetail } from '../model/MapDetail';
 import { ResponseTransformer } from '../transformers/ResponseTransformer';
 import { TemplateDataProviderFactory } from './TemplateDataProviderFactory';
+import { Request } from 'express';
 const config = require('./../config');
 const debug = require('debug')('wrapperProvider')
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -68,11 +69,11 @@ export class WrapperProvider implements ServiceManager {
         return await this.innerProvider.modifyNewResponse(name, mapDetail)
     }
 
-    public async getResponse(name: string, request: string): Promise<ProcessInfo> {
+    public async getResponse(name: string, request: string, req: Request): Promise<ProcessInfo> {
         debug('enter getResponse')
 
         try {
-            var processInfo = await this.innerProvider.getResponse(name, request)
+            var processInfo = await this.innerProvider.getResponse(name, request, req)
             if (processInfo !== undefined) {
                 
                 if( processInfo.sleep !== undefined){
