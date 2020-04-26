@@ -47,10 +47,7 @@ export class ServiceRouter {
      */
     init() {
         //   this.router.post('*', this.handle);
-        this.router.post('*', async (req: Request, resp: Response, next: NextFunction) => {
-            await this.handle(req, resp, next);
-        });
-        this.router.put('*', async (req: Request, resp: Response, next: NextFunction) => {
+        this.router.all('*', async (req: Request, resp: Response, next: NextFunction) => {
             await this.handle(req, resp, next);
         });
     }

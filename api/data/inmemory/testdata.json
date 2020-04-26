@@ -3,6 +3,15 @@
         "name": "service1",
         "config": [
             {
+                "name": "request_for_get",
+                "matches": [
+                    ""
+                ],
+                "request": "request_1 here",
+                "response": "<xml>service1_response_1_for_get</xml>",
+                "method" : "get"
+            },
+            {
                 "name": "request_1",
                 "matches": [
                     "request_1"

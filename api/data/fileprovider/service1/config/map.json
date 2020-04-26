@@ -4,6 +4,12 @@
 		{
 			"name": "request_1",
 			"matches": [
+				""
+			]
+		},
+		{
+			"name": "request_1",
+			"matches": [
 				"request_1"
 			],
 			"method": "post"
