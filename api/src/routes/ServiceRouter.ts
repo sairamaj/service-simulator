@@ -26,9 +26,15 @@ export class ServiceRouter {
             var serviceManager = ServiceManagerFactory.createServiceManager();
             var processInfo = await serviceManager.getResponse(serviceName, requestData, req);
             if (processInfo) {
-                res.status(200).
-                    set({ 'content-type': processInfo.getResponseContentType() })
-                    .send(processInfo.response)
+                if (!processInfo.binary) {
+                    res.status(200).
+                        set({ 'content-type': processInfo.getResponseContentType() })
+                        .send(processInfo.response)
+                }
+                else {
+                    res.status(200).
+                        send(Buffer.from(processInfo.response, 'binary'));
+                }
             } else {
                 res.status(404)
                     .send({

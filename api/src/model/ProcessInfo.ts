@@ -9,6 +9,7 @@ export class ProcessInfo {
     public matches: string[]
     public type: string
     public sleep: number
+    public binary: boolean
 
     public getResponseContentType() : string{
         if( this.type === 'json'){

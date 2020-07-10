@@ -7,12 +7,13 @@ import { MapDetail } from '../model/MapDetail';
 import { ResponseTransformer } from '../transformers/ResponseTransformer';
 import { TemplateDataProviderFactory } from './TemplateDataProviderFactory';
 import { Request } from 'express';
+import { clearScreenDown } from 'readline';
 const config = require('./../config');
 const debug = require('debug')('wrapperProvider')
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export class WrapperProvider implements ServiceManager {
-    constructor(public innerProvider: ServiceManager, ) {
+    constructor(public innerProvider: ServiceManager,) {
     }
 
     public async getServices(): Promise<Service[]> {
@@ -75,21 +76,24 @@ export class WrapperProvider implements ServiceManager {
         try {
             var processInfo = await this.innerProvider.getResponse(name, request, req)
             if (processInfo !== undefined) {
-                
-                if( processInfo.sleep !== undefined){
+
+                if (processInfo.sleep !== undefined) {
                     debug(`sleeping:${processInfo.sleep}`)
                     await sleep(processInfo.sleep)
                     debug(`sleeping done:${processInfo.sleep}`)
                 }
-                    
-                processInfo.response = await new ResponseTransformer(
-                    TemplateDataProviderFactory.getTemplateDataProvider())
-                    .transform(name, processInfo.request, processInfo.response)
+
+                if (!processInfo.binary) {
+                    // Transform for non binary only.
+                    processInfo.response = await new ResponseTransformer(
+                        TemplateDataProviderFactory.getTemplateDataProvider())
+                        .transform(name, processInfo.request, processInfo.response)
+                }
                 await this.innerProvider.logRequest(name, new Date(), 200, processInfo);
-            }else{
+            } else {clearScreenDown
                 await this.logRequest(name, new Date(), 404, new ProcessInfo(request));
             }
-    
+
             return processInfo
         } catch (error) {
             await this.logRequest(name, new Date(), 500, new ProcessInfo(request));

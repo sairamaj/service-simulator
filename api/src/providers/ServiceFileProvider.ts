@@ -7,6 +7,7 @@ import { ProcessInfo } from "../model/ProcessInfo";
 import { ProcessedRequest } from "../model/ProcessedRequest";
 import { MapDetail } from "../model/MapDetail";
 import { METHODS } from "http";
+import e = require("express");
 var debug = require('debug')('servicefileprovider')
 
 export class ServiceFileProvider {
@@ -131,7 +132,13 @@ export class ServiceFileProvider {
                 return;
             }
 
-            return fs.readFile(responseFileName, 'utf-8', (err, data) => {
+            var encoding = 'utf-8'
+            var binary = this.isFileBinary(responseFileName)
+            if( binary ){
+                encoding = 'binary'
+            }
+
+            return fs.readFile(responseFileName, encoding, (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -151,6 +158,7 @@ export class ServiceFileProvider {
                     processInfo.matches = foundConfig.matches;
                     processInfo.name = foundConfig.name;
                     processInfo.sleep = foundConfig.sleep;
+                    processInfo.binary = binary
                     resolve(processInfo);
                 }
             });
@@ -200,6 +208,12 @@ export class ServiceFileProvider {
     }
 
     getResponseFileName(requestName: string): string {
+        if( path.extname(requestName).length > 0)
+        {
+            return this.getServiceResponseDirectory() + path.sep + requestName;
+        }
+
+        // default add xml extension for back ward compatible.
         return this.getServiceResponseDirectory() + path.sep + requestName + '.xml';
     }
 
@@ -222,5 +236,16 @@ export class ServiceFileProvider {
     processScript(scriptName, name, request, response, req): string {
         var script = require(scriptName)
         return script.process(name, this.getServiceResponseDirectory(), request, response, req)
+    }
+
+    isFileBinary(fileName: string) : boolean {
+        debug(`fileName: ${fileName}`)
+        var ext = path.extname(fileName).toLowerCase()
+        if (ext == '.jpeg' || ext == '.png')
+        {
+            return true
+        }
+
+        return false
     }
 }
