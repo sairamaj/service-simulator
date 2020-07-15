@@ -22,3 +22,5 @@ VM Oracle Virtual Box for settings.
 ### Windows 10 home box
 Docker tool box needs to be installed (legacy docker solution)
 Legacy desktop solution. Docker Toolbox is for older Mac and Windows systems that do not meet the requirements of Docker Desktop for Mac and Docker Desktop for Windows. We recommend updating to the newer applications, if possible.
+
+[Setup Docker on Windows Server 2016](https://blog.couchbase.com/setup-docker-windows-server-2016/)
