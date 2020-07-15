@@ -1,9 +1,9 @@
 ```cmd
 cd deploy
 docker login
-docker build -f .\Dockerfile -t service-simulator:latest .
-Invoke-WebRequest http://192.168.99.100:3000/service1
-docker run -it -p:3000:80 service-simulator:latest
+docker build -f .\Dockerfile -t servicesimulator:v10 .
+docker run -it -p:3000:80 servicesimulator:v10
+Invoke-WebRequest http://192.168.99.100:3000/service1 ( get from docker inspect)
 map the folder: (folderpath)c:\temp\fileprovider to (foldername)c/fileprovider  ( Note: see no : in the folder name)
 
 docker run -it -v //c/temp://data/fileprovider -p:3000:80 service-simulator:latest
@@ -24,3 +24,8 @@ Docker tool box needs to be installed (legacy docker solution)
 Legacy desktop solution. Docker Toolbox is for older Mac and Windows systems that do not meet the requirements of Docker Desktop for Mac and Docker Desktop for Windows. We recommend updating to the newer applications, if possible.
 
 [Setup Docker on Windows Server 2016](https://blog.couchbase.com/setup-docker-windows-server-2016/)
+
+[Pushing to docker](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
+    * docker login
+    * docker tag 4f28842d9e99 sairamaj/servicesimulator:v10
+    * 
