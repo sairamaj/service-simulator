@@ -62,7 +62,7 @@ Function Test-ContainerForRunning {
     do {
         Write-Host 'Checking ....'
         $tries++
-        $container = Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
+        $container = Get-AzContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
         Write-Progress "$ContainerName is in $($container.State) Try: $tries"
         Write-Host "State: $($container.State)"
         if ( $container.State -eq 'Running') {
@@ -110,8 +110,8 @@ Function New-Container {
     
     # Create container
     Write-Host "$ContainerName Creating $ContainerName."
-    $container = New-AzureRmContainerGroup -ResourceGroupName $ResourceGroup `
-        -Name $ContainerName -Image sairamaj/servicesimulator:v3 `
+    $container = New-AzContainerGroup -ResourceGroupName $ResourceGroup `
+        -Name $ContainerName -Image sairamaj/servicesimulator:v10 `
         -DnsNameLabel $ContainerName `
         -EnvironmentVariable $environment -ErrorAction Stop
     $container
@@ -122,7 +122,7 @@ Login
 
 if ( (Test-ResourceGroup -Name $ResourceGroup -Location $Location) -eq $false) {
     Write-Warning "$ResourceGroup does not exists, creating new one."
-    $newGroup = New-AzureRmResourceGroup -Name $ResourceGroup -Location $Location
+    $newGroup = New-AzResourceGroup -Name $ResourceGroup -Location $Location
     Write-Host "Created successfully $($newGroup.ResourceGroupName)"
 }
 
@@ -144,7 +144,7 @@ if ( !(Test-ContainerForRunning)) {
 }
 
 Write-Host "Verifying... $($container.IpAddress)"
-$container = Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
+$container = Get-AzContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName
 if ( (Test-SimulatorInitialize -Host $container.IpAddress) -eq $true ) {
     Write-Host "Open the dashboard."
     Start-Process "http://$($container.IpAddress)"

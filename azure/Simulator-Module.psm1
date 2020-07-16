@@ -7,7 +7,7 @@ Function Test-ResourceGroup {
     )
 
     try {
-        Get-AzureRmResourceGroup -Name $Name -Location $Location -ErrorAction Stop
+        Get-AzResourceGroup -Name $Name -Location $Location -ErrorAction Stop
         $true    
     }
     catch {
@@ -24,7 +24,7 @@ Function Test-Mongodb {
         $Name        
     )
 
-    $null -ne (Get-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" -ResourceGroupName $ResourceGroup  -Name $Name -ErrorAction SilentlyContinue)
+    $null -ne (Get-AzResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" -ResourceGroupName $ResourceGroup  -Name $Name -ErrorAction SilentlyContinue)
 }
 
 Function Get-MongoDbConnection {
@@ -34,7 +34,7 @@ Function Get-MongoDbConnection {
         [parameter(Mandatory = $true)]
         $Name        
     ) 
-    $result = Invoke-AzureRmResourceAction -Action listConnectionStrings `
+    $result = Invoke-AzResourceAction -Action listConnectionStrings `
         -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
         -ResourceGroupName $ResourceGroup `
         -Name $Name `
@@ -75,7 +75,7 @@ Function Test-ContainerRegistry {
         $Name        
     )
     try {
-        Get-AzureRmContainerRegistry -ResourceGroupName $ResourceGroup -Name $Name -ErrorAction Stop
+        Get-AzContainerRegistry -ResourceGroupName $ResourceGroup -Name $Name -ErrorAction Stop
         $true
     }
     catch {
@@ -89,7 +89,7 @@ Function Test-ValutExists {
         $Name 
     )
 
-    $valut = Get-AzureRmKeyVault -VaultName $Name
+    $valut = Get-AzKeyVault -VaultName $Name
     if ( $null -eq $valut) {
         $false
     }
@@ -102,13 +102,13 @@ Function Test-ValutExists {
 Function Login {
     $needLogin = $true
     Try {
-        $content = Get-AzureRmContext
+        $content = Get-AzContext
         if ($content) {
             $needLogin = ([string]::IsNullOrEmpty($content.Account))
         } 
     } 
     Catch {
-        if ($_ -like "*Login-AzureRmAccount to login*") {
+        if ($_ -like "*Login-AzAccount to login*") {
             $needLogin = $true
         } 
         else {
@@ -117,7 +117,7 @@ Function Login {
     }
 
     if ($needLogin) {
-        Login-AzureRmAccount
+        Login-AzAccount
     }
 }
 
@@ -129,7 +129,7 @@ Function Test-Container {
         $Name
     )
     try {
-        Get-AzureRmContainerGroup -ResourceGroupName $ResourceGroupName -Name $Name -ErrorAction Stop | Out-Null
+        Get-AzContainerGroup -ResourceGroupName $ResourceGroupName -Name $Name -ErrorAction Stop | Out-Null
         $true
     }
     catch {
@@ -156,7 +156,7 @@ Function Show-Logs {
         $ContainerName
     )
     Write-Host "`t---------------------------------------------"
-    $logs = Get-AzureRmContainerInstanceLog -ResourceGroupName $ResourceGroup -ContainerGroupName $ContainerName 
+    $logs = Get-AzContainerInstanceLog -ResourceGroupName $ResourceGroup -ContainerGroupName $ContainerName 
     Write-Host ($logs -split '\n' |  ForEach-Object { "`t" + $_ + "`n"}) -ForegroundColor DarkCyan
     Write-Host "`t-------------------------------------------"
 }

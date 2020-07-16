@@ -23,7 +23,7 @@ Login
 
 if( (Test-Container -ResourceGroupName $ResourceGroup -Name $ContainerName ) -eq $true)
 {
-    Remove-AzureRmContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName -ErrorAction Stop
+    Remove-AzContainerGroup -ResourceGroupName $ResourceGroup -Name $ContainerName -ErrorAction Stop
     Write-Host "$ContainerName removed successfully." -ForegroundColor Green
 }
 else 
