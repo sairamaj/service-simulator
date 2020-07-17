@@ -1,7 +1,7 @@
 # Service-Simulator
 Service simulator app will allow you to write simulation data for any http service. It is simple matching some inputs with request and then respond accordingly. 
 
-  ![summary](./images/summary.png)
+  ![summary](../doc/images/summary.png)
 
   ### Overview
   ![summary](./images/overview.png)
@@ -29,9 +29,9 @@ Listens at particular Url and accepts request and sends response.
 ### Matches
 Match strings matched against to request to find out which response needs to be sent.
 ### Request
-POST string coming from the client.
+POST/PATCH/PUT string coming from the client.
 ### Response
-Data sent back to client for POST request.
+Data sent back to client for matched request.
 ### Templating
 Response data can have some dynamic templating for dates, random numbers and extracting some data from input.
 ### Provider
@@ -89,8 +89,11 @@ testdata.json is used for in memory and is used for unit test. The entire config
 
 ]
 
-Sample JSON file can be viewed here: ![testdata.json](..\api\data\inmemory\testdata.json))
 ```
+Sample JSON file can be viewed here
+[testdata](../api/data/inmemory/testdata.json)
+
+
 ```json
  {
         "name": "service1",
@@ -140,12 +143,20 @@ Each directory under fileprovider will is a service. It will have below 4 direct
         }
     ]
 ```
+* name
+    * Name used which represents the response for the match found
+    * If there is an extension .JPEG or .PNG then the response will be returned as binary data
+    * If no extension exists , a default .xml extensionis added and looked in responses directory.
+* matches:
+    * Array of string matches
+    * One can specify multiple strings here.
+
 ### logs
 Request along with served responses will be logged here
 ### requests
 Sample request files (used during testing in dashboard). The name of the file will be name specified in the configuration file with .xml as extension.
 ### responses
-Response files will be here. The name of the file is name specified in the match with .xml extension.
+Response files will be here. The name of the file is name specified in the match with .xml extension if no extension specified in the name in config.
 
 ### Mongo Db Provider
 One can configure to use Mongo db with connection string so that all requests and responses along with configuration will be stored in Mongo db.
@@ -170,8 +181,6 @@ One can configure to use Mongo db with connection string so that all requests an
     * use service control manager start __service-simulator__ service 
 * Running in Azure Container
     * [here](./azure/README.MD)
-* Running Kubernetes cluster
-    * here
 
 ## Running with different providers
 Default is in memory (uses data\inmemory\testdata.json)
@@ -191,7 +200,7 @@ By default localhost.crt localhost.key are available and you can use them. Impor
     * npm test
 
 ## Dashboard
-Default dashboard is available at http://localhost:3000 and https://localhost:3443. Dashboard is explained [here](./dashboard/readme.md)
+Default dashboard is available at http://localhost:3000 and https://localhost:3443. Dashboard is explained  [here](../dashboard/readme.md)
 
 
 

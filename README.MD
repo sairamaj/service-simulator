@@ -48,8 +48,6 @@ Service simulator app will allow you to write simulation data for any http servi
     * use service control manager start __service-simulator__ service 
 * Running in Azure Container
     * [here](./azure/README.MD)
-* Running Kubernetes cluster
-    * here
 
 ## Running with different providers
 Default is in memory (uses data\inmemory\testdata.json)
