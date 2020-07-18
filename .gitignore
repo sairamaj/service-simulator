@@ -6,3 +6,6 @@ node_modules
 api/*.key
 api/*.crt
 api/data
+.terraform
+**/*.terraform.tfstate
+**/*.terraform.tfstate.backup
