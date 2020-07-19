@@ -1,5 +1,5 @@
 provider "azurerm" {
-  version         = "=2.0.0" 
+  version = "=2.0.0"
   features {}
 }
 
@@ -14,10 +14,10 @@ resource "azurerm_container_group" "example" {
   container {
     name   = "simtest"
     image  = "sairamaj/servicesimulator:v10"
-    cpu    = "1"
+    cpu    = "0.5"
     memory = "1.5"
 
-ports {
+    ports {
       port     = 80
       protocol = "TCP"
     }
@@ -30,6 +30,18 @@ ports {
       storage_account_name = var.simulator_data_storage_account_name
       storage_account_key  = var.simulator_data_storage_account_key
     }
+  }
+
+  container {
+    name   = "sidecar"
+    image  = "microsoft/aci-tutorial-sidecar"
+    cpu    = "0.5"
+    memory = "1.5"
+    ports {
+      port     = 443
+      protocol = "TCP"
+    }
+
   }
 
   tags = {

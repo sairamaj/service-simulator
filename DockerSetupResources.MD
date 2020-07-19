@@ -28,4 +28,14 @@ Legacy desktop solution. Docker Toolbox is for older Mac and Windows systems tha
 [Pushing to docker](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
     * docker login
     * docker tag 4f28842d9e99 sairamaj/servicesimulator:v10
-    * 
+
+[Enable TLS in Azure Container](https://www.antstack.io/blog/how-to-enable-tls-for-hasura-graphql-engine-in-azure-caddy/)
+
+#### Caddy
+[docker-caddy](https://hub.docker.com/_/caddy)
+
+```cmd
+docker run -d -p 80:80 -v /caddy/index.html:/usr/share/caddy/index.html -v caddy_data:/data caddy
+```
+
+![Setting up Shared folder in Windows-10 Docker ToolBox](./doc/images/Windows!0_DockerToolBox_SharedFolder_Setup.PNG)

@@ -7,5 +7,5 @@ api/*.key
 api/*.crt
 api/data
 .terraform
-**/*.terraform.tfstate
-**/*.terraform.tfstate.backup
+terraform/*.terraform.tfstate
+terraform/*.terraform.tfstate.backup
