@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ServiceManagerFactory } from "../providers/ServiceManagerFactory";
 import { ProcessedRequest } from '../model/ProcessedRequest';
 import { ProcessInfo } from '../model/ProcessInfo';
+var url=require('url')
 var debug = require('debug')('servicerouter')
 
 export class ServiceRouter {
@@ -22,17 +23,15 @@ export class ServiceRouter {
         try {
             var requestData = await this.getRequest(req);
             
+            let parsedUrl = url.parse(req.originalUrl);
+            var serviceName = parsedUrl.pathname.split('/').slice(-1)
             // Add query string also as part of the post data.
-            var queryString = "";
-            for (const key in req.query) {
-                console.log(key, req.query[key])
-                queryString += `${key}=${req.query[key]} `;
-            }         
-            requestData += queryString
-                        
-            var parts = req.url.split('/')
-            var serviceName = parts[parts.length - 1]
+            requestData += parsedUrl.query == null ? "": parsedUrl.query
+
+            debug(`serviceName: ${serviceName}`)
+
             var serviceManager = ServiceManagerFactory.createServiceManager();
+
             var processInfo = await serviceManager.getResponse(serviceName, requestData, req);
             if (processInfo) {
                 if (!processInfo.binary) {
