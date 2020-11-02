@@ -15,6 +15,7 @@ var cors = require('cors')
 var responseTime = require('response-time')
 var rewrite = require('express-urlrewrite')
 var fs = require('fs')
+import * as path from 'path'
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -51,11 +52,24 @@ class App {
   private middleware(): void {
     
     var urlrewriteFile = 'url-rewrite.json'    
+    if(config.app.provider === 'file'){
+      var urlRewriteInFileProviderLocation = config.app.fileProviderLocation + path.sep + 'url-rewrite.json'
+      console.log(`Looking for ${urlRewriteInFileProviderLocation} `)
+      if(fs.existsSync(urlRewriteInFileProviderLocation)){
+        urlrewriteFile = urlRewriteInFileProviderLocation
+      }else{
+        console.log(`does not exist ${urlRewriteInFileProviderLocation} `)
+      }
+    }
+
     if( fs.existsSync(urlrewriteFile)){
+      console.log(`loading ${urlrewriteFile}`)
       JSON.parse(fs.readFileSync(urlrewriteFile, 'utf-8')).forEach(map => {
         console.log(`map: ${map.match} ${map.route}`)
         this.express.use(rewrite(map.match, map.route));    
       });
+    }else{
+      console.log(`url rewrite not found: ${urlrewriteFile}`)
     }
     
     // timing
