@@ -21,6 +21,15 @@ export class ServiceRouter {
     public async handle(req: Request, res: Response, next: NextFunction) {
         try {
             var requestData = await this.getRequest(req);
+            
+            // Add query string also as part of the post data.
+            var queryString = "";
+            for (const key in req.query) {
+                console.log(key, req.query[key])
+                queryString += `${key}=${req.query[key]} `;
+            }         
+            requestData += queryString
+                        
             var parts = req.url.split('/')
             var serviceName = parts[parts.length - 1]
             var serviceManager = ServiceManagerFactory.createServiceManager();
