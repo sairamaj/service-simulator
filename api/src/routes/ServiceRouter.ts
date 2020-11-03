@@ -24,12 +24,13 @@ export class ServiceRouter {
             var requestData = await this.getRequest(req);
             
             let parsedUrl = url.parse(req.originalUrl);
-            var serviceName = parsedUrl.pathname.split('/').slice(-1)
+            var urlParts = req.url.split('/')
+            var serviceName = urlParts[urlParts.length-1]
             // Add query string also as part of the post data.
+            requestData += req.originalUrl
             requestData += parsedUrl.query == null ? "": parsedUrl.query
 
             debug(`serviceName: ${serviceName}`)
-
             var serviceManager = ServiceManagerFactory.createServiceManager();
 
             var processInfo = await serviceManager.getResponse(serviceName, requestData, req);

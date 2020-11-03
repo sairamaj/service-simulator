@@ -12,6 +12,7 @@ echo "copying /api..."
 XCOPY api\dist deploy\dist /F /R /Y /S
 XCOPY api\data deploy\data /F /R /Y /S
 COPY api\package.json deploy
+COPY api\package-lock.json deploy
 
 echo "copying dashboard..."
 MD deploy\dashboard\dist\dashboard  

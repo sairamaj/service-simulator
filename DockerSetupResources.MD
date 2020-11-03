@@ -1,13 +1,13 @@
 ```cmd
 cd deploy
 docker login
-docker build -f .\Dockerfile -t servicesimulator:v12 .
+docker build -f .\Dockerfile -t servicesimulator:v13 .
 docker run -it -p:3000:80 servicesimulator:v12
 Invoke-WebRequest http://192.168.99.100:3000/service1 ( get from docker inspect)
 map the folder: (folderpath)c:\temp\fileprovider to (foldername)c/fileprovider  ( Note: see no : in the folder name)
 
 docker run -it -v //c/temp://data/fileprovider -p:3000:80 service-simulator:latest
-docker run -it -v //c/temp/simdata://data/fileprovider -p:3000:80 servicesimulator:v12
+docker run -it -v //c/temp/simdata://data/fileprovider -p:3000:80 servicesimulator:v13
 docker run -it -v //c/fileprovider://data/fileprovider -p:3000:80 service-simulator:latest /bin/sh
 ```
 
@@ -28,8 +28,8 @@ Legacy desktop solution. Docker Toolbox is for older Mac and Windows systems tha
 
 [Pushing to docker](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
     * docker login
-    * docker tag 4f28842d9e99 sairamaj/servicesimulator:v12
-    * docker push sairamaj/servicesimulator:v12
+    * docker tag 4f28842d9e99 sairamaj/servicesimulator:v13
+    * docker push sairamaj/servicesimulator:v13
 
 [Enable TLS in Azure Container](https://www.antstack.io/blog/how-to-enable-tls-for-hasura-graphql-engine-in-azure-caddy/)
 
