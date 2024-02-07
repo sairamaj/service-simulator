@@ -37,7 +37,7 @@ export class InMemoryProvider implements ServiceManager {
     );
   }
 
-  public addService(service: Service): Promise<boolean> {
+  public addService(service: Service): Promise<any> {
     debug("enter addService:" + service.name);
     return new Promise<boolean>((resolve, reject) => {
       InMemoryProvider.TestData.push(service);
