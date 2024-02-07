@@ -3,7 +3,7 @@ Here you will see all the services available from this simulator. One can create
 ![homepage](../doc/images/Home.PNG)
 
 ## Create New Service 
-One can create new service by giving a unique name. The type of services supported are __soap__ and __json__. Currently there is no validation on this and hence type exactly (soap or json)
+One can create new service by giving a unique name. The type of services supported are __soap__ (application/soap+xml), __xml__ (text/xml) and __json__. Currently there is no validation on this and hence type exactly (soap or json)
 ![secreent](../doc/images/NewService.png)
 
 ## Service responses with different formats
