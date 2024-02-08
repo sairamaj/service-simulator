@@ -15,7 +15,11 @@ export class ProcessInfo {
         if( this.type === 'json'){
             return 'application/json'
         }
+        
+        if( this.type === 'xml'){
+            return 'text/xml; charset=utf-8'
+        }
 
-        return 'text/xml; charset=utf-8'
+        return 'application/soap+xml; charset=utf-8'
     }
 }
